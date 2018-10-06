@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PetBellies.View.MyAccountPage"
+             Title="My profile" 
+             xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies"  
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.Content>
+        <StackLayout Style="{StaticResource NormalStackLayout}">
+            <!-- <Image x:Name="profilePictureImage" Aspect="AspectFit" HeightRequest="75">
+            </Image>-->
+            <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" HorizontalOptions="Center" Margin="0,25,0,0">
+            </controls:CircleImage>
+            <Label x:Name="userNameLabel" Style="{StaticResource NormalLabel}" />
+            <Button x:Name="otherButton" Style="{StaticResource NormalButton}" Text="Other" Clicked="otherButton_Clicked" />
+            <Button x:Name="updateProfileButton" Style="{StaticResource NormalButton}" Text="Edit my profile" Clicked="updateProfileButton_Clicked" />
+            <Label Text="My pets:" Style="{StaticResource NormalLabel}" />
+            <Button x:Name="addPetButton" Style="{StaticResource NormalButton}" Text="Add pet" Clicked="addPetButton_Clicked" />
+            <ListView ItemsSource="{Binding listViewWithPictureAndSomeText}" x:Name="petListView" ItemTapped="petListView_ItemTapped" SeparatorVisibility="None" HasUnevenRows="True" Margin="50,0,50,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto">
+                                    </RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60">
+                                    </ColumnDefinition>
+                                    <ColumnDefinition>
+                                    </ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <!--<Image Source="{Binding ProfilePicture}" HeightRequest="45" WidthRequest="45" Grid.Row="0" Grid.Column="0">
+                                </Image>-->
+                                <controls:CircleImage Grid.Row="0" Grid.Column="0" Source="{Binding ProfilePicture}" Aspect="AspectFill" HorizontalOptions="Center">
+                                    <controls:CircleImage.WidthRequest>
+                                        <OnPlatform x:TypeArguments="x:Double">
+                                            <On Platform="Android, iOS">45</On>
+                                        </OnPlatform>
+                                    </controls:CircleImage.WidthRequest>
+                                    <controls:CircleImage.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double">
+                                            <On Platform="Android, iOS">45</On>
+                                        </OnPlatform>
+                                    </controls:CircleImage.HeightRequest>
+                                </controls:CircleImage>
+                                <Label Text="{Binding Name}" Style="{StaticResource NormalLabel}" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" />
+                            </Grid>
+                        </customControls:ExtendedViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PetBellies.View.SearchPage"
+             xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" 
+             Title="Search hashtags">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="searchEntry" Unfocused="Handle_Unfocused" Focused="Handle_Focused" Placeholder="eg.:beautiful" TextChanged="searchEntry_TextChanged" Style="{StaticResource NormalEnrty}" Margin="5,40,5,0" />
+            <StackLayout x:Name="hashtagsListStackLayout">
+                <ListView ItemTapped="searchListView_ItemTapped" SeparatorVisibility="None" ItemsSource="{Binding searchModelList}" Margin="5,0,5,0" x:Name="searchListView" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
+                                <Grid BackgroundColor="White">
+                                    <Label Text="{Binding hashtag}" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabel}" Margin="5,0,5,0" />
+                                </Grid>
+                            </customControls:ExtendedViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <StackLayout x:Name="randomPicturesStackLayout">
+                <ScrollView>
+                    <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*">
+                            </ColumnDefinition>
+                            <ColumnDefinition Width="*">
+                            </ColumnDefinition>
+                            <ColumnDefinition Width="*">
+                            </ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition>
+                            </RowDefinition>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </ScrollView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

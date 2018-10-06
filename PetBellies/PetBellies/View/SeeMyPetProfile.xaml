@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PetBellies.View.SeeMyPetProfile"
+            Title="My pet profile" 
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Style="{StaticResource NormalStackLayout}">
+                <!--<Image x:Name="profilePictureImage" Aspect="AspectFit" Margin="0,25,0,0">
+                </Image>-->
+                <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,25,0,0" HorizontalOptions="Center">
+                    <controls:CircleImage.WidthRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">75</On>
+                        </OnPlatform>
+                    </controls:CircleImage.WidthRequest>
+                    <controls:CircleImage.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">75</On>
+                        </OnPlatform>
+                    </controls:CircleImage.HeightRequest>
+                </controls:CircleImage>
+                <Label x:Name="petnameLabel" Style="{StaticResource NormalLabel}" />
+                <Label x:Name="followersLabel" Style="{StaticResource NormalLabel}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Button x:Name="updateButton" Clicked="updateButton_Clicked" Text="Change" Style="{StaticResource NormalButton}" />
+                <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+                        </RowDefinition>
+                    </Grid.RowDefinitions>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

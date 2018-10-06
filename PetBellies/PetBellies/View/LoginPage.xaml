@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PetBellies.View.LoginPage"
+             Title="PetBellies" 
+             BackgroundImage="loginbackground.jpg" 
+             xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies">
+    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+        <StackLayout Style="{StaticResource NormalStackLayout}">
+            <Label Style="{StaticResource LogoAboveText}" Text="PetBellies" TextColor="White" />
+            <!--                <Image Style="{StaticResource Logo}" Source="logo.jpg" />-->
+            <!--<Button x:Name="loginFacebookButton" Style="{StaticResource FacebookButton}" Text="Login with Facebook" Clicked="loginFacebookButton_Clicked" />
+                <Label Text="or" Style="{StaticResource NormalLabel}" />-->
+        </StackLayout>
+        <StackLayout VerticalOptions="EndAndExpand" Margin="0,30,0,30">
+            <Label Text="E-Mail:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
+            <customControls:CustomEntry TextColor="White" x:Name="emailEntry" Keyboard="Email" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnEmail" />
+            <Label Text="Password:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
+            <customControls:CustomEntry TextColor="White" x:Name="pwEntry" IsPassword="True" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnPassword" />
+            <Label Text="Forgot password" Style="{StaticResource NormalLabel}" TextColor="White">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Button BorderColor="White" TextColor="White" x:Name="loginButton" Style="{StaticResource NormalButton}" Text="Login" Clicked="loginButton_Clicked" />
+            <ActivityIndicator Color="White" x:Name="loginActivator" IsRunning="false" Style="{StaticResource NormalActivityIndicator}">
+            </ActivityIndicator>
+            <Label Text="Are you not a member yet?" Style="{StaticResource NormalLabel}" TextColor="White"/>
+            <Button BorderColor="White" TextColor="White" x:Name="signUpButton" Style="{StaticResource NormalButton}" Text="Sign up" Clicked="signUpButton_Clicked" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

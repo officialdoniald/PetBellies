@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PetBellies.View.SeeAPicturePage"
+             Title="Picture" 
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical">
+                <Grid Margin="15,0,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60">
+                        </ColumnDefinition>
+                        <ColumnDefinition>
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="60">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="Auto">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto">
+                        </RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!--<Image x:Name="profilePictureImage" Aspect="AspectFit" Grid.Column="0" Grid.Row="0" HeightRequest="45">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped">
+                            </TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>-->
+                    <controls:CircleImage x:Name="profilePictureImage" Grid.Row="0" Grid.Column="0" Aspect="AspectFill" HorizontalOptions="Center">
+                        <controls:CircleImage.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">45</On>
+                            </OnPlatform>
+                        </controls:CircleImage.WidthRequest>
+                        <controls:CircleImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">45</On>
+                            </OnPlatform>
+                        </controls:CircleImage.HeightRequest>
+                        <controls:CircleImage.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                        </controls:CircleImage.GestureRecognizers>
+                    </controls:CircleImage>
+                    <Label Grid.Column="1" Grid.Row="0" x:Name="nameLabel" Style="{StaticResource NormalLabel}" Margin="0,0,0,0" HorizontalOptions="Start" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped">
+                            </TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Image x:Name="likeornotImage" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="3">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="likeOrNotButton_ClickedAsync" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label Grid.Column="2" Grid.Row="0" x:Name="howmanyLikesLabel" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabel}" Margin="0,0,0,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1">
+                            </TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+                <Image x:Name="pictureImage" Style="{StaticResource FillImageStyle}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="likeOrNotButton_ClickedAsync" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <StackLayout x:Name="mainStackLayout" Orientation="Horizontal" Margin="15,0,15,0">
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

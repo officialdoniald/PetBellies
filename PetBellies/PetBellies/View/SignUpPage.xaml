@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="PetBellies.View.SignUpPage" 
+             Title="Sign up">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Style="{StaticResource NormalStackLayout}">
+                <Label Style="{StaticResource LogoAboveText}" Text="PetBellies" />
+                <!--<Image
+                Style="{StaticResource Logo}"
+                Source="logo.jpg"/>-->
+                <!--<Button
+                Style="{StaticResource FacebookButton}"
+                x:Name="loginFacebookButton"
+                Text="Sign up with Facebook"
+                Clicked="loginFacebookButton_Clicked"/>-->
+                <Label Text="Last name:" Style="{StaticResource EntryAboveLabel}" />
+                <Entry x:Name="lastnameEntry" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnLastNameEntry" />
+                <Label Text="First name:" Style="{StaticResource EntryAboveLabel}" />
+                <Entry x:Name="firstnameEntry" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnFirstNameEntry" />
+                <Label Text="E-Mail:" Style="{StaticResource EntryAboveLabel}" />
+                <Entry x:Name="emailEntry" Keyboard="Email" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnEmailEntry" />
+                <Label Text="Password:" Style="{StaticResource EntryAboveLabel}" />
+                <Entry x:Name="pwEntry" IsPassword="true" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnPasswordEntry" />
+                <StackLayout Orientation="Horizontal" Margin="50,0,50,0">
+                    <Switch x:Name="imover13Switch" Toggled="Handle_Toggled"/>
+                    <Label Text="I am over 13 years old." Margin="10,0,0,0" Style="{StaticResource NormalLabel}" VerticalOptions="Center" />
+                </StackLayout>
+                <Button Text="Sign up" x:Name="signupButton" Style="{StaticResource NormalButton}" Clicked="signupButton_ClickedAsync" IsEnabled="false"/>
+                <Label Style="{StaticResource NormalLabel}" Text="By clicking Sign up, you agree to our" />
+                <Label Style="{StaticResource NormalLabel}" TextColor="#FFCBB6" FontAttributes="Italic" Text="Terms and Condition.">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_TappedAsync" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Style="{StaticResource NormalLabel}" TextColor="#FFCBB6" FontAttributes="Italic" Text=" and Privacy Policy.">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped2" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <ActivityIndicator IsRunning="false" x:Name="uploadActivity" Style="{StaticResource NormalActivityIndicator}" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PetBellies.View.HomePage"
+             Title="Wall" 
+             xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" 
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.Content>
+        <ListView BackgroundColor="Transparent" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" SeparatorVisibility="None" HasUnevenRows="True" ItemsSource="{Binding GlobalVariables.wallListViewAdapter}" x:Name="wallListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
+                        <Grid BackgroundColor="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto">
+                                </ColumnDefinition>
+                                <ColumnDefinition>
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="60">
+                                </ColumnDefinition>
+                                <ColumnDefinition Width="60">
+                                </ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto">
+                                </RowDefinition>
+                                <RowDefinition Height="Auto">
+                                </RowDefinition>
+                                <RowDefinition Height="Auto">
+                                </RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!--<Image Margin="5,20,0,0" Source="{Binding profilepictureURL}" Aspect="AspectFit" HeightRequest="45" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                                </Image.GestureRecognizers>
+                            </Image>-->
+                            <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilepictureURL}" Grid.Row="0" Grid.Column="0" Aspect="AspectFill" Margin="5,20,0,0" HorizontalOptions="Center">
+                                <controls:CircleImage.WidthRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android, iOS">45</On>
+                                    </OnPlatform>
+                                </controls:CircleImage.WidthRequest>
+                                <controls:CircleImage.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android, iOS">45</On>
+                                    </OnPlatform>
+                                </controls:CircleImage.HeightRequest>
+                                <controls:CircleImage.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                                </controls:CircleImage.GestureRecognizers>
+                            </controls:CircleImage>
+                            <Label Margin="0,20,0,0" Style="{StaticResource NormalLabel}" Text="{Binding petName}" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="0" Grid.Column="1">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped">
+                                    </TapGestureRecognizer>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Image Style="{StaticResource FillImageStyle}" Source="{Binding pictureURL}" Grid.Row="1" Grid.ColumnSpan="4">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="Button_Clicked_2" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Margin="0,20,0,0" Text="{Binding howManyLikes}" Style="{StaticResource NormalLabel}" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="2">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1">
+                                    </TapGestureRecognizer>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Image Margin="0,20,0,5" Source="{Binding followButtonText}" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="3">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Button_Clicked_1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding hashtags}" Margin="5,0,0,5" Style="{StaticResource NormalLabel}" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="2" Grid.ColumnSpan="4" />
+                        </Grid>
+                    </customControls:ExtendedViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>
