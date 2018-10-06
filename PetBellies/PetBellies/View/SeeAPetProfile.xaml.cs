@@ -53,13 +53,16 @@ namespace PetBellies.View
 
                     profilePictureImage.HeightRequest = optimalWidth;
                     profilePictureImage.WidthRequest = optimalWidth;
-                    image.Source = new UriImageSource
+
+                    if (!string.IsNullOrEmpty(thisPet.ProfilePictureURL))
                     {
-                        Uri = new Uri(item.PictureURL),
-                        CachingEnabled = true,
-                        CacheValidity = new TimeSpan(7, 0, 0, 0)
-                    };
-                    profilePictureImage.Source = thisPet.ProfilePictureURL == "" ? "" : ImageSource.FromUri(new Uri(thisPet.ProfilePictureURL));
+                        profilePictureImage.Source = new UriImageSource
+                        {
+                            Uri = new Uri(thisPet.ProfilePictureURL),
+                            CachingEnabled = true,
+                            CacheValidity = new TimeSpan(7, 0, 0, 0)
+                        };
+                    } else profilePictureImage.Source = "";
                 });
 
                 HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);

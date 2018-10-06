@@ -52,7 +52,16 @@ namespace PetBellies.View
                     profilePictureImage.HeightRequest = optimalWidth;
                     profilePictureImage.WidthRequest = optimalWidth;
 
-                    profilePictureImage.Source = thisPet.ProfilePictureURL == "" ? "" : ImageSource.FromUri(new Uri(thisPet.ProfilePictureURL));
+                    if (!string.IsNullOrEmpty(thisPet.ProfilePictureURL))
+                    {
+                        profilePictureImage.Source = new UriImageSource
+                        {
+                            Uri = new Uri(thisPet.ProfilePictureURL),
+                            CachingEnabled = true,
+                            CacheValidity = new TimeSpan(7, 0, 0, 0)
+                        };
+                    }
+                    else profilePictureImage.Source = "";
                 });
                 int left = 0;
                 int top = 0;
