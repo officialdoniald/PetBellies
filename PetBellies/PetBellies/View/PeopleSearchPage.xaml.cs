@@ -22,7 +22,7 @@ namespace PetBellies.View
             //Itt letölthetné az első 10et vagy randomba letölthetne 10et 
             //es azt jelenítené meg
 
-            //Initialize();
+            Initialize();
         }
 
         private async Task Initialize()
