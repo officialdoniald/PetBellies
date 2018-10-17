@@ -355,7 +355,7 @@ namespace PetBellies.DAL
                                 petpicture.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 petpicture.PetID = reader.GetInt32(reader.GetOrdinal("PetID"));
                                 if (reader.GetStream(reader.GetOrdinal("PictureURL")).Length != 0)
-                                    Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("PictureURL")));
+                                    petpicture.PictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("PictureURL")));
                                 else petpicture.PictureURL = null;
                                 petpicture.UploadDate = reader.GetString(reader.GetOrdinal("UploadDate"));
 
@@ -548,7 +548,7 @@ namespace PetBellies.DAL
                                 user.Email = reader.GetString(reader.GetOrdinal("Email"));
                                 if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
                                     user.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
-                                user.ProfilePictureURL = null;
+                                else user.ProfilePictureURL = null;
 
                                 users.Add(user);
                             }
@@ -852,7 +852,7 @@ namespace PetBellies.DAL
                                 petpicture.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 petpicture.PetID = reader.GetInt32(reader.GetOrdinal("PetID"));
                                 if (reader.GetStream(reader.GetOrdinal("PictureURL")).Length != 0)
-                                    petpicture.PictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                    petpicture.PictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("PictureURL")));
                                 else petpicture.PictureURL = null;
                                 petpicture.UploadDate = reader.GetString(reader.GetOrdinal("UploadDate"));
 

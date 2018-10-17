@@ -39,9 +39,7 @@ namespace PetBellies.View
                 searchListView.IsRefreshing = true;
 
                 searchListView.ItemsSource = new List<SearchModel>();
-
-                FirstTime();
-
+                
                 GlobalVariables.IsPictureDeleted = false;
             }
 
@@ -129,8 +127,6 @@ namespace PetBellies.View
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         Image image = new Image();
-
-                        //image.Source = ImageSource.FromUri(new Uri(item.PictureURL));
 
                         image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
 

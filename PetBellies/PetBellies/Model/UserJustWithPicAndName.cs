@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Xamarin.Forms;
 
 namespace PetBellies.Model
 {
@@ -19,7 +20,7 @@ namespace PetBellies.Model
             set;
         }
 
-        public byte[] ProfilePicture
+        public ImageSource ProfilePicture
         {
             get;
             set;
