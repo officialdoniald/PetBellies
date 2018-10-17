@@ -19,7 +19,10 @@ namespace PetBellies.View
         {
             InitializeComponent();
 
-            Initialize();
+            //Itt letölthetné az első 10et vagy randomba letölthetne 10et 
+            //es azt jelenítené meg
+
+            //Initialize();
         }
 
         private async Task Initialize()

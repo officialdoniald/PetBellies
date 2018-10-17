@@ -1,6 +1,5 @@
 ﻿using PetBellies.BLL.Helper;
 using PetBellies.Model;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -37,17 +36,11 @@ namespace PetBellies.View
                     {
                         user = item,
                         Name = item.LastName + " " + item.FirstName
-                        //pet = thisPet
                     };
 
-                    if (!String.IsNullOrEmpty(item.ProfilePictureURL))
-                    {
-                        listViewWith.ProfilePicture = ImageSource.FromUri(new Uri(item.ProfilePictureURL));
-                    }
-                    else
-                    {
-                        listViewWith.ProfilePicture = "";
-                    }
+                    if (item.ProfilePictureURL != null)
+                        listViewWith.ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL));
+                    else listViewWith.ProfilePicture = "";
 
                     listViewWithPictureAndSomeText.Add(listViewWith);
                 }

@@ -55,23 +55,9 @@ namespace PetBellies.View
                 {
                     nameLabel.Text = thisPet.Name;
 
-                    //profilePictureImage.Source = ImageSource.FromUri(new Uri(thisPet.ProfilePictureURL));
-
-                    //pictureImage.Source = ImageSource.FromUri(new Uri(petpictures.PictureURL));
-
-                    profilePictureImage.Source = new UriImageSource
-                    {
-                        Uri = new Uri(thisPet.ProfilePictureURL),
-                        CachingEnabled = true,
-                        CacheValidity = new TimeSpan(7, 0, 0, 0)
-                    };
-
-                    pictureImage.Source = new UriImageSource
-                    {
-                        Uri = new Uri(petpictures.PictureURL),
-                        CachingEnabled = true,
-                        CacheValidity = new TimeSpan(7, 0, 0, 0)
-                    };
+                    profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.ProfilePictureURL));
+                    
+                    pictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(petpictures.PictureURL));
                 });
 
                 var asd = GlobalVariables.seePictureFragmentViewModel.GetHashtags(petpictures.id).Split(' ');

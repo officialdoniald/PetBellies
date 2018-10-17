@@ -92,15 +92,11 @@ namespace PetBellies.BLL.ViewModel
             }
         }
 
-        public async Task<string> UpdatePetProfilePictureAsync(Pet pet, Stream stream, string uri)
+        public async Task<string> UpdatePetProfilePictureAsync(Pet pet, Stream f, string uri)
         {
             if (!String.IsNullOrEmpty(uri))
             {
-                string uniqueBlobName = await GlobalVariables.blobStorage.UploadFileAsync(uri, stream);
-
-                uniqueBlobName = GlobalVariables.blobstorageurl + uniqueBlobName;
-
-                pet.ProfilePictureURL = uniqueBlobName;
+                pet.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
 
                 bool success = GlobalVariables.databaseConnection.UpdatePet(pet.id, pet);
 

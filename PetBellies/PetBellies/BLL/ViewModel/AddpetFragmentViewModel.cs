@@ -23,13 +23,9 @@ namespace PetBellies.BLL.ViewModel
             }
             else if (!String.IsNullOrEmpty(pathf))
             {
-                string uniqueBlobName = await GlobalVariables.blobStorage.UploadFileAsync(pathf, f);
-
-                uniqueBlobName = GlobalVariables.blobstorageurl + uniqueBlobName;
-
-                pet.ProfilePictureURL = uniqueBlobName;
+                pet.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
             }
-            else pet.ProfilePictureURL = "";
+            else pet.ProfilePictureURL = null;
 
             pet.Uploader = GlobalVariables.ActualUser.id;
 

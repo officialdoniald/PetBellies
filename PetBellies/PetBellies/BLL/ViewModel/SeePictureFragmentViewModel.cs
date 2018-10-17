@@ -103,9 +103,7 @@ namespace PetBellies.BLL.ViewModel
 
         public bool DeletePicture(Petpictures petpictures)
         {
-            string asd = petpictures.PictureURL.Remove(0, GlobalVariables.blobstorageurl.Length);
-            GlobalVariables.blobStorage.DeleteFileAsync(asd);
-
+            //TODO: Delet from DB
             return GlobalVariables.databaseConnection.DeletePetpictures(petpictures);
         }
     }

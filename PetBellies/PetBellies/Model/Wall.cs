@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace PetBellies.Model
@@ -17,6 +18,6 @@ namespace PetBellies.Model
 
         public string name { get; set; }
 
-        public string ProfilePictureURL { get; set; }
+        public byte[] ProfilePictureURL { get; set; }
     }
 }

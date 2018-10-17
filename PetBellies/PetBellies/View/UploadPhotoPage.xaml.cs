@@ -1,4 +1,5 @@
 ﻿using PetBellies.BLL.Helper;
+using PetBellies.DAL;
 using Plugin.Media;
 using System;
 using System.Threading.Tasks;
@@ -11,13 +12,7 @@ namespace PetBellies.View
 	public partial class UploadPhotoPage : ContentPage
 	{
         private int selectedPetId = -1;
-        private int needToRotate = 0;
-        private int rot = 0;
-        double currentWidth;
-
-        bool asdx = true;
-        private double height = 0;
-        private double width = 0;
+        private double currentWidth;
 
         public UploadPhotoPage()
         {
@@ -28,11 +23,12 @@ namespace PetBellies.View
 
         protected override void OnAppearing()
         {
+            //DatabaseConnections databaseConnection = new DatabaseConnections();
+
+            //pictureImage.Source = ImageSource.FromStream(() => databaseConnection.PictureFromDB());
+            //pictureImage.Aspect = Aspect.Fill;
             if (GlobalVariables.AddedPet || GlobalVariables.AddedPhoto)
-            {
                 Initialize();
-                rot = 0;
-            }
         }
 
         private void Initialize()
@@ -68,18 +64,18 @@ namespace PetBellies.View
             GlobalVariables.pathf = file.Path;
 
             pictureImage.Source = ImageSource.FromStream(() => file.GetStream());
-
-            asdx = true;
         }
-
+        
         private async Task addPhotoButton_ClickedAsync(object sender, EventArgs e)
         {
             uploadActivity.IsRunning = true;
             addPhotoButton.IsEnabled = false;
             galleryButton.IsEnabled = false;
-
+            
             string success = await GlobalVariables.uploadPhotoFragmentViewModel.UploadPictureAsync(GlobalVariables.pathf, GlobalVariables.f, selectedPetId, hashtagsEntry.Text);
-
+            //DatabaseConnections databaseConnection = new DatabaseConnections();
+            //databaseConnection.InsertToImageTable(GlobalVariables.f);
+            
             if (!String.IsNullOrEmpty(success))
             {
                 await DisplayAlert(English.Failed(), success, English.OK());
@@ -102,100 +98,9 @@ namespace PetBellies.View
             selectedPetId = GlobalVariables.Mypetlist[petPicker.SelectedIndex].petid;
         }
 
-        async Task Handle_Completed(object sender, System.EventArgs e)
+        private async Task Handle_Completed(object sender, System.EventArgs e)
         {
             await addPhotoButton_ClickedAsync(this, new EventArgs());
-        }
-
-        void Handle_Clicked(object sender, System.EventArgs e)
-        {
-            setRotValue(90);
-        }
-
-        void Handle_Clicked2(object sender, System.EventArgs e)
-        {
-            setRotValue(-90);
-        }
-
-        void Handle_Clicked3(object sender, System.EventArgs e)
-        {
-            setRotValue(0);
-        }
-
-        void needToRotateorNot(int rotation)
-        {
-            if (rotation != 0)
-            {
-                needToRotate = 1;
-            }
-            else
-            {
-                needToRotate = 0;
-            }
-        }
-
-        void rotateAndHeighAndWidthSet()
-        {
-            if (Math.Abs(rot) == 360 || Math.Abs(rot) == 0 || Math.Abs(rot) == 180)
-            {
-                pictureImage.HeightRequest = height;
-                pictureImage.WidthRequest = width;
-            }
-            else if (Math.Abs(rot) == 90 || Math.Abs(rot) == 270)
-            {
-                pictureImage.HeightRequest = width;
-            }
-        }
-
-        void setRotValue(int howmany)
-        {
-            if (asdx)
-            {
-                height = pictureImage.Height;
-                width = pictureImage.Width;
-
-                pictureImage.HeightRequest = height;
-                pictureImage.WidthRequest = width;
-
-                asdx = false;
-            }
-
-            if (rot + howmany >= 360 || rot + howmany < -360 || howmany == 0 || rot + howmany == 0)
-            {
-                rot = 0;
-            }
-            else if (rot + howmany == 90)
-            {
-                rot = 90;
-            }
-            else if (rot + howmany == 180)
-            {
-                rot = 180;
-            }
-            else if (rot + howmany == 270)
-            {
-                rot = 270;
-            }
-            else if (rot + howmany == -90)
-            {
-                rot = -90;
-            }
-            else if (rot + howmany == -180)
-            {
-                rot = -180;
-            }
-            else if (rot + howmany == -270)
-            {
-                rot = -270;
-            }
-            else if (rot + howmany == -360)
-            {
-                rot = -360;
-            }
-
-            needToRotateorNot(rot);
-            pictureImage.Rotation = rot;
-            rotateAndHeighAndWidthSet();
         }
     }
 }

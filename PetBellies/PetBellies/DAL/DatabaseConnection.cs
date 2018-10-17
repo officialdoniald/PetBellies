@@ -8,9 +8,13 @@ namespace PetBellies.DAL
 {
     public class DatabaseConnections
     {
+        private Segédfüggvények Segédfüggvények = new Segédfüggvények();
+
         #region strings
 
         //GET
+        public static string GET_Pictures_SQL { get; } =
+                    "SELECT * FROM [dbo].[Pictures]";
         public static string GET_USER_SQL { get; } =
                     "SELECT * FROM [dbo].[User]";
         public static string GET_Donates_SQL { get; } =
@@ -144,6 +148,11 @@ namespace PetBellies.DAL
             "FUserID=@FUserID" +
             " WHERE ID=@ID";
 
+        public static string INSERT_Picture_SQL { get; } =
+            "INSERT INTO [dbo].[Pictures]" +
+            "([filebyte]) " +
+            "VALUES(" +
+            "@filebyte);";
         public static string INSERT_User_SQL { get; } =
             "INSERT INTO [dbo].[USER]" +
             "([FirstName], [LastName], [FacebookId], [ProfilePicture], [Email], [Password]) " +
@@ -169,7 +178,7 @@ namespace PetBellies.DAL
             "INSERT INTO [dbo].[Likes]" +
             "([Petpicturesid], [UserID]) " +
             "VALUES(" +
-            "@PetPictureURL,@UserID);";
+            "@Petpicturesid,@UserID);";
         public static string INSERT_Favoritepets_SQL { get; } =
             "INSERT INTO [dbo].[Favoritepets]" +
             "([UserID], [PetID]) " +
@@ -223,15 +232,10 @@ namespace PetBellies.DAL
                                 {
                                     user.FacebookId = null;
                                 }
-                                try
-                                {
-                                    user.ProfilePictureURL = reader.GetString(reader.GetOrdinal("ProfilePicture"));
-                                }
-                                catch (Exception)
-                                {
+                                if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length == 0)
                                     user.ProfilePictureURL = null;
-                                }
-
+                                else user.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                
                                 users.Add(user);
                             }
                         }
@@ -270,7 +274,9 @@ namespace PetBellies.DAL
                                 pet.Age = reader.GetInt32(reader.GetOrdinal("Age"));
                                 pet.PetType = reader.GetString(reader.GetOrdinal("pettype"));
                                 pet.HaveAnOwner = reader.GetInt32(reader.GetOrdinal("HaveAnOwner"));
-                                pet.ProfilePictureURL = reader.GetString(reader.GetOrdinal("ProfilePicture"));
+                                if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
+                                    pet.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                else pet.ProfilePictureURL = null;
                                 pet.Uploader = reader.GetInt32(reader.GetOrdinal("Uploader"));
 
                                 pets.Add(pet);
@@ -348,7 +354,9 @@ namespace PetBellies.DAL
 
                                 petpicture.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 petpicture.PetID = reader.GetInt32(reader.GetOrdinal("PetID"));
-                                petpicture.PictureURL = reader.GetString(reader.GetOrdinal("PictureURL"));
+                                if (reader.GetStream(reader.GetOrdinal("PictureURL")).Length != 0)
+                                    Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("PictureURL")));
+                                else petpicture.PictureURL = null;
                                 petpicture.UploadDate = reader.GetString(reader.GetOrdinal("UploadDate"));
 
                                 petpictures.Add(petpicture);
@@ -538,14 +546,9 @@ namespace PetBellies.DAL
                                 user.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
                                 user.LastName = reader.GetString(reader.GetOrdinal("LastName"));
                                 user.Email = reader.GetString(reader.GetOrdinal("Email"));
-                                try
-                                {
-                                    user.ProfilePictureURL = reader.GetString(reader.GetOrdinal("ProfilePicture"));
-                                }
-                                catch (Exception)
-                                {
-                                    user.ProfilePictureURL = null;
-                                }
+                                if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
+                                    user.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                user.ProfilePictureURL = null;
 
                                 users.Add(user);
                             }
@@ -563,58 +566,59 @@ namespace PetBellies.DAL
         #endregion
 
         #region GetByIDFunctions
-        public User GetUserByFacebookID(string facebookID)
-        {
-            User user;
+        //public User GetUserByFacebookID(string facebookID)
+        //{
+        //    User user;
 
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_USERBYFACEBOOKID_SQL, conn))
-                {
-                    conn.Open();
-                    cmd.Parameters.AddWithValue("@facebookid", facebookID);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                user = new User();
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
+        //        using (SqlCommand cmd = new SqlCommand(GET_USERBYFACEBOOKID_SQL, conn))
+        //        {
+        //            conn.Open();
+        //            cmd.Parameters.AddWithValue("@facebookid", facebookID);
+        //            using (SqlDataReader reader = cmd.ExecuteReader())
+        //            {
+        //                if (reader != null)
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        user = new User();
 
-                                user.id = reader.GetInt32(reader.GetOrdinal("id"));
-                                user.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
-                                user.LastName = reader.GetString(reader.GetOrdinal("LastName"));
-                                user.Email = reader.GetString(reader.GetOrdinal("Email"));
-                                user.Password = reader.GetString(reader.GetOrdinal("Password"));
-                                try
-                                {
-                                    user.FacebookId = reader.GetString(reader.GetOrdinal("facebookid"));
-                                }
-                                catch (Exception)
-                                {
-                                    user.FacebookId = null;
-                                }
-                                try
-                                {
-                                    user.ProfilePictureURL = reader.GetString(reader.GetOrdinal("ProfilePicture"));
-                                }
-                                catch (Exception)
-                                {
-                                    user.ProfilePictureURL = null;
-                                }
-                                return user;
-                            }
-                        }
-                    }
-                }
-                return null;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
+        //                        user.id = reader.GetInt32(reader.GetOrdinal("id"));
+        //                        user.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
+        //                        user.LastName = reader.GetString(reader.GetOrdinal("LastName"));
+        //                        user.Email = reader.GetString(reader.GetOrdinal("Email"));
+        //                        user.Password = reader.GetString(reader.GetOrdinal("Password"));
+        //                        try
+        //                        {
+        //                            user.FacebookId = reader.GetString(reader.GetOrdinal("facebookid"));
+        //                        }
+        //                        catch (Exception)
+        //                        {
+        //                            user.FacebookId = null;
+        //                        }
+        //                        try
+        //                        {
+        //                            user.ProfilePictureURL = reader.GetStream(reader.GetOrdinal("ProfilePicture"));
+        //                        }
+        //                        catch (Exception)
+        //                        {
+        //                            user.ProfilePictureURL = null;
+        //                        }
+        //                        return user;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        return null;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return null;
+        //    }
+        //}
+
         public User GetUserByEmail(string Email)
         {
             User user = new User();
@@ -645,14 +649,9 @@ namespace PetBellies.DAL
                                 {
                                     user.FacebookId = null;
                                 }
-                                try
-                                {
-                                    user.ProfilePictureURL = reader.GetString(reader.GetOrdinal("ProfilePicture"));
-                                }
-                                catch (Exception)
-                                {
-                                    user.ProfilePictureURL = null;
-                                }
+                                if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
+                                    user.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                else user.ProfilePictureURL = null;
                             }
                         }
                     }
@@ -696,14 +695,9 @@ namespace PetBellies.DAL
                                 {
                                     user.FacebookId = null;
                                 }
-                                try
-                                {
-                                    user.ProfilePictureURL = reader.GetString(reader.GetOrdinal("ProfilePicture"));
-                                }
-                                catch (Exception)
-                                {
-                                    user.ProfilePictureURL = null;
-                                }
+                                if(reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
+                                    user.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                else user.ProfilePictureURL = null;
                             }
                         }
                     }
@@ -734,13 +728,14 @@ namespace PetBellies.DAL
                         {
                             while (reader.Read())
                             {
-                                var redd = reader;
                                 pet.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 pet.Name = reader.GetString(reader.GetOrdinal("Name"));
                                 pet.Age = reader.GetInt32(reader.GetOrdinal("Age"));
                                 pet.PetType = reader.GetString(reader.GetOrdinal("pettype"));
                                 pet.HaveAnOwner = reader.GetInt32(reader.GetOrdinal("HaveAnOwner"));
-                                pet.ProfilePictureURL = reader.GetString(reader.GetOrdinal("ProfilePicture"));
+                                if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
+                                    pet.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                else pet.ProfilePictureURL = null;
                                 pet.Uploader = reader.GetInt32(reader.GetOrdinal("Uploader"));
                             }
                         }
@@ -780,7 +775,9 @@ namespace PetBellies.DAL
                                 pet.Age = reader.GetInt32(reader.GetOrdinal("Age"));
                                 pet.PetType = reader.GetString(reader.GetOrdinal("pettype"));
                                 pet.HaveAnOwner = reader.GetInt32(reader.GetOrdinal("HaveAnOwner"));
-                                pet.ProfilePictureURL = reader.GetString(reader.GetOrdinal("ProfilePicture"));
+                                if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
+                                    pet.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                else pet.ProfilePictureURL = null;
                                 pet.Uploader = reader.GetInt32(reader.GetOrdinal("Uploader"));
 
                                 pets.Add(pet);
@@ -854,7 +851,9 @@ namespace PetBellies.DAL
 
                                 petpicture.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 petpicture.PetID = reader.GetInt32(reader.GetOrdinal("PetID"));
-                                petpicture.PictureURL = reader.GetString(reader.GetOrdinal("PictureURL"));
+                                if (reader.GetStream(reader.GetOrdinal("PictureURL")).Length != 0)
+                                    petpicture.PictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                else petpicture.PictureURL = null;
                                 petpicture.UploadDate = reader.GetString(reader.GetOrdinal("UploadDate"));
 
                                 petpictures.Add(petpicture);
@@ -1034,7 +1033,9 @@ namespace PetBellies.DAL
                             {
                                 petpicture.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 petpicture.PetID = reader.GetInt32(reader.GetOrdinal("PetID"));
-                                petpicture.PictureURL = reader.GetString(reader.GetOrdinal("PictureURL"));
+                                if (reader.GetStream(reader.GetOrdinal("PictureURL")).Length != 0)
+                                    petpicture.PictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
+                                else petpicture.PictureURL = null;
                                 petpicture.UploadDate = reader.GetString(reader.GetOrdinal("UploadDate"));
                             }
                         }
@@ -1169,6 +1170,59 @@ namespace PetBellies.DAL
 
         #region InsertFunctions
 
+        public bool InsertToImageTable(System.IO.Stream file)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(INSERT_Picture_SQL, conn);
+
+                    cmd.Parameters.Add("@filebyte", System.Data.SqlDbType.Image).Value = file;
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public System.IO.Stream PictureFromDB()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
+                using (SqlCommand cmd = new SqlCommand(GET_Pictures_SQL, conn))
+                {
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                System.IO.Stream asd = reader.GetStream(reader.GetOrdinal("filebyte"));
+                                return asd;
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public bool InsertUser(User user)
         {
             try
@@ -1178,6 +1232,7 @@ namespace PetBellies.DAL
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(INSERT_User_SQL, conn);
+
 
                     cmd.Parameters.Add(
                         new SqlParameter("@FirstName", user.FirstName)
@@ -1200,7 +1255,7 @@ namespace PetBellies.DAL
                     cmd.Parameters.Add(
                         new SqlParameter("@ProfilePictureURL", (object)user.ProfilePictureURL ?? DBNull.Value)
                         {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
+                            SqlDbType = System.Data.SqlDbType.Image
                         }
                      );
                     cmd.Parameters.Add(
@@ -1264,7 +1319,7 @@ namespace PetBellies.DAL
                     cmd.Parameters.Add(
                         new SqlParameter("@ProfilePictureURL", pet.ProfilePictureURL)
                         {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
+                            SqlDbType = System.Data.SqlDbType.Image
                         }
                      );
                     cmd.Parameters.Add(
@@ -1365,7 +1420,7 @@ namespace PetBellies.DAL
                     cmd.Parameters.Add(
                         new SqlParameter("@PictureURL", petpictures.PictureURL)
                         {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
+                            SqlDbType = System.Data.SqlDbType.Image
                         }
                      );
                     cmd.Parameters.Add(
@@ -1440,9 +1495,9 @@ namespace PetBellies.DAL
                     SqlCommand cmd = new SqlCommand(INSERT_Likes_SQL, conn);
 
                     cmd.Parameters.Add(
-                        new SqlParameter("@PetPictureURL", likes.Petpicturesid)
+                        new SqlParameter("@Petpicturesid", likes.Petpicturesid)
                         {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
+                            SqlDbType = System.Data.SqlDbType.Int
                         }
                      );
                     cmd.Parameters.Add(

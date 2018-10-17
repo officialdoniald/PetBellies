@@ -28,20 +28,9 @@ namespace PetBellies.View
             profilePictureImage.HeightRequest = optimalWidth;
             profilePictureImage.WidthRequest = optimalWidth;
 
-            if (!String.IsNullOrEmpty(GlobalVariables.ActualUser.ProfilePictureURL))
-            {
-                //profilePictureImage.Source = ImageSource.FromUri(new Uri(GlobalVariables.ActualUser.ProfilePictureURL));
-                profilePictureImage.Source = new UriImageSource
-                {
-                    Uri = new Uri(GlobalVariables.ActualUser.ProfilePictureURL),
-                    CachingEnabled = true,
-                    CacheValidity = new TimeSpan(7, 0, 0, 0)
-                };
-            }
-            else
-            {
-                profilePictureImage.Source = "";
-            }
+            if (GlobalVariables.ActualUser.ProfilePictureURL != null)
+                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePictureURL));
+            else profilePictureImage.Source = "";
 
             userNameLabel.Text = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
 
@@ -52,7 +41,7 @@ namespace PetBellies.View
                 listViewWithPictureAndSomeText.Add(new ListViewWithPictureAndSomeText()
                 {
                     pet = GlobalVariables.ConvertMyPetListToPet(item),
-                    ProfilePicture = item.ProfilePictureURL == string.Empty ? "" : ImageSource.FromUri(new Uri(item.ProfilePictureURL)),
+                    ProfilePicture = item.ProfilePictureURL == null ? "" : ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
                     Name = item.Name
                 });
             }

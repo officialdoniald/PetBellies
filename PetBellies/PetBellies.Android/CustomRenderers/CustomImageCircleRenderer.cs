@@ -24,13 +24,21 @@ namespace PetBellies.Droid.CustomRenderers
         protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
         {
             base.OnElementChanged(e);
-            if (e.OldElement != null)
+            if (e.OldElement == null)
             {
                 var nativeImageView = (global::Android.Widget.ImageView)Control;
+                nativeImageView.RefreshDrawableState();
                 //var source = e.OldElement.Source.ToString();
-                
-                nativeImageView.SetImageDrawable(new CircleDrawable(GetBitmap(e.OldElement).Result));
+                //nativeImageView.LongClickable = true;
+                //nativeImageView.LongClick += NativeImageView_LongClick;
+                //nativeImageView.SetImageDrawable(new CircleDrawable(GetBitmap(e.OldElement).Result));
             }
+        }
+
+        private void NativeImageView_LongClick(object sender, LongClickEventArgs e)
+        {
+            PopupWindow popupWindow = new PopupWindow(this.Context);
+            
         }
 
         Task<Bitmap> GetBitmap(Xamarin.Forms.Image image)

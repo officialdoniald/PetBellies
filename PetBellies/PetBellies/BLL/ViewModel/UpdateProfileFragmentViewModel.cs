@@ -77,17 +77,13 @@ namespace PetBellies.BLL.ViewModel
             return UpdateUser(GlobalVariables.ActualUser);
         }
 
-        public async Task<string> UpdateProfilePicture(string uri, Stream stream)
+        public async Task<string> UpdateProfilePicture(string uri, Stream f)
         {
             if (!String.IsNullOrEmpty(uri))
             {
-                string uniqueBlobName = await GlobalVariables.blobStorage.UploadFileAsync(uri, stream);
-
-                uniqueBlobName = GlobalVariables.blobstorageurl + uniqueBlobName;
-
-                GlobalVariables.ActualUser.ProfilePictureURL = uniqueBlobName;
+                GlobalVariables.ActualUser.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
             }
-            else GlobalVariables.ActualUser.ProfilePictureURL = "";
+            else GlobalVariables.ActualUser.ProfilePictureURL = null;
 
             return UpdateUser(GlobalVariables.ActualUser);
         }

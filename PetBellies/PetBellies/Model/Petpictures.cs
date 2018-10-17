@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace PetBellies.Model
@@ -10,7 +11,7 @@ namespace PetBellies.Model
 
         public int PetID { get; set; }
 
-        public string PictureURL { get; set; }
+        public byte[] PictureURL { get; set; }
 
         public string UploadDate { get; set; }
     }

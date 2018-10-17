@@ -27,14 +27,10 @@ namespace PetBellies.BLL.ViewModel
             }
             if (!String.IsNullOrEmpty(pathf))
             {
-                string uniqueBlobName = await GlobalVariables.blobStorage.UploadFileAsync(pathf, f);
-
-                uniqueBlobName = GlobalVariables.blobstorageurl + uniqueBlobName;
-
                 Petpictures petpictures = new Petpictures()
                 {
                     PetID = petid,
-                    PictureURL = uniqueBlobName,
+                    PictureURL = new Segédfüggvények().ReadFully(f),
                     UploadDate = DateTime.UtcNow.ToString("")
                 };
 

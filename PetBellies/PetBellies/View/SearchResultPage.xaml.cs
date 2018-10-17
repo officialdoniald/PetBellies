@@ -52,12 +52,7 @@ namespace PetBellies.View
 
                         //image.Source = ImageSource.FromUri(new Uri(item.PictureURL));
 
-                        image.Source = new UriImageSource
-                        {
-                            Uri = new Uri(item.PictureURL),
-                            CachingEnabled = true,
-                            CacheValidity = new TimeSpan(7, 0, 0, 0)
-                        };
+                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
 
                         image.HeightRequest = optimalWidth;
 

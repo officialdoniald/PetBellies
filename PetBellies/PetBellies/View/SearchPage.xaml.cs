@@ -3,9 +3,7 @@ using PetBellies.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -28,8 +26,8 @@ namespace PetBellies.View
 
             searchListView.IsRefreshing = true;
 
-            InitializeThePetPictures();
-            FirstTime();
+            //InitializeThePetPictures();
+            //FirstTime();
         }
 
         protected override void OnAppearing()
@@ -134,12 +132,7 @@ namespace PetBellies.View
 
                         //image.Source = ImageSource.FromUri(new Uri(item.PictureURL));
 
-                        image.Source = new UriImageSource
-                        {
-                            Uri = new Uri(item.PictureURL),
-                            CachingEnabled = true,
-                            CacheValidity = new TimeSpan(7, 0, 0, 0)
-                        };
+                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
 
                         image.HeightRequest = optimalWidth;
 

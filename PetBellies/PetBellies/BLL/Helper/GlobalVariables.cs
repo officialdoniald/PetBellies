@@ -385,7 +385,7 @@ namespace PetBellies.BLL.Helper
 
             public int Uploader { get; set; }
 
-            public string ProfilePictureURL { get; set; }
+            public byte[] ProfilePictureURL { get; set; }
         }
     }
 }

@@ -59,8 +59,8 @@ namespace PetBellies.View
                         wallItem = item,
                         howManyLikes = item.howmanylikes.ToString() + English.GetLike(),
                         petName = item.name,
-                        profilepictureURL = ImageSource.FromUri(new Uri(item.ProfilePictureURL)),
-                        pictureURL = ImageSource.FromUri(new Uri(item.petpictures.PictureURL)),
+                        profilepictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
+                        pictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.petpictures.PictureURL)),
                         followButtonText = followButtonText(item.haveILiked),
                         hashtags = GlobalVariables.homeFragmentViewModel.GetHashtags(item.petpictures.id)
                     });

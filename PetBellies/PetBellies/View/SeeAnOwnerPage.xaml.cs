@@ -38,7 +38,7 @@ namespace PetBellies.View
             {
                 User user = GlobalVariables.databaseConnection.GetUserByID(userID);
 
-                if (!String.IsNullOrEmpty(user.ProfilePictureURL))
+                if (user.ProfilePictureURL != null)
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -51,12 +51,7 @@ namespace PetBellies.View
 
                         //profilePictureImage.Source = ImageSource.FromUri(new Uri(user.ProfilePictureURL));
 
-                        profilePictureImage.Source = new UriImageSource
-                        {
-                            Uri = new Uri(user.ProfilePictureURL),
-                            CachingEnabled = true,
-                            CacheValidity = new TimeSpan(7, 0, 0, 0)
-                        };
+                        profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(user.ProfilePictureURL));
                     });
                 }
 
@@ -96,7 +91,7 @@ namespace PetBellies.View
                             WidthRequest = optimalWidth,
                             Aspect = Aspect.AspectFill,
                             HorizontalOptions = LayoutOptions.Center,
-                            Source = ImageSource.FromUri(new Uri(item.ProfilePictureURL)),
+                            Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
                         };
 
                         Label petNameLabel = new Label()

@@ -28,16 +28,11 @@ namespace PetBellies.View
             ageEntry.Placeholder = thisPet.Age.ToString();
             typeEntry.Placeholder = thisPet.PetType;
 
-            if (!String.IsNullOrEmpty(thisPet.ProfilePictureURL))
+            if (thisPet.ProfilePictureURL != null)
             {
                 //profilePictureImage.Source = ImageSource.FromUri(new Uri(thisPet.ProfilePictureURL));
 
-                profilePictureImage.Source = new UriImageSource
-                {
-                    Uri = new Uri(thisPet.ProfilePictureURL),
-                    CachingEnabled = true,
-                    CacheValidity = new TimeSpan(7, 0, 0, 0)
-                };
+                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.ProfilePictureURL));
             }
 
             if (thisPet.HaveAnOwner == 0) shelterpetSwitch.IsToggled = true;

@@ -52,16 +52,9 @@ namespace PetBellies.View
                     profilePictureImage.HeightRequest = optimalWidth;
                     profilePictureImage.WidthRequest = optimalWidth;
 
-                    if (!string.IsNullOrEmpty(thisPet.ProfilePictureURL))
-                    {
-                        profilePictureImage.Source = new UriImageSource
-                        {
-                            Uri = new Uri(thisPet.ProfilePictureURL),
-                            CachingEnabled = true,
-                            CacheValidity = new TimeSpan(7, 0, 0, 0)
-                        };
-                    }
-                    else profilePictureImage.Source = "";
+                    if (thisPet.ProfilePictureURL != null)
+                        profilePictureImage.Source = ImageSource.FromStream(()=> new System.IO.MemoryStream(thisPet.ProfilePictureURL));
+                    else profilePictureImage.Source = null;
                 });
                 int left = 0;
                 int top = 0;
@@ -76,12 +69,7 @@ namespace PetBellies.View
 
                         //image.Source = ImageSource.FromUri(new Uri(item.PictureURL));
 
-                        image.Source = new UriImageSource
-                        {
-                            Uri = new Uri(item.PictureURL),
-                            CachingEnabled = true,
-                            CacheValidity = new TimeSpan(7, 0, 0, 0)
-                        };
+                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
 
                         image.HeightRequest = optimalWidth;
 

@@ -17,18 +17,8 @@ namespace PetBellies.View
             lastnameEntry.Placeholder = GlobalVariables.ActualUser.LastName;
             firstnameEntry.Placeholder = GlobalVariables.ActualUser.FirstName;
             emailEntry.Placeholder = GlobalVariables.ActualUser.Email;
-
-            if (!String.IsNullOrEmpty(GlobalVariables.ActualUser.ProfilePictureURL))
-            {
-                //profilePictureImage.Source = ImageSource.FromUri(new Uri(GlobalVariables.ActualUser.ProfilePictureURL));
-
-                profilePictureImage.Source = new UriImageSource
-                {
-                    Uri = new Uri(GlobalVariables.ActualUser.ProfilePictureURL),
-                    CachingEnabled = true,
-                    CacheValidity = new TimeSpan(7, 0, 0, 0)
-                };
-            }
+            
+            profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePictureURL));
         }
 
         private async void updateMyProfileButton_ClickedAsync(object sender, EventArgs e)
