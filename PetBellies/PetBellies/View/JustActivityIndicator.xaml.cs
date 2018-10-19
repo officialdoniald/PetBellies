@@ -1,6 +1,7 @@
 ﻿using PetBellies.BLL.Helper;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -32,28 +33,35 @@ namespace PetBellies.View
         {
             base.OnAppearing();
 
-            if (!String.IsNullOrEmpty(isEmpty))
+            Task.Run(()=>
             {
-                GlobalVariables.InitializeUsersEmailVariable();
+                if (!String.IsNullOrEmpty(isEmpty))
+                {
+                    GlobalVariables.InitializeUsersEmailVariable();
 
-                GlobalVariables.InitializeUser();
+                    GlobalVariables.InitializeUser();
 
-                GlobalVariables.Mypetlist = new List<GlobalVariables.MyPetsList>();
+                    GlobalVariables.Mypetlist = new List<GlobalVariables.MyPetsList>();
 
-                GlobalVariables.GetMyPets();
+                    GlobalVariables.GetMyPets();
 
-                GlobalVariables.SetMyPetListString();
+                    GlobalVariables.SetMyPetListString();
 
-                Navigation.PushModalAsync(new NavigationPage(new MainPage()));
-            }
-            else
-            {
-                GlobalVariables.GetMyPets();
+                    Device.BeginInvokeOnMainThread(()=> {
+                        Navigation.PushModalAsync(new NavigationPage(new MainPage()));
+                    });
+                }
+                else
+                {
+                    GlobalVariables.GetMyPets();
 
-                GlobalVariables.SetMyPetListString();
+                    GlobalVariables.SetMyPetListString();
 
-                Navigation.PushModalAsync(new NavigationPage(new MainPage()));
-            }
+                    Device.BeginInvokeOnMainThread(() => {
+                        Navigation.PushModalAsync(new NavigationPage(new MainPage()));
+                    });
+                }
+            });
         }
     }
 }

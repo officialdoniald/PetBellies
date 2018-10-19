@@ -3,9 +3,7 @@ using PetBellies.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,16 +18,7 @@ namespace PetBellies.View
         {
             InitializeComponent();
 
-            wallListView.IsRefreshing = true;
-
-            FirstTime();
-        }
-
-        private async Task FirstTime()
-        {
-            await Task.Run(() => {
-                Initialize();
-            });
+            Initialize();
         }
 
         private string followButtonText(bool haveILiked)
@@ -46,6 +35,10 @@ namespace PetBellies.View
 
         private void Initialize()
         {
+            Device.BeginInvokeOnMainThread(() => {
+                wallListView.IsRefreshing = true;
+            });
+
             GlobalVariables.wallListViewAdapter = new List<WallListViewAdapter>();
 
             wallList = GlobalVariables.homeFragmentViewModel.GetWallList();

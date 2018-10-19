@@ -28,12 +28,16 @@ namespace PetBellies.View
                 }
             };
 
-            NavigationPage.SetHasBackButton(this, false);
-            NavigationPage.SetHasNavigationBar(this, false);
-            
+            var homePage = new HomePage();
+            var searchPage = new SearchPage();
+            var peopleSearchPage = new PeopleSearchPage();
+            var uploadPhotoPage = new UploadPhotoPage();
+            var myAccountPage = new MyAccountPage();
+
             Device.BeginInvokeOnMainThread(() =>
             {
-                var homePage = new HomePage();
+                NavigationPage.SetHasBackButton(this, false);
+                NavigationPage.SetHasNavigationBar(this, false);
 
                 var navigationHomePage = new NavigationPage(homePage);
                 //navigationHomePage.Title = "Főmenü";
@@ -41,28 +45,24 @@ namespace PetBellies.View
                 navigationHomePage.Style = GlobalVariables.NavigationPageStyle;
                 NavigationPage.SetHasNavigationBar(homePage, false);
 
-                var searchPage = new SearchPage();
                 var navigationSearchPage = new NavigationPage(searchPage);
                 //navigationSearchPage.Title = "Keresés";
                 navigationSearchPage.Icon = GlobalVariables.searchpng;
                 navigationSearchPage.Style = GlobalVariables.NavigationPageStyle;
                 NavigationPage.SetHasNavigationBar(searchPage, false);
 
-                var peopleSearchPage = new PeopleSearchPage();
                 var navigationPeopleSearchPage = new NavigationPage(peopleSearchPage);
                 //navigationMyAccountPage.Title = "Fiók";
                 navigationPeopleSearchPage.Icon = GlobalVariables.peoplepng;
                 navigationPeopleSearchPage.Style = GlobalVariables.NavigationPageStyle;
                 NavigationPage.SetHasNavigationBar(peopleSearchPage, false);
 
-                var uploadPhotoPage = new UploadPhotoPage();
                 var navigationUploadPhotoPage = new NavigationPage(uploadPhotoPage);
                 //navigationUploadPhotoPage.Title = "Fotó";
                 navigationUploadPhotoPage.Icon = GlobalVariables.camerapng;
                 navigationUploadPhotoPage.Style = GlobalVariables.NavigationPageStyle;
                 NavigationPage.SetHasNavigationBar(uploadPhotoPage, false);
 
-                var myAccountPage = new MyAccountPage();
                 var navigationMyAccountPage = new NavigationPage(myAccountPage);
                 //navigationMyAccountPage.Title = "Fiók";
                 navigationMyAccountPage.Icon = GlobalVariables.profilepng;

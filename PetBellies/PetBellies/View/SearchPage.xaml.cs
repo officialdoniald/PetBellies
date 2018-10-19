@@ -27,7 +27,6 @@ namespace PetBellies.View
             searchListView.IsRefreshing = true;
 
             //InitializeThePetPictures();
-            //FirstTime();
         }
 
         protected override void OnAppearing()
@@ -73,13 +72,6 @@ namespace PetBellies.View
             var searchResultPage = new SearchResultPage(selectedSearchModel.petpicturesList, hasht);
 
             Navigation.PushAsync(searchResultPage);
-        }
-
-        private async Task FirstTime()
-        {
-            await Task.Run(() => {
-                SetTheListView();
-            });
         }
 
         private void SetTheListView()
