@@ -2,7 +2,7 @@
 using PetBellies.BLL.Helper;
 using Plugin.Connectivity;
 using System;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -36,34 +36,47 @@ namespace PetBellies.View
 
         private void loginButton_Clicked(object sender, EventArgs e)
         {
-            loginButton.IsEnabled = false;
-
-            string success = GlobalVariables.loginPageViewModel.Login(emailEntry.Text, pwEntry.Text);
-
-            if (!String.IsNullOrEmpty(success))
+            Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() => loginActivator.IsRunning = false);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    loginButton.IsEnabled = false;
+                    loginActivator.IsRunning = true;
+                });
 
-                DisplayAlert(English.Failed(), success, English.OK());
-            }
-            else
-            {
-                FileStoreAndLoading.InsertToFile(GlobalVariables.logintxt, emailEntry.Text);
+                string success = GlobalVariables.loginPageViewModel.Login(emailEntry.Text, pwEntry.Text);
 
-                Navigation.PushModalAsync(new JustActivityIndicator("login"));
-            }
+                if (!String.IsNullOrEmpty(success))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                        DisplayAlert(English.Failed(), success, English.OK())
+                    );
+                }
+                else
+                {
+                    FileStoreAndLoading.InsertToFile(GlobalVariables.logintxt, emailEntry.Text);
 
-            loginButton.IsEnabled = true;
+                    Device.BeginInvokeOnMainThread(() =>
+                        Navigation.PushModalAsync(new JustActivityIndicator("login"))
+                    );
+                }
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    loginButton.IsEnabled = true;
+                    loginActivator.IsRunning = false;
+                });
+            });
         }
 
-        private async void signUpButton_Clicked(object sender, EventArgs e)
+        private void signUpButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SignUpPage());
+            Navigation.PushAsync(new SignUpPage());
         }
         
-        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ForgotPasswordPage());
+            Navigation.PushAsync(new ForgotPasswordPage());
         }
 
         void Handle_CompletedOnPassword(object sender, System.EventArgs e)

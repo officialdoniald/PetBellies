@@ -13,18 +13,13 @@ namespace PetBellies.BLL.ViewModel
     {
         private string UpdateUser(User user)
         {
-            bool success = GlobalVariables.databaseConnection.UpdateUser(user.id, user);
-
-            if (success)
+            if (GlobalVariables.databaseConnection.UpdateUser(user.id, user))
             {
                 GlobalVariables.ActualUser = user;
 
                 return English.Empty();
             }
-            else
-            {
-                return English.SomethingWentWrong();
-            }
+            else return English.SomethingWentWrong();
         }
 
         public async Task<string> UpdateEmailAsync(string newEmail)
@@ -33,13 +28,13 @@ namespace PetBellies.BLL.ViewModel
             {
                 return English.ThisEmailIsYourEmail();
             }
-            if (!String.IsNullOrEmpty(newEmail))
+            if (!string.IsNullOrEmpty(newEmail))
             {
                 GlobalVariables.ActualUser.Email = newEmail;
 
                 User checkEmailExist = GlobalVariables.databaseConnection.GetUserByEmail(newEmail);
 
-                if (!String.IsNullOrEmpty(checkEmailExist.Email))
+                if (!string.IsNullOrEmpty(checkEmailExist.Email))
                 {
                     return English.ThisEmailIsExist();
                 }
@@ -77,11 +72,11 @@ namespace PetBellies.BLL.ViewModel
             return UpdateUser(GlobalVariables.ActualUser);
         }
 
-        public async Task<string> UpdateProfilePicture(string uri, Stream f)
+        public string UpdateProfilePicture(bool addedPhoto)
         {
-            if (!String.IsNullOrEmpty(uri))
+            if (addedPhoto)
             {
-                GlobalVariables.ActualUser.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
+                GlobalVariables.ActualUser.ProfilePictureURL = new Segédfüggvények().ReadFully(GlobalVariables.stream);
             }
             else GlobalVariables.ActualUser.ProfilePictureURL = null;
 
@@ -90,14 +85,14 @@ namespace PetBellies.BLL.ViewModel
 
         public string UpdatePassword(string oldpassword, string newPassword)
         {
-            if (String.IsNullOrEmpty(oldpassword) || String.IsNullOrEmpty(newPassword))
+            if (string.IsNullOrEmpty(oldpassword) || string.IsNullOrEmpty(newPassword))
             {
-                return English.ThisEmailIsExist();
+                return English.PasswordIsEmpty();
             }
 
             if (GlobalVariables.ActualUser.Password != oldpassword)
             {
-                return English.BadPasswordLength();
+                return English.BadOldPassword();
             }
 
             if (newPassword.Length < 6 && newPassword.Length > 16)

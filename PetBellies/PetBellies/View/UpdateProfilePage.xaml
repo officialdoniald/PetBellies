@@ -41,6 +41,8 @@
                 <Label Text="New password:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="newpwEntry" IsPassword="True" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnNewPWEntry" />
                 <Button Text="Change" Style="{StaticResource NormalButton}" x:Name="changepwButton" Clicked="changepwButton_ClickedAsync" />
+                <ActivityIndicator x:Name="updateProfileActivator" IsRunning="false" Style="{StaticResource NormalActivityIndicator}">
+                </ActivityIndicator>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -84,119 +84,62 @@ namespace PetBellies.BLL.Helper
         public static Style NormalLabel;
         public static Style NavigationPageStyle;
 
-        public static Stream f;
-
-        public static string pathf = "";
-
-        public static MediaFile mediaFile;
-
-        public static string blobstorageurl =
-            "https://officialdoniald.blob.core.windows.net/appmancs/";
-
-        public static string databaseFileName =
-            "LocalDatabaseTable.db3";
-
-        public static string GlobalPassword = string.Empty;
-        public static string AzureDBConnectionString = string.Empty;
-        public static string AzureBlobStorageConnectionString = string.Empty;
-
         public static DatabaseConnections databaseConnection =
             new DatabaseConnections();
 
-        public static BlobStorage blobStorage =
-            new BlobStorage();
-
-        public static Mailer mailer =
-            new Mailer();
+        /// <summary>
+        /// Application password.
+        /// </summary>
+        public static string GlobalPassword { get; set; }
 
         /// <summary>
-        /// The SMTP Mail server.
+        /// DBConnectionString.
         /// </summary>
-        public static SMTPUser SMTPUser = new SMTPUser()
-        {
-            SMTPCLientHost = "smtp.",
-            SMTPEmail = "",
-            SMTPPassword = GlobalPassword,
-            SMTPServerPort = 587,
-            SMTPUsername = ""
-        };
+        public static string AzureDBConnectionString { get; set; }
 
+        /// <summary>
+        /// Selected picture from galery Stream.
+        /// </summary>
+        public static Stream stream;
+
+        /// <summary>
+        /// Source of the selected galery picture.
+        /// </summary>
+        public static string sstream;
         /// <summary>
         /// Is Pet deleted?
         /// </summary>
-        private static bool isPetDeleted = false;
-
-        public static bool IsPetDeleted
-        {
-            get => isPetDeleted;
-            set => isPetDeleted = value;
-        }
+        public static bool IsPetDeleted { get; set; }
 
         /// <summary>
         /// Is Picture deleted?
         /// </summary>
-        private static bool isPictureDeleted = false;
-
-        public static bool IsPictureDeleted
-        {
-            get => isPictureDeleted;
-            set => isPictureDeleted = value;
-        }
+        public static bool IsPictureDeleted { get; set; }
 
         /// <summary>
         /// Is Pet added?
         /// </summary>
-        private static bool isUpdatedMyProfile = false;
-
-        public static bool IsUpdatedMyProfile
-        {
-            get => isUpdatedMyProfile;
-            set => isUpdatedMyProfile = value;
-        }
+        public static bool IsUpdatedMyProfile { get; set; }
 
         /// <summary>
         /// Is Pet added?
         /// </summary>
-        private static bool addedPet = false;
-
-        public static bool AddedPet
-        {
-            get => addedPet;
-            set => addedPet = value;
-        }
+        public static bool AddedPet { get; set; }
 
         /// <summary>
         /// Is Photo added?
         /// </summary>
-        private static bool addedPhoto = false;
-
-        public static bool AddedPhoto
-        {
-            get => addedPhoto;
-            set => addedPhoto = value;
-        }
+        public static bool AddedPhoto { get; set; }
 
         /// <summary>
         /// What is the actual user now?
         /// </summary>
-        private static List<string> myPetsString;
-
-        public static List<string> MyPetsString
-        {
-            get => myPetsString;
-            set => myPetsString = value;
-        }
+        public static List<string> MyPetsString {  get; set; }
 
         /// <summary>
         /// What is the actual user now?
         /// </summary>
-        private static User actualuser;
-
-        public static User ActualUser
-        {
-            get => actualuser;
-            set => actualuser = value;
-        }
+        public static User ActualUser { get; set; }
 
         /// <summary>
         /// What is the actual user's email
@@ -212,24 +155,12 @@ namespace PetBellies.BLL.Helper
         /// <summary>
         /// Already logged in?
         /// </summary>
-        private static bool havetologin;
-
-        public static bool HaveToLogin
-        {
-            get => havetologin;
-            set => havetologin = value;
-        }
+        public static bool HaveToLogin { get; set; }
 
         /// <summary>
         /// My pets list.
         /// </summary>
-        private static List<MyPetsList> mypetlist;
-
-        public static List<MyPetsList> Mypetlist
-        {
-            get => mypetlist;
-            set => mypetlist = value;
-        }
+        public static List<MyPetsList> Mypetlist { get; set; }
 
         /// <summary>
         /// Initializes the user.
@@ -248,7 +179,7 @@ namespace PetBellies.BLL.Helper
             {
                 ActualUsersEmail = DependencyService.Get<IFileStoreAndLoad>().LoadText(logintxt);
 
-                if (!String.IsNullOrEmpty(ActualUsersEmail))
+                if (!string.IsNullOrEmpty(ActualUsersEmail))
                 {
                     User user = databaseConnection.GetUserByEmail(ActualUsersEmail);
 
@@ -282,7 +213,7 @@ namespace PetBellies.BLL.Helper
         }
 
         /// <summary>
-        /// Gets my pets and store to the local SQLite DB.
+        /// Gets my pets and store to the local list.
         /// </summary>
         public static void GetMyPets()
         {
@@ -305,7 +236,7 @@ namespace PetBellies.BLL.Helper
         {
             MyPetsString = new List<string>();
 
-            foreach (var item in GlobalVariables.Mypetlist)
+            foreach (var item in Mypetlist)
             {
                 MyPetsString.Add(item.Name);
             }
@@ -354,38 +285,6 @@ namespace PetBellies.BLL.Helper
                 ProfilePictureURL = pet.ProfilePictureURL,
                 Uploader = pet.Uploader
             };
-        }
-
-        /// <summary>
-        /// Event handler when connection changes
-        /// </summary>
-        static event ConnectivityChangedEventHandler ConnectivityChanged;
-
-        public class ConnectivityChangedEventArgs : EventArgs
-        {
-            public bool IsConnected { get; set; }
-
-        }
-
-        public delegate void ConnectivityChangedEventHandler(object sender, ConnectivityChangedEventArgs e);
-
-        public class MyPetsList
-        {
-            public int id { get; set; }
-
-            public int petid { get; set; }
-
-            public string Name { get; set; }
-
-            public int Age { get; set; }
-
-            public string PetType { get; set; }
-
-            public int HaveAnOwner { get; set; }
-
-            public int Uploader { get; set; }
-
-            public byte[] ProfilePictureURL { get; set; }
         }
     }
 }

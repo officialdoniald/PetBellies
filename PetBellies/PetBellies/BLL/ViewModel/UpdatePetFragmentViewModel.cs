@@ -1,12 +1,7 @@
 ﻿using PetBellies.BLL.Helper;
 using PetBellies.Model;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace PetBellies.BLL.ViewModel
 {
@@ -92,15 +87,13 @@ namespace PetBellies.BLL.ViewModel
             }
         }
 
-        public async Task<string> UpdatePetProfilePictureAsync(Pet pet, Stream f, string uri)
+        public string UpdatePetProfilePictureAsync(bool addedPhoto, Pet pet, Stream f)
         {
-            if (!String.IsNullOrEmpty(uri))
+            if (addedPhoto)
             {
                 pet.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
 
-                bool success = GlobalVariables.databaseConnection.UpdatePet(pet.id, pet);
-
-                if (!success)
+                if (!GlobalVariables.databaseConnection.UpdatePet(pet.id, pet))
                 {
                     return English.SomethingWentWrong();
                 }

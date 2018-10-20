@@ -1,7 +1,7 @@
 ﻿using PetBellies.BLL.Helper;
-using PetBellies.DAL;
 using Plugin.Media;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,6 +13,8 @@ namespace PetBellies.View
 	{
         private int selectedPetId = -1;
         private double currentWidth;
+        private bool addedPhoto = false;
+        private Stream f;
 
         public UploadPhotoPage()
         {
@@ -23,10 +25,6 @@ namespace PetBellies.View
 
         protected override void OnAppearing()
         {
-            //DatabaseConnections databaseConnection = new DatabaseConnections();
-
-            //pictureImage.Source = ImageSource.FromStream(() => databaseConnection.PictureFromDB());
-            //pictureImage.Aspect = Aspect.Fill;
             if (GlobalVariables.AddedPet || GlobalVariables.AddedPhoto)
                 Initialize();
         }
@@ -55,42 +53,53 @@ namespace PetBellies.View
             }
 
             var file = await CrossMedia.Current.PickPhotoAsync();
-
-            GlobalVariables.mediaFile = file;
-
+            
             if (file == null) return;
 
-            GlobalVariables.f = file.GetStream();
-            GlobalVariables.pathf = file.Path;
+            addedPhoto = true;
 
-            pictureImage.Source = ImageSource.FromStream(() => file.GetStream());
+            f = file.GetStream();
+
+            GlobalVariables.sstream = file.Path;
+            GlobalVariables.stream = f;
+
+            pictureImage.Source = ImageSource.FromStream(() => f);
         }
         
-        private async Task addPhotoButton_ClickedAsync(object sender, EventArgs e)
+        private void addPhotoButton_ClickedAsync(object sender, EventArgs e)
         {
-            uploadActivity.IsRunning = true;
-            addPhotoButton.IsEnabled = false;
-            galleryButton.IsEnabled = false;
-            
-            string success = await GlobalVariables.uploadPhotoFragmentViewModel.UploadPictureAsync(GlobalVariables.pathf, GlobalVariables.f, selectedPetId, hashtagsEntry.Text);
-            //DatabaseConnections databaseConnection = new DatabaseConnections();
-            //databaseConnection.InsertToImageTable(GlobalVariables.f);
-            
-            if (!String.IsNullOrEmpty(success))
-            {
-                await DisplayAlert(English.Failed(), success, English.OK());
-            }
-            else
-            {
-                GlobalVariables.AddedPhoto = true;
+            Task.Run(()=> {
+                Device.BeginInvokeOnMainThread(()=> {
+                    uploadActivity.IsRunning = true;
+                    addPhotoButton.IsEnabled = false;
+                    galleryButton.IsEnabled = false;
+                });
 
-                await Navigation.PopToRootAsync();
-                await Navigation.PushAsync(new SeeMyPetProfile(selectedPetId));
-            }
+                string success = GlobalVariables.uploadPhotoFragmentViewModel.UploadPictureAsync(addedPhoto, f, selectedPetId, hashtagsEntry.Text);
 
-            galleryButton.IsEnabled = true;
-            addPhotoButton.IsEnabled = true;
-            uploadActivity.IsRunning = false;
+                if (!string.IsNullOrEmpty(success))
+                {
+                    Device.BeginInvokeOnMainThread(() => {
+                        DisplayAlert(English.Failed(), success, English.OK());
+                    });
+                }
+                else
+                {
+                    GlobalVariables.AddedPhoto = true;
+                    addedPhoto = false;
+
+                    Device.BeginInvokeOnMainThread(() => {
+                        Navigation.PopToRootAsync();
+                        Navigation.PushAsync(new SeeMyPetProfile(selectedPetId));
+                    });
+                }
+
+                Device.BeginInvokeOnMainThread(() => {
+                    galleryButton.IsEnabled = true;
+                    addPhotoButton.IsEnabled = true;
+                    uploadActivity.IsRunning = false;
+                });
+            });
         }
 
         private void petPicker_SelectedIndexChanged(object sender, EventArgs e)
@@ -98,9 +107,9 @@ namespace PetBellies.View
             selectedPetId = GlobalVariables.Mypetlist[petPicker.SelectedIndex].petid;
         }
 
-        private async Task Handle_Completed(object sender, System.EventArgs e)
+        private void Handle_Completed(object sender, System.EventArgs e)
         {
-            await addPhotoButton_ClickedAsync(this, new EventArgs());
+            addPhotoButton_ClickedAsync(this, new EventArgs());
         }
     }
 }

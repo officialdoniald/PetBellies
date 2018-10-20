@@ -1,98 +1,154 @@
 ﻿using PetBellies.BLL.Helper;
 using Plugin.Media;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class UpdateProfilePage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class UpdateProfilePage : ContentPage
+    {
+        private bool addedPhoto = false;
+        private Stream f;
+
         public UpdateProfilePage()
         {
             InitializeComponent();
 
-            lastnameEntry.Placeholder = GlobalVariables.ActualUser.LastName;
-            firstnameEntry.Placeholder = GlobalVariables.ActualUser.FirstName;
-            emailEntry.Placeholder = GlobalVariables.ActualUser.Email;
-            
-            profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePictureURL));
+            Device.BeginInvokeOnMainThread(() => {
+                lastnameEntry.Placeholder = GlobalVariables.ActualUser.LastName;
+                firstnameEntry.Placeholder = GlobalVariables.ActualUser.FirstName;
+                emailEntry.Placeholder = GlobalVariables.ActualUser.Email;
+                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePictureURL));
+            });
         }
 
-        private async void updateMyProfileButton_ClickedAsync(object sender, EventArgs e)
+        private void updateMyProfileButton_ClickedAsync(object sender, EventArgs e)
         {
-            updateMyProfileButton.IsEnabled = false;
-
-            string success = GlobalVariables.updateProfileFragmentViewModel.UpdateProfile(firstnameEntry.Text, lastnameEntry.Text);
-
-            if (!String.IsNullOrEmpty(success))
+            Task.Run(() =>
             {
-                await DisplayAlert(English.Failed(), success, English.OK());
-            }
-            else
-            {
-                GlobalVariables.IsUpdatedMyProfile = true;
+                DisableOrEnableButtons(false);
 
-                await Navigation.PopAsync();
-            }
+                string success = GlobalVariables.updateProfileFragmentViewModel.UpdateProfile(firstnameEntry.Text, lastnameEntry.Text);
 
-            updateMyProfileButton.IsEnabled = true;
+                if (!String.IsNullOrEmpty(success))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayAlert(English.Failed(), success, English.OK());
+                    });
+                }
+                else
+                {
+                    GlobalVariables.IsUpdatedMyProfile = true;
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayAlert(English.Successful(), English.Successful(), English.OK());
+                    });
+                }
+
+                DisableOrEnableButtons(true);
+            });
         }
 
-        private async void changeEmailButton_ClickedAsync(object sender, EventArgs e)
+        private void changeEmailButton_ClickedAsync(object sender, EventArgs e)
         {
-            changeEmailButton.IsEnabled = false;
-
-            string success = await GlobalVariables.updateProfileFragmentViewModel.UpdateEmailAsync(emailEntry.Text);
-
-            if (!String.IsNullOrEmpty(success))
+            Task.Run(async () =>
             {
-                await DisplayAlert(English.Failed(), success, English.OK());
-            }
-            else
-            {
-                await Navigation.PopAsync();
-            }
+                DisableOrEnableButtons(false);
 
-            changeEmailButton.IsEnabled = true;
+                string success = await GlobalVariables.updateProfileFragmentViewModel.UpdateEmailAsync(emailEntry.Text);
+
+                if (!String.IsNullOrEmpty(success))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayAlert(English.Failed(), success, English.OK());
+                    });
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayAlert(English.Successful(), English.Successful(), English.OK());
+                    });
+                }
+
+                DisableOrEnableButtons(true);
+            });
         }
 
-        private async Task changepwButton_ClickedAsync(object sender, EventArgs e)
+        private void changepwButton_ClickedAsync(object sender, EventArgs e)
         {
-            changepwButton.IsEnabled = false;
-
-            string success = GlobalVariables.updateProfileFragmentViewModel.UpdatePassword(pwEntry.Text, newpwEntry.Text);
-
-            if (!String.IsNullOrEmpty(success))
+            Task.Run(() =>
             {
-                await DisplayAlert(English.Failed(), success, English.OK());
-            }
-            else
-            {
-                await Navigation.PopAsync();
-            }
+                DisableOrEnableButtons(false);
 
-            changepwButton.IsEnabled = true;
+                string success = GlobalVariables.updateProfileFragmentViewModel.UpdatePassword(pwEntry.Text, newpwEntry.Text);
+
+                if (!String.IsNullOrEmpty(success))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayAlert(English.Failed(), success, English.OK());
+                    });
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayAlert(English.Successful(), English.Successful(), English.OK());
+                    });
+                }
+
+                DisableOrEnableButtons(true);
+            });
         }
 
-        private async Task changeProfilePictureButton_ClickedAsync(object sender, EventArgs e)
+        private void changeProfilePictureButton_ClickedAsync(object sender, EventArgs e)
         {
-            changeProfilePictureButton.IsEnabled = false;
-
-            string success = await GlobalVariables.updateProfileFragmentViewModel.UpdateProfilePicture(GlobalVariables.pathf, GlobalVariables.f);
-
-            if (!String.IsNullOrEmpty(success))
+            Task.Run(() =>
             {
-                await DisplayAlert(English.Failed(), success, English.OK());
-            }
-            else
-            {
-                await Navigation.PopAsync();
-            }
+                DisableOrEnableButtons(false);
 
-            changeProfilePictureButton.IsEnabled = true;
+                string success = GlobalVariables.updateProfileFragmentViewModel.UpdateProfilePicture(addedPhoto);
+
+                if (!string.IsNullOrEmpty(success))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayAlert(English.Failed(), success, English.OK());
+                    });
+                }
+                else
+                {
+                    addedPhoto = false;
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayAlert(English.Successful(), English.Successful(), English.OK());
+                    });
+                }
+
+                DisableOrEnableButtons(true);
+            });
+        }
+
+        private void DisableOrEnableButtons(bool enable)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                updateProfileActivator.IsRunning = !enable;
+                galleryButton.IsEnabled = enable;
+                changeProfilePictureButton.IsEnabled = enable;
+                changepwButton.IsEnabled = enable;
+                changeEmailButton.IsEnabled = enable;
+                updateMyProfileButton.IsEnabled = enable;
+            });
         }
 
         private async Task galleryButton_ClickedAsync(object sender, EventArgs e)
@@ -104,15 +160,15 @@ namespace PetBellies.View
             }
 
             var file = await CrossMedia.Current.PickPhotoAsync();
-
-            GlobalVariables.mediaFile = file;
-
+            
             if (file == null) return;
+            
+            addedPhoto = true;
+            f = file.GetStream();
+            GlobalVariables.sstream = file.Path;
+            GlobalVariables.stream = f;
 
-            GlobalVariables.f = file.GetStream();
-            GlobalVariables.pathf = file.Path;
-
-            profilePictureImage.Source = ImageSource.FromStream(() => file.GetStream());
+            profilePictureImage.Source = ImageSource.FromStream(() => f);
         }
 
         void Handle_CompletedOnOldPWEntry(object sender, System.EventArgs e)
@@ -120,21 +176,9 @@ namespace PetBellies.View
             newpwEntry.Focus();
         }
 
-        async Task Handle_CompletedOnNewPWEntry(object sender, System.EventArgs e)
+        void Handle_CompletedOnNewPWEntry(object sender, System.EventArgs e)
         {
-            await changepwButton_ClickedAsync(this, new EventArgs());
+            changepwButton_ClickedAsync(this, new EventArgs());
         }
-
-        //private async void changeFaceookButton_ClickedAsync(object sender, EventArgs e)
-        //{
-        //    changeFaceookButton.IsEnabled = false;
-
-        //    DependencyService.Get<IClearCookies>().ClearAllWebAppCookies();
-
-        //    await Navigation.PushAsync(new FacebookLogin.Views.FacebookProfileCsPage());
-
-        //    changeFaceookButton.IsEnabled = true;
-        //}
-
     }
 }

@@ -25,16 +25,20 @@ namespace PetBellies.View
 
         public SeeMyPetProfile(int petid)
         {
-            InitializeComponent();
-
             this.petid = petid;
+
+            InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
             InitializeThePetPictures();
         }
-
-        private async Task InitializeThePetPictures()
+        private void InitializeThePetPictures()
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
                 thisPet = GlobalVariables.ConvertMyPetListToPet(GlobalVariables.Mypetlist.Where(u => u.petid == petid).FirstOrDefault());
 
@@ -54,8 +58,8 @@ namespace PetBellies.View
 
                     if (thisPet.ProfilePictureURL != null)
                         profilePictureImage.Source = ImageSource.FromStream(()=> new System.IO.MemoryStream(thisPet.ProfilePictureURL));
-                    else profilePictureImage.Source = null;
                 });
+
                 int left = 0;
                 int top = 0;
 
@@ -66,8 +70,6 @@ namespace PetBellies.View
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         Image image = new Image();
-
-                        //image.Source = ImageSource.FromUri(new Uri(item.PictureURL));
 
                         image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
 
@@ -101,12 +103,7 @@ namespace PetBellies.View
                 }
             });
         }
-
-        protected override void OnAppearing()
-        {
-            InitializeThePetPictures();
-        }
-
+        
         public void OnPictureClicked(Petpictures petpictures)
         {
             Navigation.PushAsync(new SeeMyPicturePage(petpictures));

@@ -35,6 +35,8 @@
                 </StackLayout>
                 <Button Text="Change" x:Name="changePetButton" Style="{StaticResource NormalButton}" Clicked="changePetButton_ClickedAsync" />
                 <Button Text="Delete profile" Style="{StaticResource NormalButton}" x:Name="deletePetButton" Clicked="deletePetButton_ClickedAsync" />
+                <ActivityIndicator x:Name="updatePetProfileActivator" IsRunning="false" Style="{StaticResource NormalActivityIndicator}">
+                </ActivityIndicator>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -30,8 +30,6 @@ namespace PetBellies.View
             }
             else
             {
-                string sentMail = GlobalVariables.mailer.SendEmail(emailEntry.Text, string.Empty);
-
                 await Navigation.PopToRootAsync();
             }
 

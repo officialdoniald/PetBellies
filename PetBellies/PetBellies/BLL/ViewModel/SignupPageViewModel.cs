@@ -10,23 +10,14 @@ namespace PetBellies.BLL.ViewModel
 {
     public class SignupPageViewModel
     {
-        public async Task<string> UploadFileAsync(string pathf, Stream f)
-        {
-            string uniqueBlobName = await GlobalVariables.blobStorage.UploadFileAsync(pathf, f);
-
-            uniqueBlobName = "https://officialdoniald.blob.core.windows.net/appmancs/" + uniqueBlobName;
-
-            return uniqueBlobName;
-        }
-
         public async Task<string> SignUpAsync(User user)
         {
-            if (String.IsNullOrEmpty(user.Email) || String.IsNullOrEmpty(user.FirstName) ||
-                String.IsNullOrEmpty(user.LastName) || String.IsNullOrEmpty(user.Password))
+            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.FirstName) ||
+                string.IsNullOrEmpty(user.LastName) || string.IsNullOrEmpty(user.Password))
             {
                 return English.YouHaveToFillAllEntries();
             }
-            if (user.Password.Length < 6 && user.Password.Length > 16)
+            if (user.Password.Length < 6 || user.Password.Length > 16)
             {
                 return English.BadPasswordLength();
             }
@@ -41,7 +32,7 @@ namespace PetBellies.BLL.ViewModel
 
                 if (success)
                 {
-                    string url = String.Format("http://petbellies.com/php/petbelliesreg.php?email={0}&nev={1}", user.Email, user.FirstName);
+                    string url = string.Format("http://petbellies.com/php/petbelliesreg.php?email={0}&nev={1}", user.Email, user.FirstName);
                     Uri uri = new Uri(url);
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                     request.Method = "GET";

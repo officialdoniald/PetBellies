@@ -16,7 +16,9 @@ namespace PetBellies.View
         {
             InitializeComponent();
 
-            userNameLabel.Text = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
+            Device.BeginInvokeOnMainThread(() => {
+                userNameLabel.Text = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
+            });
         }
 
         protected override void OnAppearing()

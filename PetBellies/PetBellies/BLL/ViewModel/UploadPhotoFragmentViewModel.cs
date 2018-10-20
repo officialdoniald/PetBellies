@@ -19,13 +19,13 @@ namespace PetBellies.BLL.ViewModel
             return GlobalVariables.databaseConnection.GetUserByEmail(userEmail);
         }
 
-        public async System.Threading.Tasks.Task<string> UploadPictureAsync(string pathf, Stream f, int petid, string hashtag)
+        public string UploadPictureAsync(bool addedPhoto, Stream f, int petid, string hashtag)
         {
             if (petid == -1)
             {
                 return English.ChooseAnimal();
             }
-            if (!String.IsNullOrEmpty(pathf))
+            if (addedPhoto)
             {
                 Petpictures petpictures = new Petpictures()
                 {
@@ -42,7 +42,7 @@ namespace PetBellies.BLL.ViewModel
                 }
                 else
                 {
-                    if (!String.IsNullOrEmpty(hashtag))
+                    if (!string.IsNullOrEmpty(hashtag))
                     {
                         var hashtags = hashtag.Trim().Split('#');
 

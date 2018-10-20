@@ -1,19 +1,14 @@
 ﻿using PetBellies.BLL.Helper;
 using PetBellies.Model;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace PetBellies.BLL.ViewModel
 {
     public class AddpetFragmentViewModel
     {
-        public async Task<string> AddPetAsync(string pathf, Stream f, Pet pet)
+        public string AddPetAsync(bool addedPhoto, Stream f, Pet pet)
         {
-            if (String.IsNullOrEmpty(pet.Name) || String.IsNullOrEmpty(pet.PetType))
+            if (string.IsNullOrEmpty(pet.Name) || string.IsNullOrEmpty(pet.PetType))
             {
                 return English.YouHaveToFillAllEntries();
             }
@@ -21,7 +16,7 @@ namespace PetBellies.BLL.ViewModel
             {
                 return English.NotNegNumber();
             }
-            else if (!String.IsNullOrEmpty(pathf))
+            else if (addedPhoto)
             {
                 pet.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
             }
@@ -45,11 +40,7 @@ namespace PetBellies.BLL.ViewModel
 
                 GlobalVariables.MyPetsString.Add(myPetList.Name);
 
-                //GlobalVariables.SetMyPetListString();
-
                 GlobalVariables.AddedPet = true;
-
-                //GlobalVariables.LocalSQLiteDatabase.InsertMyPetsList(myPetList);
 
                 return English.Empty();
             }

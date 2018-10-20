@@ -21,12 +21,13 @@ namespace PetBellies.View
         {
             InitializeComponent();
 
-            hashtagsListStackLayout.IsVisible = false;
-            randomPicturesStackLayout.IsVisible = true;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                hashtagsListStackLayout.IsVisible = false;
+                randomPicturesStackLayout.IsVisible = true;
 
-            searchListView.IsRefreshing = true;
-
-            //InitializeThePetPictures();
+                searchListView.IsRefreshing = true;
+            });
         }
 
         protected override void OnAppearing()

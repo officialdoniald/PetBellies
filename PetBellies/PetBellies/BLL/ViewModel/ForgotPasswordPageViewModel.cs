@@ -38,8 +38,6 @@ namespace PetBellies.BLL.ViewModel
                 return English.SomethingWentWrong();
             }
 
-            //string sentMail = DependencyService.Get<IMailerInj>().SendMail(user.Email,user.Password);
-
             string url = String.Format("http://petbellies.com/php/petbelliesforgotp.php?email={0}&nev={1}&pw={2}", EMAIL, user.FirstName, user.Password);
             Uri uri = new Uri(url);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);

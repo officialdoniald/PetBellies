@@ -14,7 +14,6 @@ namespace PetBellies
 
             GlobalVariables.GlobalPassword = PetBellies.Properties.Resources.ResourceManager.GetString("GlobalPassword");
             GlobalVariables.AzureDBConnectionString = PetBellies.Properties.Resources.ResourceManager.GetString("AzureDBConnectionString");
-            GlobalVariables.AzureBlobStorageConnectionString = PetBellies.Properties.Resources.ResourceManager.GetString("AzureBlobStorageConnectionString");
             GlobalVariables.NormalLabel = (Style)Resources["NormalLabel"];
             GlobalVariables.NavigationPageStyle = (Style)Resources["NavigationPageStyle"];
 

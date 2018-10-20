@@ -2,11 +2,8 @@
 using PetBellies.Model;
 using Plugin.Media;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +12,9 @@ namespace PetBellies.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AddPetPage : ContentPage
 	{
+        private bool addedPhoto = false;
+        private Stream f;
+
         public AddPetPage()
         {
             InitializeComponent();
@@ -25,6 +25,8 @@ namespace PetBellies.View
             uploadActivity.IsRunning = true;
             addPetButton.IsEnabled = false;
             galleryButton.IsEnabled = false;
+
+            addedPhoto = true;
 
             bool isChecked = shelterpetSwitch.IsToggled;
 
@@ -53,14 +55,16 @@ namespace PetBellies.View
                 HaveAnOwner = isCheckedToInt
             };
 
-            string success = await GlobalVariables.addpetFragmentViewModel.AddPetAsync(GlobalVariables.pathf, GlobalVariables.f, pet);
+            string success = GlobalVariables.addpetFragmentViewModel.AddPetAsync(addedPhoto, f, pet);
 
-            if (!String.IsNullOrEmpty(success))
+            if (!string.IsNullOrEmpty(success))
             {
                 await DisplayAlert(English.Failed(), success, English.OK());
             }
             else
             {
+                addedPhoto = false;
+                
                 await Navigation.PopAsync();
             }
 
@@ -78,15 +82,15 @@ namespace PetBellies.View
             }
 
             var file = await CrossMedia.Current.PickPhotoAsync();
-
-            GlobalVariables.mediaFile = file;
-
+            
             if (file == null) return;
 
-            GlobalVariables.f = file.GetStream();
-            GlobalVariables.pathf = file.Path;
+            f = file.GetStream();
 
-            profilePictureImage.Source = ImageSource.FromStream(() => file.GetStream());
+            GlobalVariables.sstream = file.Path;
+            GlobalVariables.stream = f;
+
+            profilePictureImage.Source = ImageSource.FromStream(() => f);
         }
 
         void Handle_CompletedOnNameEntry(object sender, System.EventArgs e)

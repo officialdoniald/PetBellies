@@ -1,4 +1,5 @@
 ﻿using PetBellies.BLL.Helper;
+using PetBellies.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace PetBellies.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class JustActivityIndicator : ContentPage
 	{
-        private string isEmpty = String.Empty;
+        private string isEmpty = string.Empty;
 
         public JustActivityIndicator()
         {
@@ -35,13 +36,13 @@ namespace PetBellies.View
 
             Task.Run(()=>
             {
-                if (!String.IsNullOrEmpty(isEmpty))
+                if (!string.IsNullOrEmpty(isEmpty))
                 {
                     GlobalVariables.InitializeUsersEmailVariable();
 
                     GlobalVariables.InitializeUser();
 
-                    GlobalVariables.Mypetlist = new List<GlobalVariables.MyPetsList>();
+                    GlobalVariables.Mypetlist = new List<MyPetsList>();
 
                     GlobalVariables.GetMyPets();
 

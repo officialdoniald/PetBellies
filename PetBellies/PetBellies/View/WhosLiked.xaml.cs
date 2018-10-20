@@ -23,9 +23,7 @@ namespace PetBellies.View
         public WhosLiked(int petpicturesid)
         {
             this.petpicturesid = petpicturesid;
-
-            //thisPet = whosLikedViewModel.GetPetByPetId(petpicturesid);
-
+            
             InitializeComponent();
 
             Initialize();

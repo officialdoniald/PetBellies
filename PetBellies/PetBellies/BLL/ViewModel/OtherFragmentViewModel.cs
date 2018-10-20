@@ -1,4 +1,5 @@
 ﻿using PetBellies.BLL.Helper;
+using PetBellies.Model;
 
 namespace PetBellies.BLL.ViewModel
 {
@@ -12,9 +13,7 @@ namespace PetBellies.BLL.ViewModel
             {
                 while (GlobalVariables.Mypetlist.Count != 0)
                 {
-                    string siker = GlobalVariables.updatePetFragmentViewModel.DeletePet(GlobalVariables.Mypetlist[i].petid);
-
-                    if (!string.IsNullOrEmpty(siker))
+                    if (!string.IsNullOrEmpty(GlobalVariables.updatePetFragmentViewModel.DeletePet(GlobalVariables.Mypetlist[i].petid)))
                     {
                         return English.SomethingWentWrong();
                     }
@@ -23,11 +22,9 @@ namespace PetBellies.BLL.ViewModel
                 }
             }
 
-            GlobalVariables.Mypetlist = new System.Collections.Generic.List<GlobalVariables.MyPetsList>();
+            GlobalVariables.Mypetlist = new System.Collections.Generic.List<MyPetsList>();
 
-            bool success = GlobalVariables.databaseConnection.DeleteAccount(GlobalVariables.ActualUser.id);
-
-            if (!success)
+            if (!GlobalVariables.databaseConnection.DeleteAccount(GlobalVariables.ActualUser.id))
             {
                 return English.SomethingWentWrong();
             }
