@@ -61,6 +61,14 @@ namespace PetBellies.View
             }
 
             Device.BeginInvokeOnMainThread(() => {
+                if (GlobalVariables.wallListViewAdapter.Count == 0)
+                {
+                    nothingFoundStackLayout.IsVisible = true;
+                }
+                else
+                {
+                    nothingFoundStackLayout.IsVisible = true;
+                }
                 wallListView.ItemsSource = GlobalVariables.wallListViewAdapter;
                 wallListView.IsRefreshing = false;
             });

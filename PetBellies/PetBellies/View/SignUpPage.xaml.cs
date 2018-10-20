@@ -10,7 +10,7 @@ namespace PetBellies.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SignUpPage : ContentPage
 	{
-        private string asd = "";
+        private string successedRegistration = "";
         
         public SignUpPage()
         {
@@ -23,9 +23,9 @@ namespace PetBellies.View
                 RegistrationAsync();
             });
 
-            if (!String.IsNullOrEmpty(asd))
+            if (!String.IsNullOrEmpty(successedRegistration))
             {
-                await DisplayAlert(English.Failed(), asd, English.OK());
+                await DisplayAlert(English.Failed(), successedRegistration, English.OK());
                 uploadActivity.IsRunning = false;
             }
             else
@@ -56,7 +56,7 @@ namespace PetBellies.View
             };
 
             string success = await GlobalVariables.signupPageViewModel.SignUpAsync(user);
-            asd = success;
+            successedRegistration = success;
         }
 
         void Handle_CompletedOnEmailEntry(object sender, System.EventArgs e)
@@ -81,22 +81,15 @@ namespace PetBellies.View
                 await signupButton_ClickedAsync(this, new EventArgs());
             }
         }
-
-        //private async void loginFacebookButton_Clicked(object sender, EventArgs e)
-        //{
-        //    DependencyService.Get<IClearCookies>().ClearAllWebAppCookies();
-
-        //    await Navigation.PushAsync(new FacebookLogin.Views.FacebookProfileCsPage());
-        //}
-
-        async Task Handle_TappedAsync(object sender, System.EventArgs e)
+        
+        void Handle_TappedAsync(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new TermsAndCondPage());
+            Navigation.PushAsync(new TermsAndCondPage());
         }
 
-        async Task Handle_Tapped2(object sender, System.EventArgs e)
+        void Handle_Tapped2(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new PrivaciPolicyPage());
+            Navigation.PushAsync(new PrivaciPolicyPage());
         }
 
         void Handle_Toggled(object sender, Xamarin.Forms.ToggledEventArgs e)

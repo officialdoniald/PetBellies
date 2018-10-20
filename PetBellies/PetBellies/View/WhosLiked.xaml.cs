@@ -1,11 +1,7 @@
 ﻿using PetBellies.BLL.Helper;
 using PetBellies.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,8 +10,6 @@ namespace PetBellies.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class WhosLiked : ContentPage
 	{
-        //private Pet thisPet = new Pet();
-
         private int petpicturesid = -1;
 
         private List<User> users = new List<User>();

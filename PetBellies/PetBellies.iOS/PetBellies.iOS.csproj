@@ -174,4 +174,7 @@
       <Name>PetBellies</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\nothing.png" />
+  </ItemGroup>
 </Project>
