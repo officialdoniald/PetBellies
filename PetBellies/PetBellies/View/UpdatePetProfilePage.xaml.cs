@@ -51,7 +51,7 @@ namespace PetBellies.View
                         DisplayAlert(English.Failed(), success, English.OK());
                     });
                 else Device.BeginInvokeOnMainThread(() => {
-                    DisplayAlert(English.Successful(), English.Successful(), English.OK());
+                    Navigation.PopToRootAsync();
                 });
 
                 DisableOrEnableButtons(true);
