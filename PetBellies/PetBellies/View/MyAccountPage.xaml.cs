@@ -32,7 +32,7 @@ namespace PetBellies.View
 
             if (GlobalVariables.ActualUser.ProfilePictureURL != null)
                 profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePictureURL));
-            else profilePictureImage.Source = "";
+            else profilePictureImage.Source = "account.png";
 
             userNameLabel.Text = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
 

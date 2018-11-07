@@ -1316,12 +1316,20 @@ namespace PetBellies.DAL
                             SqlDbType = System.Data.SqlDbType.Int
                         }
                      );
+
+                    
+                    
+                    if (pet.ProfilePictureURL is null)
+                    {
+                        pet.ProfilePictureURL = new byte[0];
+                    }
                     cmd.Parameters.Add(
-                        new SqlParameter("@ProfilePictureURL", pet.ProfilePictureURL)
-                        {
-                            SqlDbType = System.Data.SqlDbType.Image
-                        }
-                     );
+                       new SqlParameter("@ProfilePictureURL", pet.ProfilePictureURL)
+                       {
+                           SqlDbType = System.Data.SqlDbType.Image
+                       }
+                    );
+
                     cmd.Parameters.Add(
                         new SqlParameter("@Uploader", pet.Uploader)
                         {
@@ -1343,8 +1351,9 @@ namespace PetBellies.DAL
                     return returnInt;
                 }
             }
-            catch (Exception)
-            {
+            catch (Exception ex)
+            {//az account.png-t kell neki atadni, ha ures
+                var asd = ex.Message;
                 return -1;
             }
         }

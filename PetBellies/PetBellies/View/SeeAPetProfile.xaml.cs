@@ -55,9 +55,8 @@ namespace PetBellies.View
                     profilePictureImage.WidthRequest = optimalWidth;
 
                     if (thisPet.ProfilePictureURL != null)
-                    {
                         profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.ProfilePictureURL));
-                    } else profilePictureImage.Source = "";
+                    else profilePictureImage.Source = "account.png";
                 });
 
                 HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);

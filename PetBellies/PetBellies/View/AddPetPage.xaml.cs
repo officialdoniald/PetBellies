@@ -20,57 +20,69 @@ namespace PetBellies.View
             InitializeComponent();
         }
 
-        private async Task addPetButton_ClickedAsync(object sender, EventArgs e)
+        private void addPetButton_ClickedAsync(object sender, EventArgs e)
         {
-            uploadActivity.IsRunning = true;
-            addPetButton.IsEnabled = false;
-            galleryButton.IsEnabled = false;
+            Task.Run(()=> {
+                DisableOrEnableButtons(false);
 
-            addedPhoto = true;
+                bool isChecked = shelterpetSwitch.IsToggled;
 
-            bool isChecked = shelterpetSwitch.IsToggled;
+                int isCheckedToInt = 1;
 
-            int isCheckedToInt = 1;
+                if (isChecked) isCheckedToInt = 0;
 
-            if (isChecked) isCheckedToInt = 0;
+                int age;
 
-            int age;
+                try
+                {
+                    age = Convert.ToInt32(ageEntry.Text);
+                }
+                catch (Exception)
+                {
+                    Device.BeginInvokeOnMainThread(()=> {
+                        DisplayAlert(English.Failed(), English.YouHaveToFillAllEntries(), English.OK());
+                    });
 
-            try
+                    return;
+                }
+
+                Pet pet = new Pet()
+                {
+                    Name = nameEntry.Text,
+                    Age = age,
+                    PetType = typeEntry.Text,
+                    HaveAnOwner = isCheckedToInt
+                };
+
+                string success = GlobalVariables.addpetFragmentViewModel.AddPetAsync(addedPhoto, f, pet);
+
+                if (!string.IsNullOrEmpty(success))
+                {
+                    Device.BeginInvokeOnMainThread(() => {
+                        DisplayAlert(English.Failed(), success, English.OK());
+                    });
+                }
+                else
+                {
+                    addedPhoto = false;
+
+                    Device.BeginInvokeOnMainThread(() => {
+                        Navigation.PopAsync();
+                    });
+                }
+
+                DisableOrEnableButtons(true);
+            });
+        }
+
+        private void DisableOrEnableButtons(bool enable)
+        {
+            Device.BeginInvokeOnMainThread(() =>
             {
-                age = Convert.ToInt32(ageEntry.Text);
-            }
-            catch (Exception)
-            {
-                await DisplayAlert(English.Failed(), English.YouHaveToFillAllEntries(), English.OK());
-
-                return;
-            }
-
-            Pet pet = new Pet()
-            {
-                Name = nameEntry.Text,
-                Age = age,
-                PetType = typeEntry.Text,
-                HaveAnOwner = isCheckedToInt
-            };
-
-            string success = GlobalVariables.addpetFragmentViewModel.AddPetAsync(addedPhoto, f, pet);
-
-            if (!string.IsNullOrEmpty(success))
-            {
-                await DisplayAlert(English.Failed(), success, English.OK());
-            }
-            else
-            {
-                addedPhoto = false;
-                
-                await Navigation.PopAsync();
-            }
-
-            galleryButton.IsEnabled = true;
-            addPetButton.IsEnabled = true;
-            uploadActivity.IsRunning = false;
+                addPetActivator.IsRunning = !enable;
+                galleryButton.IsEnabled = enable;
+                addPetButton.IsEnabled = enable;
+            });
         }
 
         private async Task galleryButton_ClickedAsync(object sender, EventArgs e)
@@ -90,6 +102,8 @@ namespace PetBellies.View
             GlobalVariables.sstream = file.Path;
             GlobalVariables.stream = f;
 
+            addedPhoto = true;
+
             profilePictureImage.Source = ImageSource.FromStream(() => f);
         }
 
@@ -102,6 +116,7 @@ namespace PetBellies.View
         {
             typeEntry.Focus();
         }
+
         void Handle_CompletedOnTypeEntry(object sender, System.EventArgs e)
         {
             shelterpetSwitch.Focus();

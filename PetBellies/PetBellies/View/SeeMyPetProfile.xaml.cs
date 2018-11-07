@@ -58,6 +58,7 @@ namespace PetBellies.View
 
                     if (thisPet.ProfilePictureURL != null)
                         profilePictureImage.Source = ImageSource.FromStream(()=> new System.IO.MemoryStream(thisPet.ProfilePictureURL));
+                    else profilePictureImage.Source = "account.png";
                 });
 
                 int left = 0;

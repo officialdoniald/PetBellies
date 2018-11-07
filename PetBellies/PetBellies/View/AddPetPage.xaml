@@ -32,7 +32,8 @@
                     <Label Text="Shelter pet?" Margin="10,0,0,0" Style="{StaticResource NormalLabel}" VerticalOptions="Center" />
                 </StackLayout>
                 <Button Text="Add" x:Name="addPetButton" Style="{StaticResource NormalButton}" Clicked="addPetButton_ClickedAsync" />
-                <ActivityIndicator IsRunning="false" x:Name="uploadActivity" />
+                <ActivityIndicator x:Name="addPetActivator" IsRunning="false" Style="{StaticResource NormalActivityIndicator}">
+                </ActivityIndicator>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
