@@ -31,9 +31,12 @@ namespace PetBellies.DAL
                     "SELECT * FROM [dbo].[Following]";
         public static string GET_HASHTAGS_SQL { get; } =
                     "SELECT * FROM [dbo].[Hashtags]";
+        public static string GET_GlobalCasualImage_SQL { get; } =
+                    "SELECT CasualImage FROM [dbo].[Table]";
         public static string GET_USERSBYKEYWORD_SQL { get; } =
             //"SELECT * FROM [dbo].[User] Where FirstName LIKE " + '%' + "@keyword" + '%' + " OR LastName= LIKE "+'%'+"@keyword"+'%';
             "SELECT id,Email,FirstName,LastName,ProfilePicture FROM [dbo].[User]";
+        
         //GETBYID
         public static string GET_USERBYEMAIL_SQL { get; } =
                     "SELECT * FROM [dbo].[User] WHERE EMAIL=@EMAIL";
@@ -147,12 +150,7 @@ namespace PetBellies.DAL
             "UserID=@UserID," +
             "FUserID=@FUserID" +
             " WHERE ID=@ID";
-
-        public static string INSERT_Picture_SQL { get; } =
-            "INSERT INTO [dbo].[Pictures]" +
-            "([filebyte]) " +
-            "VALUES(" +
-            "@filebyte);";
+        
         public static string INSERT_User_SQL { get; } =
             "INSERT INTO [dbo].[USER]" +
             "([FirstName], [LastName], [FacebookId], [ProfilePicture], [Email], [Password]) " +
@@ -563,61 +561,40 @@ namespace PetBellies.DAL
             }
         }
 
+        public byte[] GetGlobalCasualImage()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
+                using (SqlCommand cmd = new SqlCommand(GET_GlobalCasualImage_SQL, conn))
+                {
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                System.IO.Stream stream = reader.GetStream(reader.GetOrdinal("CasualImage"));
+
+                                if (stream.Length != 0)
+                                    return Segédfüggvények.ReadFully(stream);
+                                else return null;
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         #endregion
 
         #region GetByIDFunctions
-        //public User GetUserByFacebookID(string facebookID)
-        //{
-        //    User user;
-
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
-        //        using (SqlCommand cmd = new SqlCommand(GET_USERBYFACEBOOKID_SQL, conn))
-        //        {
-        //            conn.Open();
-        //            cmd.Parameters.AddWithValue("@facebookid", facebookID);
-        //            using (SqlDataReader reader = cmd.ExecuteReader())
-        //            {
-        //                if (reader != null)
-        //                {
-        //                    while (reader.Read())
-        //                    {
-        //                        user = new User();
-
-        //                        user.id = reader.GetInt32(reader.GetOrdinal("id"));
-        //                        user.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
-        //                        user.LastName = reader.GetString(reader.GetOrdinal("LastName"));
-        //                        user.Email = reader.GetString(reader.GetOrdinal("Email"));
-        //                        user.Password = reader.GetString(reader.GetOrdinal("Password"));
-        //                        try
-        //                        {
-        //                            user.FacebookId = reader.GetString(reader.GetOrdinal("facebookid"));
-        //                        }
-        //                        catch (Exception)
-        //                        {
-        //                            user.FacebookId = null;
-        //                        }
-        //                        try
-        //                        {
-        //                            user.ProfilePictureURL = reader.GetStream(reader.GetOrdinal("ProfilePicture"));
-        //                        }
-        //                        catch (Exception)
-        //                        {
-        //                            user.ProfilePictureURL = null;
-        //                        }
-        //                        return user;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        return null;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-        //    }
-        //}
 
         public User GetUserByEmail(string Email)
         {
@@ -1169,60 +1146,7 @@ namespace PetBellies.DAL
         #endregion
 
         #region InsertFunctions
-
-        public bool InsertToImageTable(System.IO.Stream file)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
-                {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand(INSERT_Picture_SQL, conn);
-
-                    cmd.Parameters.Add("@filebyte", System.Data.SqlDbType.Image).Value = file;
-
-                    cmd.ExecuteNonQuery();
-
-                    return true;
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public System.IO.Stream PictureFromDB()
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_Pictures_SQL, conn))
-                {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                System.IO.Stream asd = reader.GetStream(reader.GetOrdinal("filebyte"));
-                                return asd;
-                            }
-                        }
-                    }
-                }
-                return null;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
+        
         public bool InsertUser(User user)
         {
             try
@@ -1253,7 +1177,7 @@ namespace PetBellies.DAL
                         }
                      );
                     cmd.Parameters.Add(
-                        new SqlParameter("@ProfilePictureURL", (object)user.ProfilePictureURL ?? DBNull.Value)
+                        new SqlParameter("@ProfilePictureURL", (object)user.ProfilePictureURL ?? GlobalVariables.GlobalCasualImage)
                         {
                             SqlDbType = System.Data.SqlDbType.Image
                         }
@@ -1316,13 +1240,12 @@ namespace PetBellies.DAL
                             SqlDbType = System.Data.SqlDbType.Int
                         }
                      );
-
-                    
                     
                     if (pet.ProfilePictureURL is null)
                     {
-                        pet.ProfilePictureURL = new byte[0];
+                        pet.ProfilePictureURL = GlobalVariables.GlobalCasualImage;
                     }
+
                     cmd.Parameters.Add(
                        new SqlParameter("@ProfilePictureURL", pet.ProfilePictureURL)
                        {
@@ -1351,9 +1274,8 @@ namespace PetBellies.DAL
                     return returnInt;
                 }
             }
-            catch (Exception ex)
-            {//az account.png-t kell neki atadni, ha ures
-                var asd = ex.Message;
+            catch (Exception)
+            {
                 return -1;
             }
         }
@@ -2054,106 +1976,5 @@ namespace PetBellies.DAL
         }
 
         #endregion
-
-        /*
-         #region InsertFunctions
-
-        public int InsertUser(User user)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
-                {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand(INSERT_User_SQL, conn);
-
-                    cmd.Parameters.Add(
-                        new SqlParameter("@EVENTNAME", user.EVENTNAME)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@DESCRIPTION", (object)user.DESCRIPTION ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@MDESCRIPTION", (object)user.MDESCRIPTION ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@HOWMANY", user.HOWMANY)
-                        {
-                            SqlDbType = System.Data.SqlDbType.Int
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@ONLINE", user.ONLINE)
-                        {
-                            SqlDbType = System.Data.SqlDbType.Int
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@FROM", (object)user.FROM ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@TO", (object)user.TO ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@TOWN", (object)user.TOWN ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@PLACE", (object)user.PLACE ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@MEETINGCORD", (object)user.MEETINGCORD ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@PLACECORD", (object)user.PLACECORD ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-
-                    //var idpar = new SqlParameter("@id", DBNull.Value)
-                    //{
-                    //    SqlDbType = System.Data.SqlDbType.Int,
-                    //    Direction = System.Data.ParameterDirection.Output
-                    //};
-                    //cmd.Parameters.Add(idpar);
-
-                    cmd.ExecuteNonQuery();
-                    //events.id = (int)idpar.Value;
-                    return events.id;
-                }
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
-        }
-
-        #endregion
-         */
     }
 }

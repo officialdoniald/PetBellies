@@ -50,7 +50,7 @@ namespace PetBellies.BLL.Helper
             {
                 try
                 {
-                    using (FileStream SourceStream = File.Open(GlobalVariables.sstream, FileMode.Open))
+                    using (FileStream SourceStream = File.Open(GlobalVariables.SourceSelectedImageFromGallery, FileMode.Open))
                     using (MemoryStream ms = new MemoryStream())
                     {
                         SourceStream.CopyTo(ms);

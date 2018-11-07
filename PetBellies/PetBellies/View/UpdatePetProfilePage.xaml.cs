@@ -177,8 +177,8 @@ namespace PetBellies.View
 
             f = file.GetStream();
 
-            GlobalVariables.sstream = file.Path;
-            GlobalVariables.stream = f;
+            GlobalVariables.SourceSelectedImageFromGallery = file.Path;
+            GlobalVariables.SelectedImageFromGallery = f;
 
             profilePictureImage.Source = ImageSource.FromStream(() => f);
         }

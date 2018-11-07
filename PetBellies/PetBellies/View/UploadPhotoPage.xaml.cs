@@ -60,8 +60,8 @@ namespace PetBellies.View
 
             f = file.GetStream();
 
-            GlobalVariables.sstream = file.Path;
-            GlobalVariables.stream = f;
+            GlobalVariables.SourceSelectedImageFromGallery = file.Path;
+            GlobalVariables.SelectedImageFromGallery = f;
 
             pictureImage.Source = ImageSource.FromStream(() => f);
         }

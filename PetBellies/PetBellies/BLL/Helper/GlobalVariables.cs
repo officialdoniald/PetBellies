@@ -98,14 +98,20 @@ namespace PetBellies.BLL.Helper
         public static string AzureDBConnectionString { get; set; }
 
         /// <summary>
+        /// GlobalCasualImage.
+        /// </summary>
+        public static byte[] GlobalCasualImage;
+
+        /// <summary>
         /// Selected picture from galery Stream.
         /// </summary>
-        public static Stream stream;
+        public static Stream SelectedImageFromGallery;
 
         /// <summary>
         /// Source of the selected galery picture.
         /// </summary>
-        public static string sstream;
+        public static string SourceSelectedImageFromGallery;
+
         /// <summary>
         /// Is Pet deleted?
         /// </summary>
@@ -168,6 +174,14 @@ namespace PetBellies.BLL.Helper
         public static void InitializeUser()
         {
             ActualUser = databaseConnection.GetUserByEmail(ActualUsersEmail);
+        }
+
+        /// <summary>
+        /// Initializes the GlobalCasualImage.
+        /// </summary>
+        public static void InitializeGlobalCasualImage()
+        {
+            GlobalCasualImage = databaseConnection.GetGlobalCasualImage();
         }
 
         /// <summary>

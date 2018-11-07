@@ -11,7 +11,7 @@ namespace PetBellies
         public App()
         {
             InitializeComponent();
-
+            
             GlobalVariables.GlobalPassword = PetBellies.Properties.Resources.ResourceManager.GetString("GlobalPassword");
             GlobalVariables.AzureDBConnectionString = PetBellies.Properties.Resources.ResourceManager.GetString("AzureDBConnectionString");
             GlobalVariables.NormalLabel = (Style)Resources["NormalLabel"];
@@ -22,6 +22,7 @@ namespace PetBellies
                 while (!CrossConnectivity.Current.IsConnected) { }
             }
             GlobalVariables.InitializeUsersEmail();
+            GlobalVariables.InitializeGlobalCasualImage();
 
             if (!GlobalVariables.HaveToLogin)
             {
