@@ -88,5 +88,19 @@ namespace PetBellies.View
         {
             pwEntry.Focus();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            GlobalVariables.CanIGoBackWithTheBackButton = false;
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            GlobalVariables.CanIGoBackWithTheBackButton = true;
+        }
     }
 }

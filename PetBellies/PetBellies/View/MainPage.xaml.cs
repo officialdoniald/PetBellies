@@ -14,6 +14,8 @@ namespace PetBellies.View
         {
             InitializeComponent();
 
+            Title = "MainPage";
+
             CrossConnectivity.Current.ConnectivityChanged += async (sender, args) =>
             {
                 if (!CrossConnectivity.Current.IsConnected && !wasNotConn)

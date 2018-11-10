@@ -30,9 +30,18 @@ namespace PetBellies.View
             });
         }
 
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            GlobalVariables.CanIGoBackWithTheBackButton = true;
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            GlobalVariables.CanIGoBackWithTheBackButton = false;
 
             if (GlobalVariables.IsPictureDeleted)
             {

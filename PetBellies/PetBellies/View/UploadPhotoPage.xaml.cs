@@ -23,8 +23,17 @@ namespace PetBellies.View
             currentWidth = Application.Current.MainPage.Width;
         }
 
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            GlobalVariables.CanIGoBackWithTheBackButton = true;
+        }
+
         protected override void OnAppearing()
         {
+            GlobalVariables.CanIGoBackWithTheBackButton = false;
+
             if (GlobalVariables.AddedPet || GlobalVariables.AddedPhoto)
                 Initialize();
         }

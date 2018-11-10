@@ -50,5 +50,19 @@ namespace PetBellies.View
                 }
             };
         }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            BLL.Helper.GlobalVariables.CanIGoBackWithTheBackButton = true;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            BLL.Helper.GlobalVariables.CanIGoBackWithTheBackButton = false;
+        }
     }
 }

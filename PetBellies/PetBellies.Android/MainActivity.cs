@@ -1,8 +1,10 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using PetBellies.BLL.Helper;
 using Plugin.CurrentActivity;
 using Plugin.Permissions;
+using Xamarin.Forms;
 
 namespace PetBellies.Droid
 {
@@ -27,6 +29,12 @@ namespace PetBellies.Droid
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        public override void OnBackPressed() { }
+        public override void OnBackPressed()
+        {
+            if (GlobalVariables.CanIGoBackWithTheBackButton)
+            {
+                base.OnBackPressed();
+            }
+        }
     }
 }

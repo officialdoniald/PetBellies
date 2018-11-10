@@ -88,6 +88,11 @@ namespace PetBellies.BLL.Helper
             new DatabaseConnections();
 
         /// <summary>
+        /// Can I go back with the Back Button?
+        /// </summary>
+        public static bool CanIGoBackWithTheBackButton { get; set; } = false;
+
+        /// <summary>
         /// Application password.
         /// </summary>
         public static string GlobalPassword { get; set; }
