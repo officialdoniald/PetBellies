@@ -61,15 +61,6 @@ namespace PetBellies.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DefaultEndpointsProtocol=https;AccountName=officialdoniald;AccountKey=xKdU5Ijg9oU6HBS2zi60get5qeLLrUPYvwVjdTxcoRhBCTVvssSZn1jKzXyhyEklCRL/Gx6CsttTM6uxnBqKtg==;EndpointSuffix=core.windows.net.
-        /// </summary>
-        internal static string AzureBlobStorageConnectionString {
-            get {
-                return ResourceManager.GetString("AzureBlobStorageConnectionString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Data Source=tcp:projektfifi.database.windows.net,1433;Initial Catalog=projektfifi;User ID=doniald@projektfifi;Password=96kEHTPp2o0206;.
         /// </summary>
         internal static string AzureDBConnectionString {
