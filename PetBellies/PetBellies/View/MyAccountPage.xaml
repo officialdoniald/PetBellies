@@ -12,6 +12,11 @@
             <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" HorizontalOptions="Center" Margin="0,25,0,0">
             </controls:CircleImage>
             <Label x:Name="userNameLabel" Style="{StaticResource NormalLabel}" />
+            <Label x:Name="followingLabel" Style="{StaticResource NormalLabel}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
             <Button x:Name="otherButton" Style="{StaticResource NormalButton}" Text="Other" Clicked="otherButton_Clicked" />
             <Button x:Name="updateProfileButton" Style="{StaticResource NormalButton}" Text="Edit my profile" Clicked="updateProfileButton_Clicked" />
             <Label Text="My pets:" Style="{StaticResource NormalLabel}" />

@@ -10,7 +10,9 @@ namespace PetBellies.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MyAccountPage : ContentPage
 	{
-        List<ListViewWithPictureAndSomeText> listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
+        private List<ListViewWithPictureAndSomeText> listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
+
+        private List<Following> followings = new List<Following>();
 
         public MyAccountPage()
         {
@@ -45,6 +47,10 @@ namespace PetBellies.View
             else profilePictureImage.Source = "account.png";
 
             userNameLabel.Text = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
+
+            followings = GlobalVariables.myAccountPageViewModel.GetMyFollowing();
+
+            followingLabel.Text = followings.Count + " following";
 
             listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
 
@@ -85,6 +91,12 @@ namespace PetBellies.View
         private void addPetButton_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AddPetPage());
+        }
+
+        //Following gomb
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new FollowersPage(followings));
         }
     }
 }

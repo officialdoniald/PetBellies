@@ -67,16 +67,11 @@ namespace PetBellies.View
                 }
                 else
                 {
-                    nothingFoundStackLayout.IsVisible = true;
+                    nothingFoundStackLayout.IsVisible = false;
                 }
                 wallListView.ItemsSource = GlobalVariables.wallListViewAdapter;
                 wallListView.IsRefreshing = false;
             });
-
-            //if (wallList.Count == 0 && Device.OS == TargetPlatform.Android)
-            //{
-            //    wallListView.IsRefreshing = false;
-            //}
         }
 
         async void Handle_Refreshing(object sender, System.EventArgs e)

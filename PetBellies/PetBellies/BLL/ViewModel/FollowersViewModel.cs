@@ -23,5 +23,26 @@ namespace PetBellies.BLL.ViewModel
 
             return userList;
         }
+
+        public List<Pet> GetPetList(List<Following> followings)
+        {
+            List<Pet> petList = new List<Pet>();
+
+            foreach (var item in followings)
+            {
+                Pet pet = new Pet();
+
+                pet = GlobalVariables.databaseConnection.GetPetByID(item.FUserID);
+
+                petList.Add(pet);
+            }
+
+            return petList;
+        }
+
+        public bool IsMyPet(int petid)
+        {
+            return GlobalVariables.whosLikedViewModel.IsMyPet(petid);
+        }
     }
 }

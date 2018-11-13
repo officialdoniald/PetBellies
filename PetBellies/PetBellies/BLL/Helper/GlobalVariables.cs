@@ -15,6 +15,9 @@ namespace PetBellies.BLL.Helper
         public static List<WallListViewAdapter> wallListViewAdapter =
             new List<WallListViewAdapter>();
 
+        public static MyAccountPageViewModel myAccountPageViewModel =
+            new MyAccountPageViewModel();
+
         public static SignupPageViewModel signupPageViewModel =
             new SignupPageViewModel();
 
