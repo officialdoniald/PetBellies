@@ -153,6 +153,16 @@ namespace PetBellies.BLL.Helper
         {
             return " like";
         }
+
+        public static string BlockedUser()
+        {
+            return "This user is blocked!";
+        }
+
+        public static string BlockedPetUser()
+        {
+            return "This pet's user is blocked!";
+        }
     }
 }
 

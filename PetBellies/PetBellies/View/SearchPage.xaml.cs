@@ -128,35 +128,40 @@ namespace PetBellies.View
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        Image image = new Image();
+                        var pet = GlobalVariables.databaseConnection.GetPetByID(item.PetID);
 
-                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
-
-                        image.HeightRequest = optimalWidth;
-
-                        image.GestureRecognizers.Add(new TapGestureRecognizer()
+                        if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(pet.Uploader))
                         {
-                            NumberOfTapsRequired = 1,
-                            TappedCallback = delegate
+                            Image image = new Image();
+
+                            image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
+
+                            image.HeightRequest = optimalWidth;
+
+                            image.GestureRecognizers.Add(new TapGestureRecognizer()
                             {
-                                OnPictureClicked(item);
+                                NumberOfTapsRequired = 1,
+                                TappedCallback = delegate
+                                {
+                                    OnPictureClicked(item);
+                                }
+                            });
+
+                            image.Aspect = Aspect.AspectFill;
+
+                            pictureListGrid.Children.Add(image, top, left);
+
+                            if (i == 3)
+                            {
+                                left++;
+                                i = 1;
+                                top = 0;
                             }
-                        });
-
-                        image.Aspect = Aspect.AspectFill;
-
-                        pictureListGrid.Children.Add(image, top, left);
-
-                        if (i == 3)
-                        {
-                            left++;
-                            i = 1;
-                            top = 0;
-                        }
-                        else
-                        {
-                            i++;
-                            top++;
+                            else
+                            {
+                                i++;
+                                top++;
+                            }
                         }
                     });
                 }

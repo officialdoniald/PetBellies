@@ -7,7 +7,6 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Style="{StaticResource NormalStackLayout}">
-                <!--<Image x:Name="profilePictureImage" Aspect="AspectFit"/>-->
                 <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFill">
                     <controls:CircleImage.WidthRequest>
                         <OnPlatform x:TypeArguments="x:Double">
@@ -20,8 +19,10 @@
                         </OnPlatform>
                     </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
+                <Button Margin="50,25,50,0" Text="Block" Style="{StaticResource NormalButton}" x:Name="blockUserButton" IsVisible="false" Clicked="blockUserButton_Clicked"/>
                 <Label x:Name="userNameLabel" Style="{StaticResource NormalLabel}" />
-                <Label Text="Pets:" Style="{StaticResource NormalLabel}" Margin="50,25,50,10"/>
+                <Label x:Name="blockedLabel" IsVisible="False" Style="{StaticResource NormalLabel}" />
+                <Label Text="Pets:" x:Name="petsLabel" IsVisible="false" Style="{StaticResource NormalLabel}" Margin="50,25,50,10"/>
                 <StackLayout x:Name="petsStackLayout" Orientation="Vertical" HorizontalOptions="Center">
                 </StackLayout>
             </StackLayout>

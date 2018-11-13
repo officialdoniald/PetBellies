@@ -1,12 +1,8 @@
 ﻿using ImageCircle.Forms.Plugin.Abstractions;
 using PetBellies.BLL.Helper;
 using PetBellies.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,7 +21,7 @@ namespace PetBellies.View
 
         public SeeAnOwnerPage(int userid)
         {
-            this.userID = userid;
+            userID = userid;
 
             InitializeComponent();
 
@@ -49,8 +45,6 @@ namespace PetBellies.View
                         profilePictureImage.HeightRequest = optimalWidth;
                         profilePictureImage.WidthRequest = optimalWidth;
 
-                        //profilePictureImage.Source = ImageSource.FromUri(new Uri(user.ProfilePictureURL));
-
                         profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(user.ProfilePictureURL));
                     });
                 }
@@ -64,60 +58,81 @@ namespace PetBellies.View
                     userNameLabel.Text = user.FirstName + " " + user.LastName;
                 });
 
-                petList = GlobalVariables.seeAnOwnerProfileViewModel.GetPet(user.id);
+                if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(userID))//ha nem blokkolt
+                {
+                    petList = GlobalVariables.seeAnOwnerProfileViewModel.GetPet(user.id);
 
-                foreach (var item in petList)
+                    foreach (var item in petList)
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            blockedLabel.IsVisible = false;
+                            petsLabel.IsVisible = true;
+                            blockUserButton.IsVisible = true;
+
+                            StackLayout oneGrid = new StackLayout()
+                            {
+                                Orientation = StackOrientation.Vertical
+                            };
+
+                            CircleImage petProfilePictureImage = new CircleImage
+                            {
+                                HeightRequest = optimalWidth,
+                                WidthRequest = optimalWidth,
+                                Aspect = Aspect.AspectFill,
+                                HorizontalOptions = LayoutOptions.Center,
+                                Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
+                            };
+
+                            Label petNameLabel = new Label()
+                            {
+                                Text = item.Name,
+                                Style = GlobalVariables.NormalLabel
+                            };
+
+                            var goToPetProfileTapped = new TapGestureRecognizer();
+                            goToPetProfileTapped.Tapped += (s, e) =>
+                            {
+                                var searchResultPage = new SeeAPetProfile(item.id);
+
+                                Navigation.PushAsync(searchResultPage);
+                            };
+
+                            petProfilePictureImage.GestureRecognizers.Add(goToPetProfileTapped);
+                            petNameLabel.GestureRecognizers.Add(goToPetProfileTapped);
+
+                            oneGrid.Children.Add(petProfilePictureImage);
+                            oneGrid.Children.Add(petNameLabel);
+
+                            petsStackLayout.Children.Add(oneGrid);
+                        });
+                    }
+                }
+                else
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        StackLayout oneGrid = new StackLayout()
-                        {
-                            Orientation = StackOrientation.Vertical
-                        };
-
-                        //Image petProfilePictureImage = new Image()
-                        //{
-                        //    Source = ImageSource.FromUri(new Uri(item.ProfilePictureURL)),
-                        //    HeightRequest = optimalWidth,
-                        //    Aspect = Aspect.AspectFill,
-                        //    HorizontalOptions = LayoutOptions.Center
-                        //};
-
-                        CircleImage petProfilePictureImage = new CircleImage
-                        {
-                            //BorderColor = Color.White,
-                            //BorderThickness = 0,
-                            HeightRequest = optimalWidth,
-                            WidthRequest = optimalWidth,
-                            Aspect = Aspect.AspectFill,
-                            HorizontalOptions = LayoutOptions.Center,
-                            Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
-                        };
-
-                        Label petNameLabel = new Label()
-                        {
-                            Text = item.Name,
-                            Style = GlobalVariables.NormalLabel
-                        };
-
-                        var goToPetProfileTapped = new TapGestureRecognizer();
-                        goToPetProfileTapped.Tapped += (s, e) =>
-                        {
-                            var searchResultPage = new SeeAPetProfile(item.id);
-
-                            Navigation.PushAsync(searchResultPage);
-                        };
-
-                        petProfilePictureImage.GestureRecognizers.Add(goToPetProfileTapped);
-                        petNameLabel.GestureRecognizers.Add(goToPetProfileTapped);
-
-                        oneGrid.Children.Add(petProfilePictureImage);
-                        oneGrid.Children.Add(petNameLabel);
-
-                        petsStackLayout.Children.Add(oneGrid);
+                        blockUserButton.IsVisible = false;
+                        blockedLabel.Text = English.BlockedUser();
+                        blockedLabel.IsVisible = true;
+                        petsLabel.IsVisible = false;
                     });
                 }
             });
+        }
+
+        private void blockUserButton_Clicked(object sender, System.EventArgs e)
+        {
+            var success = GlobalVariables.blockedPeopleViewModel.InsertBlockedPeople(
+            new Model.BlockedPeople()
+            {
+                UserID = GlobalVariables.ActualUser.id,
+                BlockedUserID = userID
+            });
+
+            if (!string.IsNullOrEmpty(success))
+                DisplayAlert(English.Failed(), success, English.OK());
+            else Navigation.PopToRootAsync();
         }
     }
 }

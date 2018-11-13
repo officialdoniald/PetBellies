@@ -14,13 +14,19 @@
                 Clicked="deleteAcoountPageButton_ClickedAsync"/>
             <Button
                 Margin="50,25,50,0"
+                Text="Blocked People"
+                Style="{StaticResource NormalButton}"
+                x:Name="blockedPeopleButton"
+                Clicked="blockedPeopleButton_Clicked"/>
+            <Button
+                Margin="50,25,50,0"
                 Text="Logout"
                 Style="{StaticResource NormalButton}"
                 x:Name="loguotButton"
                 Clicked="loguotButton_Clicked"/>
             <ActivityIndicator x:Name="deleteActivity">
 
-            </ActivityIndicator>
+                </ActivityIndicator>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

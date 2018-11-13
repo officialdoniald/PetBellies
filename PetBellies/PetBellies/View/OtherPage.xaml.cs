@@ -57,5 +57,10 @@ namespace PetBellies.View
 
             loguotButton.IsEnabled = true;
         }
+
+        private void blockedPeopleButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new BlockedPeople());
+        }
     }
 }

@@ -14,5 +14,7 @@ namespace PetBellies.Model
         public User user { get; set; }
 
         public Pet pet { get; set; }
+
+        public BlockedPeople blockedPeople { get; set; }
     }
 }

@@ -59,57 +59,76 @@ namespace PetBellies.View
                     else profilePictureImage.Source = "account.png";
                 });
 
-                HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);
+                if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(thisPet.Uploader))
+                {
+                    HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);
 
-                int left = 0;
-                int top = 0;
+                    int left = 0;
+                    int top = 0;
 
-                int i = 1;
+                    int i = 1;
 
-                foreach (var item in petPictureListfromDB)
+                    foreach (var item in petPictureListfromDB)
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            followersLabel.IsVisible = true;
+                            followButton.IsVisible = true;
+                            goToOwnerPageButton.IsVisible = true;
+                            blockedLabel.IsVisible = false;
+
+                            Image image = new Image();
+
+                            //image.Source = ImageSource.FromUri(new Uri(item.PictureURL));
+
+                            image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
+
+                            image.HeightRequest = optimalWidth;
+
+                            image.GestureRecognizers.Add(new TapGestureRecognizer()
+                            {
+                                NumberOfTapsRequired = 1,
+                                TappedCallback = delegate
+                                {
+                                    OnPictureClicked(item);
+                                }
+                            });
+
+                            image.Aspect = Aspect.AspectFill;
+
+                            pictureListGrid.Children.Add(image, top, left);
+
+                            if (i == 3)
+                            {
+                                left++;
+                                i = 1;
+                                top = 0;
+                            }
+                            else
+                            {
+                                i++;
+                                top++;
+                            }
+                        });
+                    }
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        if (HaveIAlreadyFollow) followButton.Text = GlobalVariables.petProfileFragmentViewModel.unfollowText;
+                        else followButton.Text = GlobalVariables.petProfileFragmentViewModel.followText;
+                    });
+                }
+                else
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        Image image = new Image();
-
-                        //image.Source = ImageSource.FromUri(new Uri(item.PictureURL));
-
-                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
-
-                        image.HeightRequest = optimalWidth;
-
-                        image.GestureRecognizers.Add(new TapGestureRecognizer()
-                        {
-                            NumberOfTapsRequired = 1,
-                            TappedCallback = delegate
-                            {
-                                OnPictureClicked(item);
-                            }
-                        });
-
-                        image.Aspect = Aspect.AspectFill;
-
-                        pictureListGrid.Children.Add(image, top, left);
-
-                        if (i == 3)
-                        {
-                            left++;
-                            i = 1;
-                            top = 0;
-                        }
-                        else
-                        {
-                            i++;
-                            top++;
-                        }
+                        followersLabel.IsVisible = false;
+                        followButton.IsVisible = false;
+                        goToOwnerPageButton.IsVisible = false;
+                        blockedLabel.IsVisible = true;
+                        blockedLabel.Text = English.BlockedPetUser();
                     });
                 }
-
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    if (HaveIAlreadyFollow) followButton.Text = GlobalVariables.petProfileFragmentViewModel.unfollowText;
-                    else followButton.Text = GlobalVariables.petProfileFragmentViewModel.followText;
-                });
             });
         }
 

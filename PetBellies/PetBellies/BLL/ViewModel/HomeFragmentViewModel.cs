@@ -66,7 +66,10 @@ namespace PetBellies.BLL.ViewModel
                             wall.haveILiked = true;
                         }
 
-                        wallList.Add(wall);
+                        if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(pet.Uploader))
+                        {
+                            wallList.Add(wall);
+                        }
                     }
                 }
                 return wallList;

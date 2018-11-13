@@ -21,13 +21,14 @@
                     </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
                 <Label x:Name="petnameLabel" Style="{StaticResource NormalLabel}" />
-                <Label x:Name="followersLabel" Style="{StaticResource NormalLabel}">
+                <Label x:Name="followersLabel" IsVisible="False" Style="{StaticResource NormalLabel}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Button x:Name="followButton" Clicked="followButton_ClickedAsync" Style="{StaticResource NormalButton}" />
-                <Button x:Name="goToOwnerPageButton" Clicked="goToOwnerPageButton_Clicked" Style="{StaticResource NormalButton}" Text="Go to the owner's page" />
+                <Label x:Name="blockedLabel" IsVisible="False" Style="{StaticResource NormalLabel}" />
+                <Button x:Name="followButton" IsVisible="False" Clicked="followButton_ClickedAsync" Style="{StaticResource NormalButton}" />
+                <Button x:Name="goToOwnerPageButton" IsVisible="False" Clicked="goToOwnerPageButton_Clicked" Style="{StaticResource NormalButton}" Text="Go to the owner's page" />
                 <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*">

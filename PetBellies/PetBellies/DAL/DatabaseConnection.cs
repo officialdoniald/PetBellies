@@ -15,6 +15,8 @@ namespace PetBellies.DAL
         //GET
         public static string GET_Pictures_SQL { get; } =
                     "SELECT * FROM [dbo].[Pictures]";
+        public static string GET_BlockedPeople_SQL { get; } =
+                    "SELECT * FROM [dbo].[Blockedpeople] where UserID=@UserID;";
         public static string GET_USER_SQL { get; } =
                     "SELECT * FROM [dbo].[User]";
         public static string GET_Donates_SQL { get; } =
@@ -72,6 +74,9 @@ namespace PetBellies.DAL
         //DELETE
         public static string DELETE_USER_SQL { get; } =
                    "DELETE FROM [dbo].[User] WHERE ID=@id";
+        public static string DELETE_BlockedPeople_SQL { get; } =
+                   "DELETE FROM [dbo].[Blockedpeople] WHERE UserID=@UserID AND BlockedUserID=@BlockedUserID;"+
+                   "DELETE FROM [dbo].[Blockedpeople] WHERE BlockedUserID=@UserID AND UserID=@BlockedUserID;";
         public static string DELETE_Following_SQL { get; } =
                    "DELETE FROM [dbo].[Following] WHERE userID=@userid AND fuserid=@petid";
         public static string DELETE_Donates_SQL { get; } =
@@ -150,7 +155,8 @@ namespace PetBellies.DAL
             "UserID=@UserID," +
             "FUserID=@FUserID" +
             " WHERE ID=@ID";
-        
+
+        //INSERT
         public static string INSERT_User_SQL { get; } =
             "INSERT INTO [dbo].[USER]" +
             "([FirstName], [LastName], [FacebookId], [ProfilePicture], [Email], [Password]) " +
@@ -166,7 +172,6 @@ namespace PetBellies.DAL
             "([UserID], [DonateDate], [HowMany], [CashType], [PetID]) " +
             "VALUES(" +
             "@UserID,@DonateDate,@HowMany,@CashType,@PetID);";
-
         public static string INSERT_Petpictures_SQL { get; } =
             "INSERT INTO [dbo].[Petpictures]" +
             "([PetID], [PictureURL], [UploadDate]) " +
@@ -187,6 +192,15 @@ namespace PetBellies.DAL
             "([UserID], [FUserID]) " +
             "VALUES(" +
             "@UserID,@FUserID);";
+        public static string INSERT_BlockedPeople_SQL { get; } =
+            "INSERT INTO [dbo].[Blockedpeople]" +
+            "([UserID], [BlockedUserID]) " +
+            "VALUES(" +
+            "@UserID,@BlockedUserID);"+
+            "INSERT INTO [dbo].[Blockedpeople]" +
+            "([UserID], [BlockedUserID]) " +
+            "VALUES(" +
+            "@BlockedUserID,@UserID);";
         public static string INSERT_Hashtags_SQL { get; } =
             "INSERT INTO [dbo].[Hashtags]" +
             "([petpicturesid], [hashtag]) " +
@@ -990,6 +1004,43 @@ namespace PetBellies.DAL
             }
         }
 
+        public List<BlockedPeople> GetBlockedPeopleByID()
+        {
+            List<BlockedPeople> blockedPeople = new List<BlockedPeople>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
+                using (SqlCommand cmd = new SqlCommand(GET_BlockedPeople_SQL, conn))
+                {
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@UserID", GlobalVariables.ActualUser.id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                BlockedPeople blockedPeopleJustOne = new BlockedPeople();
+
+                                blockedPeopleJustOne.ID = reader.GetInt32(reader.GetOrdinal("ID"));
+                                blockedPeopleJustOne.UserID = GlobalVariables.ActualUser.id;
+                                blockedPeopleJustOne.BlockedUserID = reader.GetInt32(reader.GetOrdinal("BlockedUserID"));
+
+                                blockedPeople.Add(blockedPeopleJustOne);
+                            }
+                        }
+                    }
+                }
+                return blockedPeople;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public Petpictures GetOnePetpicturesByID(int ID)
         {
             Petpictures petpicture = new Petpictures();
@@ -1378,6 +1429,40 @@ namespace PetBellies.DAL
             catch (Exception)
             {
                 return -1;
+            }
+        }
+
+        public bool InsertBlockedPeople(BlockedPeople blockedPeople)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(INSERT_BlockedPeople_SQL, conn);
+
+                    cmd.Parameters.Add(
+                        new SqlParameter("@BlockedUserID", blockedPeople.BlockedUserID)
+                        {
+                            SqlDbType = System.Data.SqlDbType.Int
+                        }
+                     );
+                    cmd.Parameters.Add(
+                        new SqlParameter("@UserID", blockedPeople.UserID)
+                        {
+                            SqlDbType = System.Data.SqlDbType.Int
+                        }
+                     );
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -1823,6 +1908,30 @@ namespace PetBellies.DAL
                     {
                         cmd.Parameters.AddWithValue("@id", favoritepets.id);
                         if (cmd.ExecuteNonQuery() == 1) return true;
+                        else return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteBlockedPeople(BlockedPeople blockedPeople)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GlobalVariables.AzureDBConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(
+                        DELETE_BlockedPeople_SQL
+                        , conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserID", blockedPeople.UserID);
+                        cmd.Parameters.AddWithValue("@BlockedUserID", blockedPeople.BlockedUserID);
+                        if (cmd.ExecuteNonQuery() == 2) return true;
                         else return false;
                     }
                 }

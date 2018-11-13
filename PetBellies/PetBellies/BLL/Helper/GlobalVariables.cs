@@ -2,7 +2,6 @@
 using PetBellies.BLL.ViewModel;
 using PetBellies.DAL;
 using PetBellies.Model;
-using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +19,9 @@ namespace PetBellies.BLL.Helper
 
         public static SignupPageViewModel signupPageViewModel =
             new SignupPageViewModel();
+
+        public static BlockedPeopleViewModel blockedPeopleViewModel =
+            new BlockedPeopleViewModel();
 
         public static ForgotPasswordPageViewModel forgotPasswordPageViewModel =
             new ForgotPasswordPageViewModel();

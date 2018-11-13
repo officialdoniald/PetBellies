@@ -20,5 +20,24 @@ namespace PetBellies.BLL.ViewModel
         {
             return GlobalVariables.databaseConnection.GetPetsByUserID(userid);
         }
+
+        public bool IsItABlockedUser(int userid)
+        {
+            //TODO: adatbázissal megcsinálni Where-el, de nincs kedvem.
+            var blockedPeopleList = GlobalVariables.databaseConnection.GetBlockedPeopleByID();
+
+            if (blockedPeopleList != null && blockedPeopleList.Count > 0)
+            {
+                foreach (var item in blockedPeopleList)
+                {
+                    if (item.BlockedUserID == userid)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }
