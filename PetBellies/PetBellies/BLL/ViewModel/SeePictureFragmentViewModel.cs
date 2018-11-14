@@ -103,7 +103,6 @@ namespace PetBellies.BLL.ViewModel
 
         public bool DeletePicture(Petpictures petpictures)
         {
-            //TODO: Delet from DB
             return GlobalVariables.databaseConnection.DeletePetpictures(petpictures);
         }
     }

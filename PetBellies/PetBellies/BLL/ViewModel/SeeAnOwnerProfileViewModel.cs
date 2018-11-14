@@ -23,7 +23,6 @@ namespace PetBellies.BLL.ViewModel
 
         public bool IsItABlockedUser(int userid)
         {
-            //TODO: adatbázissal megcsinálni Where-el, de nincs kedvem.
             var blockedPeopleList = GlobalVariables.databaseConnection.GetBlockedPeopleByID();
 
             if (blockedPeopleList != null && blockedPeopleList.Count > 0)
