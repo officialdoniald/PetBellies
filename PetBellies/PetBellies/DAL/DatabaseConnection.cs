@@ -9,7 +9,7 @@ namespace PetBellies.DAL
     public class DatabaseConnections
     {
         private Segédfüggvények Segédfüggvények = new Segédfüggvények();
-
+        
         #region strings
 
         //GET
@@ -606,6 +606,7 @@ namespace PetBellies.DAL
                 return null;
             }
         }
+        
         #endregion
 
         #region GetByIDFunctions
@@ -631,7 +632,9 @@ namespace PetBellies.DAL
                                 user.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
                                 user.LastName = reader.GetString(reader.GetOrdinal("LastName"));
                                 user.Email = reader.GetString(reader.GetOrdinal("Email"));
+
                                 user.Password = reader.GetString(reader.GetOrdinal("Password"));
+
                                 try
                                 {
                                     user.FacebookId = reader.GetString(reader.GetOrdinal("FacebookId"));
@@ -677,7 +680,9 @@ namespace PetBellies.DAL
                                 user.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
                                 user.LastName = reader.GetString(reader.GetOrdinal("LastName"));
                                 user.Email = reader.GetString(reader.GetOrdinal("Email"));
+
                                 user.Password = reader.GetString(reader.GetOrdinal("Password"));
+
                                 try
                                 {
                                     user.FacebookId = reader.GetString(reader.GetOrdinal("FacebookId"));
@@ -1239,10 +1244,11 @@ namespace PetBellies.DAL
                             SqlDbType = System.Data.SqlDbType.NVarChar
                         }
                      );
+
                     cmd.Parameters.Add(
-                        new SqlParameter("@Password", user.Password)
+                        new SqlParameter("@Password", Segédfüggvények.EncryptPassword(user.Password))
                         {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
+                            SqlDbType = System.Data.SqlDbType.VarChar
                         }
                      );
 
@@ -1624,7 +1630,13 @@ namespace PetBellies.DAL
                         cmd.Parameters.AddWithValue("@FacebookId", user.FacebookId);
                         cmd.Parameters.AddWithValue("@ProfilePictureURL", user.ProfilePictureURL);
                         cmd.Parameters.AddWithValue("@Email", user.Email);
-                        cmd.Parameters.AddWithValue("@Password", user.Password);
+                        
+                        cmd.Parameters.Add(
+                            new SqlParameter("@Password", user.Password)
+                            {
+                                SqlDbType = System.Data.SqlDbType.VarChar
+                            }
+                         );
 
                         int rows = cmd.ExecuteNonQuery();
 

@@ -40,7 +40,7 @@ namespace PetBellies.BLL.ViewModel
 
             var user = GlobalVariables.databaseConnection.GetUserByEmail(EMAIL.ToLower());
 
-            if (user is null || user.Password != PASSWORD)
+            if (user is null || user.Password != segédfüggvények.EncryptPassword(PASSWORD))
             {
                 return English.BadPasswordOrEmail();
             }

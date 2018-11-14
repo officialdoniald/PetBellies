@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 namespace PetBellies.BLL.Helper
 {
@@ -73,6 +74,16 @@ namespace PetBellies.BLL.Helper
             //    }
             //    return ms.ToArray();
             //}
+        }
+
+        public string EncryptPassword(string password)
+        {
+            using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+            {
+                UTF8Encoding uTF8Encoding = new UTF8Encoding();
+                byte[] data = md5.ComputeHash(uTF8Encoding.GetBytes(password));
+                return Convert.ToBase64String(data);
+            }
         }
     }
 }

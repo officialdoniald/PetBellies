@@ -90,7 +90,7 @@ namespace PetBellies.BLL.ViewModel
                 return English.PasswordIsEmpty();
             }
 
-            if (GlobalVariables.ActualUser.Password != oldpassword)
+            if (GlobalVariables.ActualUser.Password != new Segédfüggvények().EncryptPassword(oldpassword))
             {
                 return English.BadOldPassword();
             }
@@ -100,7 +100,7 @@ namespace PetBellies.BLL.ViewModel
                 return English.BadPasswordLength();
             }
 
-            GlobalVariables.ActualUser.Password = newPassword;
+            GlobalVariables.ActualUser.Password = new Segédfüggvények().EncryptPassword(newPassword);
 
             return UpdateUser(GlobalVariables.ActualUser);
         }
