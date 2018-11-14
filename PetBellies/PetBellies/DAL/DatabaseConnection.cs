@@ -1040,7 +1040,7 @@ namespace PetBellies.DAL
                 }
                 return blockedPeople;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }

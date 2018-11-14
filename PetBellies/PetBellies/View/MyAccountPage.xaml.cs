@@ -50,7 +50,7 @@ namespace PetBellies.View
 
             followings = GlobalVariables.myAccountPageViewModel.GetMyFollowing();
 
-            followingLabel.Text = followings.Count + " following";
+            followingLabel.Text = followings.Count.ToString();
 
             listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
 

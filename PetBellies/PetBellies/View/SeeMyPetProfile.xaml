@@ -7,9 +7,8 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Style="{StaticResource NormalStackLayout}">
-                <!--<Image x:Name="profilePictureImage" Aspect="AspectFit" Margin="0,25,0,0">
-                </Image>-->
-                <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,25,0,0" HorizontalOptions="Center">
+                <Label x:Name="petnameLabel" Style="{StaticResource DetailLabel}" Margin="0,0,0,20"/>
+                <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" HorizontalOptions="Center">
                     <controls:CircleImage.WidthRequest>
                         <OnPlatform x:TypeArguments="x:Double">
                             <On Platform="Android, iOS">75</On>
@@ -21,12 +20,30 @@
                         </OnPlatform>
                     </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
-                <Label x:Name="petnameLabel" Style="{StaticResource NormalLabel}" />
-                <Label x:Name="followersLabel" Style="{StaticResource NormalLabel}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
-                    </Label.GestureRecognizers>
-                </Label>
+                <Grid x:Name="detailGrid" Margin="0,20,0,50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" x:Name="followersLabel" Style="{StaticResource DetailLabel}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="followers">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Column="1" Grid.Row="0" x:Name="ageLabel" Style="{StaticResource DetailLabel}" />
+                    <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="years old"/>
+                    <Label Grid.Column="2" Grid.RowSpan="2" x:Name="kindLabel" Style="{StaticResource DetailLabel}" />
+                </Grid>
                 <Button x:Name="updateButton" Clicked="updateButton_Clicked" Text="Change" Style="{StaticResource NormalButton}" />
                 <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
                     <Grid.ColumnDefinitions>

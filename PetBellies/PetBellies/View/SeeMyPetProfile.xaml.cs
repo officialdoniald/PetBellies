@@ -45,13 +45,17 @@ namespace PetBellies.View
                 petPictureListfromDB = GlobalVariables.petProfileFragmentViewModel.GetPetPictureURL(petid);
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    followersLabel.Text = GlobalVariables.followersViewModel.GetUserList(this.petid).Count + " followers";
+                    followersLabel.Text = GlobalVariables.followersViewModel.GetUserList(this.petid).Count.ToString();
 
                     currentWidth = Application.Current.MainPage.Width;
 
                     optimalWidth = currentWidth / 3;
 
                     petnameLabel.Text = thisPet.Name;
+
+                    ageLabel.Text = thisPet.Age.ToString();
+
+                    kindLabel.Text = thisPet.PetType;
 
                     profilePictureImage.HeightRequest = optimalWidth;
                     profilePictureImage.WidthRequest = optimalWidth;

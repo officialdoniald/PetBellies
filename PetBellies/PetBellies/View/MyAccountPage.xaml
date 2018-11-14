@@ -7,19 +7,32 @@
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
     <ContentPage.Content>
         <StackLayout Style="{StaticResource NormalStackLayout}">
-            <!-- <Image x:Name="profilePictureImage" Aspect="AspectFit" HeightRequest="75">
-            </Image>-->
-            <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" HorizontalOptions="Center" Margin="0,25,0,0">
-            </controls:CircleImage>
-            <Label x:Name="userNameLabel" Style="{StaticResource NormalLabel}" />
-            <Label x:Name="followingLabel" Style="{StaticResource NormalLabel}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                </Label.GestureRecognizers>
-            </Label>
-            <Button x:Name="otherButton" Style="{StaticResource NormalButton}" Text="Other" Clicked="otherButton_Clicked" />
-            <Button x:Name="updateProfileButton" Style="{StaticResource NormalButton}" Text="Edit my profile" Clicked="updateProfileButton_Clicked" />
-            <Label Text="My pets:" Style="{StaticResource NormalLabel}" />
+            <Label x:Name="userNameLabel" Style="{StaticResource DetailLabel}" Margin="0,0,0,20"/>
+            <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" HorizontalOptions="Center"/>
+            <Grid x:Name="detailGrid" Margin="0,20,0,50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label x:Name="followingLabel" Style="{StaticResource DetailLabel}" Grid.Column="0" Grid.Row="0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Style="{StaticResource AltDetailLabel}" Text="following" Grid.Column="0" Grid.Row="1">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Button x:Name="updateProfileButton" Style="{StaticResource NormalButton}" Text="Edit" Clicked="updateProfileButton_Clicked" Grid.Column="1" Grid.RowSpan="2"/>
+                <Button x:Name="otherButton" Style="{StaticResource NormalButton}" Text="Other" Clicked="otherButton_Clicked"  Grid.Column="2" Grid.RowSpan="2"/>
+            </Grid>
+            <Label Text="My pets:" Style="{StaticResource DetailLabel}" />
             <Button x:Name="addPetButton" Style="{StaticResource NormalButton}" Text="Add pet" Clicked="addPetButton_Clicked" />
             <ListView ItemsSource="{Binding listViewWithPictureAndSomeText}" x:Name="petListView" ItemTapped="petListView_ItemTapped" SeparatorVisibility="None" HasUnevenRows="True" Margin="50,0,50,0">
                 <ListView.ItemTemplate>
@@ -36,8 +49,6 @@
                                     <ColumnDefinition>
                                     </ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <!--<Image Source="{Binding ProfilePicture}" HeightRequest="45" WidthRequest="45" Grid.Row="0" Grid.Column="0">
-                                </Image>-->
                                 <controls:CircleImage Grid.Row="0" Grid.Column="0" Source="{Binding ProfilePicture}" Aspect="AspectFill" HorizontalOptions="Center">
                                     <controls:CircleImage.WidthRequest>
                                         <OnPlatform x:TypeArguments="x:Double">

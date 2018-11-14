@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PetBellies.App"
-             xmlns:System="clr-namespace:System;assembly=mscorlib">
+             x:Class="PetBellies.App">
     <Application.Resources>
         <ResourceDictionary>
             <!--Values-->
-            <System:Int32 x:Key="NormalFontSize">15</System:Int32>
-            <System:Int32 x:Key="TitleFontSize">70</System:Int32>
-            <System:Int32 x:Key="ButtonHeighRequest">40</System:Int32>
-            <System:Int32 x:Key="ButtonBorderWidth">2</System:Int32>
-            <System:String x:Key="AppBarColor">#FFCBB6</System:String>
-            <System:String x:Key="AppColor">Black</System:String>
-            <System:String x:Key="iosFontFamily">IndieFlower</System:String>
-            <System:String x:Key="androidFontFamily">IndieFlower.ttf#Indie Flower</System:String>
+            <x:Int32 x:Key="NormalFontSize">15</x:Int32>
+            <x:Int32 x:Key="DetailFontSize">25</x:Int32>
+            <x:Int32 x:Key="TitleFontSize">70</x:Int32>
+            <x:Int32 x:Key="ButtonHeighRequest">40</x:Int32>
+            <x:Int32 x:Key="ButtonBorderWidth">2</x:Int32>
+            <x:String x:Key="AppBarColor">#FFCBB6</x:String>
+            <x:String x:Key="AppColor">Black</x:String>
+            <x:String x:Key="iosFontFamily">IndieFlower</x:String>
+            <x:String x:Key="androidFontFamily">IndieFlower.ttf#Indie Flower</x:String>
+            
             <!--Styles #FFCBB6 #FF4081-->
             <Style TargetType="NavigationPage" x:Key="NavigationPageStyle">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource AppBarColor}" />
@@ -28,42 +29,33 @@
                 <Setter Property="Aspect" Value="AspectFill" />
                 <Setter Property="HeightRequest" Value="400" />
             </Style>
-
-            <!--<Style TargetType="Image" x:Key="FillImageStyle">
-                <Setter Property="VerticalOptions" Value="Fill" />
-                <Setter Property="HorizontalOptions" Value="Fill" />
-                <Setter Property="Aspect" Value="Fill" />
-            </Style>-->
             <Style TargetType="Entry" x:Key="NormalEnrty">
                 <Setter Property="TextColor" Value="{StaticResource AppColor}" />
                 <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
                 <Setter Property="HeightRequest" Value="45" />
                 <Setter Property="Margin" Value="50,0,50,0" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
-                <!--<Setter Property="FontFamily">
-                    <Setter.Value>
-                        <OnPlatform x:TypeArguments="x:String" iOS="{StaticResource iosFontFamily}" Android="{StaticResource androidFontFamily}" />
-                    </Setter.Value>
-                </Setter>-->
             </Style>
             <Style TargetType="Label" x:Key="NormalLabel">
                 <Setter Property="TextColor" Value="{StaticResource AppColor}" />
                 <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="Margin" Value="50,0,50,0" />
-                <!--<Setter Property="FontFamily">
-                    <Setter.Value>
-                        <OnPlatform x:TypeArguments="x:String" iOS="{StaticResource iosFontFamily}" Android="{StaticResource androidFontFamily}" />
-                    </Setter.Value>
-                </Setter>-->
+            </Style>
+            <Style TargetType="Label" x:Key="DetailLabel">
+                <Setter Property="TextColor" Value="{StaticResource AppColor}" />
+                <Setter Property="FontSize" Value="{StaticResource DetailFontSize}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Label" x:Key="AltDetailLabel">
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
             </Style>
             <Style TargetType="Label" x:Key="LogoAboveText">
                 <Setter Property="TextColor" Value="{StaticResource AppColor}" />
-                <!--<Setter Property="FontFamily">
-                    <Setter.Value>
-                        <OnPlatform x:TypeArguments="x:String" iOS="{StaticResource iosFontFamily}" Android="{StaticResource androidFontFamily}" />
-                    </Setter.Value>
-                </Setter>-->
                 <Setter Property="FontSize" Value="{StaticResource TitleFontSize}" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="Margin" Value="0,0,0,5" />
@@ -73,13 +65,9 @@
                 <Setter Property="TextColor" Value="{StaticResource AppColor}" />
                 <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
                 <Setter Property="HorizontalOptions" Value="Start" />
-                <!--<Setter Property="FontFamily">
-                    <Setter.Value>
-                        <OnPlatform x:TypeArguments="x:String" iOS="{StaticResource iosFontFamily}" Android="{StaticResource androidFontFamily}" />
-                    </Setter.Value>
-                </Setter>-->
             </Style>
             <Style TargetType="Button" x:Key="NormalButton">
+                <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="TextColor" Value="{StaticResource AppColor}" />
                 <Setter Property="HeightRequest" Value="{StaticResource ButtonHeighRequest}" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
@@ -87,11 +75,6 @@
                 <Setter Property="BorderColor" Value="{StaticResource AppColor}" />
                 <Setter Property="BorderWidth" Value="{StaticResource ButtonBorderWidth}" />
                 <Setter Property="Margin" Value="50,10,50,0" />
-                <!--<Setter Property="FontFamily">
-                    <Setter.Value>
-                        <OnPlatform x:TypeArguments="x:String" iOS="{StaticResource iosFontFamily}" Android="{StaticResource androidFontFamily}" />
-                    </Setter.Value>
-                </Setter>-->
             </Style>
             <Style TargetType="Button" x:Key="FacebookButton">
                 <Setter Property="TextColor" Value="White" />
@@ -100,11 +83,6 @@
                 <Setter Property="BackgroundColor" Value="#3B5998" />
                 <Setter Property="BorderColor" Value="{StaticResource AppColor}" />
                 <Setter Property="Margin" Value="0,0,0,5" />
-                <!--<Setter Property="FontFamily">
-                    <Setter.Value>
-                        <OnPlatform x:TypeArguments="x:String" iOS="{StaticResource iosFontFamily}" Android="{StaticResource androidFontFamily}" />
-                    </Setter.Value>
-                </Setter>-->
             </Style>
             <Style TargetType="StackLayout" x:Key="NormalStackLayout">
                 <Setter Property="Orientation" Value="Vertical" />

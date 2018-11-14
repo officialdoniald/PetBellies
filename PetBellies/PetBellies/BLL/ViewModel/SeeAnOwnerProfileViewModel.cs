@@ -38,5 +38,10 @@ namespace PetBellies.BLL.ViewModel
 
             return false;
         }
+
+        public List<Following> GetUsersFollowing(int id)
+        {
+            return GlobalVariables.databaseConnection.GetFollowingByuserID(id);
+        }
     }
 }

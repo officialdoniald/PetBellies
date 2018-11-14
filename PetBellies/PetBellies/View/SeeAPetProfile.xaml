@@ -7,8 +7,8 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Style="{StaticResource NormalStackLayout}">
-                <!--<Image x:Name="profilePictureImage" Aspect="AspectFit" Margin="0,20,0,0" />-->
-                <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,20,0,0" HorizontalOptions="Center">
+                <Label x:Name="petnameLabel" Style="{StaticResource DetailLabel}" Margin="0,0,0,20"/>
+                <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" HorizontalOptions="Center">
                     <controls:CircleImage.WidthRequest>
                         <OnPlatform x:TypeArguments="x:Double">
                             <On Platform="Android, iOS">75</On>
@@ -20,15 +20,42 @@
                         </OnPlatform>
                     </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
-                <Label x:Name="petnameLabel" Style="{StaticResource NormalLabel}" />
-                <Label x:Name="followersLabel" IsVisible="False" Style="{StaticResource NormalLabel}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
-                    </Label.GestureRecognizers>
-                </Label>
+                <Grid x:Name="detailGrid" IsVisible="False" Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" x:Name="followersLabel" Style="{StaticResource DetailLabel}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="followers">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Column="1" Grid.Row="0" x:Name="ageLabel" Style="{StaticResource DetailLabel}" />
+                    <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="years old"/>
+                    <Label Grid.Column="2" Grid.RowSpan="2" x:Name="kindLabel" Style="{StaticResource DetailLabel}" />
+                </Grid>
                 <Label x:Name="blockedLabel" IsVisible="False" Style="{StaticResource NormalLabel}" />
-                <Button x:Name="followButton" IsVisible="False" Clicked="followButton_ClickedAsync" Style="{StaticResource NormalButton}" />
-                <Button x:Name="goToOwnerPageButton" IsVisible="False" Clicked="goToOwnerPageButton_Clicked" Style="{StaticResource NormalButton}" Text="Go to the owner's page" />
+                <Grid x:Name="buttonGrid" IsVisible="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="followButton" Grid.Column="1" Grid.Row="0" Clicked="followButton_ClickedAsync" Style="{StaticResource NormalButton}" />
+                    <Button x:Name="goToOwnerPageButton" Grid.Column="0" Grid.Row="0" Clicked="goToOwnerPageButton_Clicked" Style="{StaticResource NormalButton}" Text="Go to the owner's page" />
+                </Grid>
                 <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*">

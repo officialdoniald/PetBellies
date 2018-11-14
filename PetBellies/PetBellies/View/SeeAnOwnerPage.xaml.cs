@@ -1,6 +1,7 @@
 ﻿using ImageCircle.Forms.Plugin.Abstractions;
 using PetBellies.BLL.Helper;
 using PetBellies.Model;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -14,6 +15,8 @@ namespace PetBellies.View
         private int userID = -1;
 
         private List<Pet> petList = new List<Pet>();
+
+        private List<Following> followings = new List<Following>();
 
         double currentWidth = 0;
 
@@ -68,7 +71,10 @@ namespace PetBellies.View
                         {
                             blockedLabel.IsVisible = false;
                             petsLabel.IsVisible = true;
-                            blockUserButton.IsVisible = true;
+                            detailGrid.IsVisible = true;
+
+                            followings = GlobalVariables.seeAnOwnerProfileViewModel.GetUsersFollowing(userID);
+                            followingLabel.Text = followings.Count.ToString();
 
                             StackLayout oneGrid = new StackLayout()
                             {
@@ -112,16 +118,22 @@ namespace PetBellies.View
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        blockUserButton.IsVisible = false;
                         blockedLabel.Text = English.BlockedUser();
                         blockedLabel.IsVisible = true;
                         petsLabel.IsVisible = false;
+                        detailGrid.IsVisible = false;
                     });
                 }
             });
         }
 
-        private void blockUserButton_Clicked(object sender, System.EventArgs e)
+        //Following gomb
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new FollowersPage(followings));
+        }
+
+        private void blockUserButton_Clicked(object sender, EventArgs e)
         {
             var success = GlobalVariables.blockedPeopleViewModel.InsertBlockedPeople(
             new Model.BlockedPeople()

@@ -31,10 +31,11 @@ namespace PetBellies.Droid
 
         public override void OnBackPressed()
         {
-            if (GlobalVariables.CanIGoBackWithTheBackButton)
-            {
-                base.OnBackPressed();
-            }
+            //TODO: jobbat kitalálni
+            //if (GlobalVariables.CanIGoBackWithTheBackButton)
+            //{
+            //    base.OnBackPressed();
+            //}
         }
     }
 }

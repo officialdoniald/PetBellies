@@ -43,13 +43,15 @@ namespace PetBellies.View
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    followersLabel.Text = GlobalVariables.followersViewModel.GetUserList(this.petid).Count + " followers";
+                    followersLabel.Text = GlobalVariables.followersViewModel.GetUserList(this.petid).Count.ToString();
 
                     currentWidth = Application.Current.MainPage.Width;
 
                     optimalWidth = currentWidth / 3;
 
                     petnameLabel.Text = thisPet.Name;
+                    ageLabel.Text = thisPet.Age.ToString();
+                    kindLabel.Text = thisPet.PetType;
 
                     profilePictureImage.HeightRequest = optimalWidth;
                     profilePictureImage.WidthRequest = optimalWidth;
@@ -61,8 +63,15 @@ namespace PetBellies.View
 
                 if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(thisPet.Uploader))
                 {
-                    HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);
+                    Device.BeginInvokeOnMainThread(()=> 
+                    {
+                        detailGrid.IsVisible = true;
+                        buttonGrid.IsVisible = true;
+                        blockedLabel.IsVisible = false;
+                    });
 
+                    HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);
+                    
                     int left = 0;
                     int top = 0;
 
@@ -72,14 +81,7 @@ namespace PetBellies.View
                     {
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            followersLabel.IsVisible = true;
-                            followButton.IsVisible = true;
-                            goToOwnerPageButton.IsVisible = true;
-                            blockedLabel.IsVisible = false;
-
                             Image image = new Image();
-
-                            //image.Source = ImageSource.FromUri(new Uri(item.PictureURL));
 
                             image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
 
@@ -122,9 +124,8 @@ namespace PetBellies.View
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        followersLabel.IsVisible = false;
-                        followButton.IsVisible = false;
-                        goToOwnerPageButton.IsVisible = false;
+                        detailGrid.IsVisible = false;
+                        buttonGrid.IsVisible = false;
                         blockedLabel.IsVisible = true;
                         blockedLabel.Text = English.BlockedPetUser();
                     });
@@ -132,7 +133,7 @@ namespace PetBellies.View
             });
         }
 
-        private async System.Threading.Tasks.Task followButton_ClickedAsync(object sender, EventArgs e)
+        private async Task followButton_ClickedAsync(object sender, EventArgs e)
         {
             if (HaveIAlreadyFollow)
             {
@@ -140,7 +141,7 @@ namespace PetBellies.View
 
                 HaveIAlreadyFollow = !HaveIAlreadyFollow;
 
-                if (!String.IsNullOrEmpty(success))
+                if (!string.IsNullOrEmpty(success))
                 {
                     await DisplayAlert(English.Failed(), success, English.OK());
                 }
@@ -155,7 +156,7 @@ namespace PetBellies.View
 
                 HaveIAlreadyFollow = !HaveIAlreadyFollow;
 
-                if (!String.IsNullOrEmpty(success))
+                if (!string.IsNullOrEmpty(success))
                 {
                     await DisplayAlert(English.Failed(), success, English.OK());
                 }
