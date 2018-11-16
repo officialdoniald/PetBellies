@@ -50,7 +50,7 @@ namespace PetBellies.View
                     optimalWidth = currentWidth / 3;
 
                     petnameLabel.Text = thisPet.Name;
-                    ageLabel.Text = thisPet.Age.ToString();
+                    ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
                     kindLabel.Text = thisPet.PetType;
 
                     profilePictureImage.HeightRequest = optimalWidth;

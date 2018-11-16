@@ -283,7 +283,7 @@ namespace PetBellies.DAL
 
                                 pet.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 pet.Name = reader.GetString(reader.GetOrdinal("Name"));
-                                pet.Age = reader.GetInt32(reader.GetOrdinal("Age"));
+                                pet.Age = reader.GetDateTime(reader.GetOrdinal("Age"));
                                 pet.PetType = reader.GetString(reader.GetOrdinal("pettype"));
                                 pet.HaveAnOwner = reader.GetInt32(reader.GetOrdinal("HaveAnOwner"));
                                 if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
@@ -726,7 +726,7 @@ namespace PetBellies.DAL
                             {
                                 pet.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 pet.Name = reader.GetString(reader.GetOrdinal("Name"));
-                                pet.Age = reader.GetInt32(reader.GetOrdinal("Age"));
+                                pet.Age = reader.GetDateTime(reader.GetOrdinal("Age"));
                                 pet.PetType = reader.GetString(reader.GetOrdinal("pettype"));
                                 pet.HaveAnOwner = reader.GetInt32(reader.GetOrdinal("HaveAnOwner"));
                                 if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
@@ -768,7 +768,7 @@ namespace PetBellies.DAL
 
                                 pet.id = reader.GetInt32(reader.GetOrdinal("id"));
                                 pet.Name = reader.GetString(reader.GetOrdinal("Name"));
-                                pet.Age = reader.GetInt32(reader.GetOrdinal("Age"));
+                                pet.Age = reader.GetDateTime(reader.GetOrdinal("Age"));
                                 pet.PetType = reader.GetString(reader.GetOrdinal("pettype"));
                                 pet.HaveAnOwner = reader.GetInt32(reader.GetOrdinal("HaveAnOwner"));
                                 if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
@@ -1282,7 +1282,7 @@ namespace PetBellies.DAL
                     cmd.Parameters.Add(
                         new SqlParameter("@Age", pet.Age)
                         {
-                            SqlDbType = System.Data.SqlDbType.Int
+                            SqlDbType = System.Data.SqlDbType.DateTime
                         }
                      );
                     cmd.Parameters.Add(

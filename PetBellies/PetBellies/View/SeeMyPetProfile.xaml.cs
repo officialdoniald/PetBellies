@@ -53,7 +53,7 @@ namespace PetBellies.View
 
                     petnameLabel.Text = thisPet.Name;
 
-                    ageLabel.Text = thisPet.Age.ToString();
+                    ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
 
                     kindLabel.Text = thisPet.PetType;
 

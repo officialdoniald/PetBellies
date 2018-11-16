@@ -18,6 +18,8 @@ namespace PetBellies.View
         public AddPetPage()
         {
             InitializeComponent();
+
+            ageDatePicker.MaximumDate = DateTime.Now;
         }
 
         private void addPetButton_ClickedAsync(object sender, EventArgs e)
@@ -30,26 +32,11 @@ namespace PetBellies.View
                 int isCheckedToInt = 1;
 
                 if (isChecked) isCheckedToInt = 0;
-
-                int age;
-
-                try
-                {
-                    age = Convert.ToInt32(ageEntry.Text);
-                }
-                catch (Exception)
-                {
-                    Device.BeginInvokeOnMainThread(()=> {
-                        DisplayAlert(English.Failed(), English.YouHaveToFillAllEntries(), English.OK());
-                    });
-
-                    return;
-                }
-
+                
                 Pet pet = new Pet()
                 {
                     Name = nameEntry.Text,
-                    Age = age,
+                    Age = ageDatePicker.Date,
                     PetType = typeEntry.Text,
                     HaveAnOwner = isCheckedToInt
                 };
@@ -109,7 +96,7 @@ namespace PetBellies.View
 
         void Handle_CompletedOnNameEntry(object sender, System.EventArgs e)
         {
-            ageEntry.Focus();
+            ageDatePicker.Focus();
         }
 
         void Handle_CompletedOnAgeEntry(object sender, System.EventArgs e)

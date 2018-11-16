@@ -24,11 +24,13 @@ namespace PetBellies.View
 
             this.petid = petid;
 
+            ageDatePicker.MaximumDate = DateTime.Now;
+
             thisPet = GlobalVariables.ConvertMyPetListToPet(GlobalVariables.Mypetlist.Where(i => i.petid == petid).FirstOrDefault());
 
             Device.BeginInvokeOnMainThread(() => {
                 nameEntry.Placeholder = thisPet.Name;
-                ageEntry.Placeholder = thisPet.Age.ToString();
+                ageDatePicker.Date = thisPet.Age;
                 typeEntry.Placeholder = thisPet.PetType;
 
                 if (thisPet.ProfilePictureURL != null)
@@ -69,18 +71,7 @@ namespace PetBellies.View
                 int isCheckedToInt = 1;
 
                 if (isChecked) isCheckedToInt = 0;
-
-                int age;
-
-                if (string.IsNullOrEmpty(ageEntry.Text))
-                {
-                    age = -1;
-                }
-                else
-                {
-                    age = Convert.ToInt32(ageEntry.Text);
-                }
-
+                
                 Pet pet = new Pet();
 
                 pet = thisPet;
@@ -90,10 +81,9 @@ namespace PetBellies.View
                 {
                     pet.Name = nameEntry.Text;
                 }
-                if (age != -1)
-                {
-                    pet.Age = age;
-                }
+                
+                pet.Age = ageDatePicker.Date;
+                
                 if (!string.IsNullOrEmpty(typeEntry.Text))
                 {
                     pet.PetType = typeEntry.Text;

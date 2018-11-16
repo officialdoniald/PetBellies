@@ -101,6 +101,9 @@
             <Style TargetType="Picker" x:Key="NormalPicker">
                 <Setter Property="TextColor" Value="{StaticResource AppColor}" />
             </Style>
+            <Style TargetType="DatePicker" x:Key="NormalDatePicker">
+                <Setter Property="TextColor" Value="{StaticResource AppColor}" />
+            </Style>
             <Style TargetType="ActivityIndicator" x:Key="NormalActivityIndicator">
                 <Setter Property="Color" Value="{StaticResource AppColor}" />
             </Style>

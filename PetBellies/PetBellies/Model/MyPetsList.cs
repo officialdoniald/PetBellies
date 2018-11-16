@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PetBellies.Model
 {
@@ -12,7 +10,7 @@ namespace PetBellies.Model
 
         public string Name { get; set; }
 
-        public int Age { get; set; }
+        public DateTime Age { get; set; }
 
         public string PetType { get; set; }
 

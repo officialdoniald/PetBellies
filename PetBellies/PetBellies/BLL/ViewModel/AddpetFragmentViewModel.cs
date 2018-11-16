@@ -12,10 +12,6 @@ namespace PetBellies.BLL.ViewModel
             {
                 return English.YouHaveToFillAllEntries();
             }
-            else if (pet.Age < 0)
-            {
-                return English.NotNegNumber();
-            }
             else if (addedPhoto)
             {
                 pet.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
