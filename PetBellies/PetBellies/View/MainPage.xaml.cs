@@ -2,17 +2,25 @@
 using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace PetBellies.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MainPage : TabbedPage
-	{
+	public partial class MainPage : Xamarin.Forms.TabbedPage
+    {
         private bool wasNotConn = false;
 
         public MainPage()
         {
             InitializeComponent();
+
+            if (Device.OS == TargetPlatform.Android)
+            {
+                On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+                On<Xamarin.Forms.PlatformConfiguration.Android>().SetBarItemColor(Color.Gray);
+                On<Xamarin.Forms.PlatformConfiguration.Android>().SetBarSelectedItemColor(Color.White);
+            }
 
             Title = "MainPage";
 
@@ -69,7 +77,7 @@ namespace PetBellies.View
                 //navigationMyAccountPage.Title = "Fiók";
                 navigationMyAccountPage.Icon = GlobalVariables.profilepng;
                 navigationMyAccountPage.Style = GlobalVariables.NavigationPageStyle;
-                NavigationPage.SetHasNavigationBar(myAccountPage, false);
+                NavigationPage.SetHasNavigationBar(myAccountPage, true);
 
                 Children.Add(navigationHomePage);
                 Children.Add(navigationSearchPage);

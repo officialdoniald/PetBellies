@@ -3,6 +3,7 @@ using PetBellies.BLL.Helper;
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,8 +11,8 @@ using Xamarin.Forms.Xaml;
 namespace PetBellies.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SeeAnOwnerPage : ContentPage
-	{
+	public partial class SeeAnOwnerPage : ContentPage, INotifyPropertyChanged
+    {
         private int userID = -1;
 
         private List<Pet> petList = new List<Pet>();
@@ -21,6 +22,9 @@ namespace PetBellies.View
         double currentWidth = 0;
 
         double optimalWidth = 0;
+
+        private int _position;
+        public int Position { get { return _position; } set { _position = value; OnPropertyChanged(); } }
 
         public SeeAnOwnerPage(int userid)
         {
@@ -65,54 +69,84 @@ namespace PetBellies.View
                 {
                     petList = GlobalVariables.seeAnOwnerProfileViewModel.GetPet(user.id);
 
-                    foreach (var item in petList)
+                    List<ImageAndText> imageAndTexts = new List<ImageAndText>();
+
+                    ToolbarItem BlockToolbarItem = new ToolbarItem()
                     {
-                        Device.BeginInvokeOnMainThread(() =>
+                        Text = "Block",
+                        Priority = 0
+                    };
+
+                    BlockToolbarItem.Clicked += blockUserButton_Clicked;
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        NavigationPage.SetHasNavigationBar(this, true);
+
+                        ToolbarItems.Add(BlockToolbarItem);
+
+                        blockedLabel.IsVisible = false;
+                        //petsLabel.IsVisible = true;
+                        followingLabel.IsVisible = true;
+                        followingAltLabel.IsVisible = true;
+                        petListStackLayout.IsVisible = true;
+
+                        followings = GlobalVariables.seeAnOwnerProfileViewModel.GetUsersFollowing(userID);
+                        followingLabel.Text = followings.Count.ToString();
+                    });
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        foreach (var item in petList)
                         {
-                            blockedLabel.IsVisible = false;
-                            petsLabel.IsVisible = true;
-                            detailGrid.IsVisible = true;
+                            imageAndTexts.Add(new ImageAndText()
+                            {
+                                Pet = item,
+                                Name = item.Name,
+                                ProfilePictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL))
+                            });
 
-                            followings = GlobalVariables.seeAnOwnerProfileViewModel.GetUsersFollowing(userID);
-                            followingLabel.Text = followings.Count.ToString();
+                            Frame frame = new Frame()
+                            {
+                                //BorderColor = Color.LightGray,
+                                //Padding = 10,
+                                //BackgroundColor = Color.FromHex("#F5F6F8")
+                                BackgroundColor = Color.White
+                            };
 
-                            StackLayout oneGrid = new StackLayout()
+                            StackLayout stackLayout = new StackLayout()
                             {
                                 Orientation = StackOrientation.Vertical
                             };
 
                             CircleImage petProfilePictureImage = new CircleImage
                             {
-                                HeightRequest = optimalWidth,
-                                WidthRequest = optimalWidth,
+                                HeightRequest = 55,
+                                WidthRequest = 55,
                                 Aspect = Aspect.AspectFill,
                                 HorizontalOptions = LayoutOptions.Center,
-                                Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
+                                Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL))
                             };
 
-                            Label petNameLabel = new Label()
+                            Label nameLabel = new Label()
                             {
                                 Text = item.Name,
-                                Style = GlobalVariables.NormalLabel
+                                HorizontalOptions = LayoutOptions.Center,
+                                TextColor = Color.Black
                             };
 
-                            var goToPetProfileTapped = new TapGestureRecognizer();
-                            goToPetProfileTapped.Tapped += (s, e) =>
+                            stackLayout.GestureRecognizers.Add(new TapGestureRecognizer()
                             {
-                                var searchResultPage = new SeeAPetProfile(item.id);
+                                NumberOfTapsRequired = 1,
+                                TappedCallback = delegate { TapPet(item.id); }
+                            });
 
-                                Navigation.PushAsync(searchResultPage);
-                            };
-
-                            petProfilePictureImage.GestureRecognizers.Add(goToPetProfileTapped);
-                            petNameLabel.GestureRecognizers.Add(goToPetProfileTapped);
-
-                            oneGrid.Children.Add(petProfilePictureImage);
-                            oneGrid.Children.Add(petNameLabel);
-
-                            petsStackLayout.Children.Add(oneGrid);
-                        });
-                    }
+                            stackLayout.Children.Add(petProfilePictureImage);
+                            stackLayout.Children.Add(nameLabel);
+                            frame.Content = stackLayout;
+                            petListStackLayout.Children.Add(frame);
+                        }
+                    });
                 }
                 else
                 {
@@ -120,11 +154,20 @@ namespace PetBellies.View
                     {
                         blockedLabel.Text = English.BlockedUser();
                         blockedLabel.IsVisible = true;
-                        petsLabel.IsVisible = false;
-                        detailGrid.IsVisible = false;
+                        //petsLabel.IsVisible = false;
+                        followingLabel.IsVisible = false;
+                        followingAltLabel.IsVisible = false;
+                        petListStackLayout.IsVisible = false;
                     });
                 }
             });
+        }
+
+        private void TapPet(int id)
+        {
+            var searchResultPage = new SeeAPetProfile(id);
+
+            Navigation.PushAsync(searchResultPage);
         }
 
         //Following gomb

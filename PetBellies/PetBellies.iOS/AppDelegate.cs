@@ -24,6 +24,13 @@ namespace PetBellies.iOS
             UITabBar.Appearance.TintColor = new UIColor(red: 0.91f, green: 0.63f, blue: 0.57f, alpha: 1.0f);
             UIProgressView.Appearance.TintColor = UIColor.LightTextColor;
 
+            var statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
+            if (statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
+            {
+                statusBar.BackgroundColor = new UIColor(red: 0.91f, green: 0.63f, blue: 0.57f, alpha: 1.0f);
+                statusBar.TintColor = UIColor.White;
+            }
+
             global::Xamarin.Forms.Forms.Init();
 
             LoadApplication(new App());

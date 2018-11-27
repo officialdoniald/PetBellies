@@ -130,6 +130,7 @@ namespace PetBellies.View
                     {
                         var pet = GlobalVariables.databaseConnection.GetPetByID(item.PetID);
 
+                        //TODO: ez nem kell, mert amúgy is le van tiltva mindenhogy, nem fog tudni ide jönni.
                         if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(pet.Uploader))
                         {
                             Image image = new Image();

@@ -4,8 +4,13 @@
              x:Class="PetBellies.View.OtherPage"
              Title="Other">
     <ContentPage.Content>
-        <StackLayout
-                Style="{StaticResource NormalStackLayout}">
+        <StackLayout Style="{StaticResource NormalStackLayout}">
+            <Button
+                Margin="50,25,50,0"
+                Text="Edit my profile"
+                Style="{StaticResource NormalButton}"
+                x:Name="editAcoountPageButton"
+                Clicked="updateProfileButton_Clicked"/>
             <Button
                 Margin="50,25,50,0"
                 Text="Delete my account"
@@ -24,9 +29,7 @@
                 Style="{StaticResource NormalButton}"
                 x:Name="loguotButton"
                 Clicked="loguotButton_Clicked"/>
-            <ActivityIndicator x:Name="deleteActivity">
-
-                </ActivityIndicator>
+            <ActivityIndicator x:Name="deleteActivity"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

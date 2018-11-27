@@ -2,21 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.View.SeeMyPetProfile"
-            Title="My pet profile" 
+             Title="My pet profile" 
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
-    <ContentPage.Content>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Name="editToolbarItem" Activated="updateButton_Clicked" Order="Primary" Text="Edit" Priority="1" />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
         <ScrollView>
             <StackLayout Style="{StaticResource NormalStackLayout}">
-                <Label x:Name="petnameLabel" Style="{StaticResource DetailLabel}" Margin="0,0,0,20"/>
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="1" Grid.Row="0" x:Name="petnameLabel" Style="{StaticResource DetailLabel}"/>
+                </Grid>
                 <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" HorizontalOptions="Center">
                     <controls:CircleImage.WidthRequest>
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android, iOS">75</On>
+                            <On Platform="Android, iOS">65</On>
                         </OnPlatform>
                     </controls:CircleImage.WidthRequest>
                     <controls:CircleImage.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android, iOS">75</On>
+                            <On Platform="Android, iOS">65</On>
                         </OnPlatform>
                     </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
@@ -42,9 +55,9 @@
                     </Label>
                     <Label Grid.Column="1" Grid.Row="0" x:Name="ageLabel" Style="{StaticResource DetailLabel}" />
                     <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="years old"/>
-                    <Label Grid.Column="2" Grid.RowSpan="2" x:Name="kindLabel" Style="{StaticResource DetailLabel}" />
+                    <Label Grid.Column="2" Grid.Row="0" x:Name="kindLabel" Style="{StaticResource DetailLabel}" />
+                    <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="kind"/>
                 </Grid>
-                <Button x:Name="updateButton" Clicked="updateButton_Clicked" Text="Change" Style="{StaticResource NormalButton}" />
                 <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*">

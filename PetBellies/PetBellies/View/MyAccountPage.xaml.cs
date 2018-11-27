@@ -1,4 +1,5 @@
-﻿using PetBellies.BLL.Helper;
+﻿using ImageCircle.Forms.Plugin.Abstractions;
+using PetBellies.BLL.Helper;
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
@@ -54,38 +55,62 @@ namespace PetBellies.View
 
             listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
 
+            petListStackLayout.Children.Clear();
+
             foreach (var item in GlobalVariables.Mypetlist)
             {
-                listViewWithPictureAndSomeText.Add(new ListViewWithPictureAndSomeText()
+                Frame frame = new Frame()
                 {
-                    pet = GlobalVariables.ConvertMyPetListToPet(item),
-                    ProfilePicture = item.ProfilePictureURL == null ? "" : ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
-                    Name = item.Name
-                });
-            }
+                    //BorderColor = Color.LightGray,
+                    //Padding = 10,
+                    //BackgroundColor = Color.FromHex("#F5F6F8")
+                    BackgroundColor = Color.White
+                };
 
-            petListView.ItemsSource = listViewWithPictureAndSomeText;
+                StackLayout stackLayout = new StackLayout()
+                {
+                    Orientation = StackOrientation.Vertical
+                };
+
+                CircleImage petProfilePictureImage = new CircleImage
+                {
+                    HeightRequest = 55,
+                    WidthRequest = 55,
+                    Aspect = Aspect.AspectFill,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL))
+                };
+
+                Label nameLabel = new Label()
+                {
+                    Text = item.Name,
+                    HorizontalOptions = LayoutOptions.Center,
+                    TextColor = Color.Black
+                };
+
+                stackLayout.GestureRecognizers.Add(new TapGestureRecognizer()
+                {
+                    NumberOfTapsRequired = 1,
+                    TappedCallback = delegate { TapPet(item.petid); }
+                });
+
+                stackLayout.Children.Add(petProfilePictureImage);
+                stackLayout.Children.Add(nameLabel);
+                frame.Content = stackLayout;
+                petListStackLayout.Children.Add(frame);
+            }
         }
 
-        private void petListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void TapPet(int id)
         {
-            var listView = (ListView)sender;
-
-            var selectedLVWPAST = (ListViewWithPictureAndSomeText)listView.SelectedItem;
-
-            var searchResultPage = new SeeMyPetProfile(selectedLVWPAST.pet.id);
+            var searchResultPage = new SeeMyPetProfile(id);
 
             Navigation.PushAsync(searchResultPage);
         }
-
+        
         private void otherButton_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new OtherPage());
-        }
-
-        private void updateProfileButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new UpdateProfilePage());
         }
 
         private void addPetButton_Clicked(object sender, EventArgs e)

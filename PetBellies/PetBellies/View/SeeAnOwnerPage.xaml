@@ -3,48 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.View.SeeAnOwnerPage"
              Title="Owner profile"
+             xmlns:control="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Style="{StaticResource NormalStackLayout}">
-                <Label x:Name="userNameLabel" Style="{StaticResource DetailLabel}" Margin="0,0,0,20"/>
-                <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFill">
-                    <controls:CircleImage.WidthRequest>
-                        <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android, iOS">75</On>
-                        </OnPlatform>
-                    </controls:CircleImage.WidthRequest>
-                    <controls:CircleImage.HeightRequest>
-                        <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android, iOS">75</On>
-                        </OnPlatform>
-                    </controls:CircleImage.HeightRequest>
-                </controls:CircleImage>
-                <Grid x:Name="detailGrid" IsVisible="False" Margin="0,20,0,50">
+            <StackLayout>
+                <Grid Margin="15,0,15,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label x:Name="followingLabel" Style="{StaticResource DetailLabel}" Grid.Column="0" Grid.Row="0">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Style="{StaticResource AltDetailLabel}" Text="following" Grid.Column="0" Grid.Row="1">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Button Margin="50,25,50,0" Text="Block" Style="{StaticResource NormalButton}" x:Name="blockUserButton" Clicked="blockUserButton_Clicked" Grid.Column="1" Grid.RowSpan="2"/>
+                    <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFit" Grid.Column="0" Grid.Row="0">
+                        <controls:CircleImage.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">65</On>
+                            </OnPlatform>
+                        </controls:CircleImage.WidthRequest>
+                        <controls:CircleImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">65</On>
+                            </OnPlatform>
+                        </controls:CircleImage.HeightRequest>
+                    </controls:CircleImage>
+                    <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="1" Grid.Row="0">
+                        <Label x:Name="userNameLabel" Style="{StaticResource NameLabel}" VerticalOptions="Center"/>
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                            <Label x:Name="followingLabel" IsVisible="false" Style="{StaticResource DetailLabel2}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Style="{StaticResource AltDetailLabel2}" IsVisible="false" x:Name="followingAltLabel" Text="following">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </StackLayout>
                 </Grid>
-                <Label x:Name="blockedLabel" IsVisible="False" Style="{StaticResource NormalLabel}" />
-                <Label Text="Pets:" x:Name="petsLabel" IsVisible="false" Style="{StaticResource DetailLabel}" Margin="50,25,50,10"/>
-                <StackLayout x:Name="petsStackLayout" Orientation="Vertical" HorizontalOptions="Center">
-                </StackLayout>
+                <Label Margin="15,0,15,0" x:Name="blockedLabel" IsVisible="False" Style="{StaticResource NormalLabel}" />
+                <!--<StackLayout>
+                    <Label/><BoxView HeightRequest="1" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"/><Label/>
+                </StackLayout>-->
+                <!--<Label Text="Pets:" x:Name="petsLabel" IsVisible="false" Style="{StaticResource DetailLabel}"/>-->
+                <!--<ContentView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <StackLayout>
+                        <control:CarouselView Position="{Binding Position, Mode=TwoWay}" x:Name="petsCarouselView" ItemsSource="{Binding imageAndTexts}" ItemSelected="petsCarouselView_ItemSelected">
+                            <control:CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout BackgroundColor="Transparent">
+                                        <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding ProfilePictureURL}" Aspect="AspectFit" Grid.Column="0" Grid.Row="0">
+                                            <controls:CircleImage.WidthRequest>
+                                                <OnPlatform x:TypeArguments="x:Double">
+                                                    <On Platform="Android, iOS">55</On>
+                                                </OnPlatform>
+                                            </controls:CircleImage.WidthRequest>
+                                            <controls:CircleImage.HeightRequest>
+                                                <OnPlatform x:TypeArguments="x:Double">
+                                                    <On Platform="Android, iOS">55</On>
+                                                </OnPlatform>
+                                            </controls:CircleImage.HeightRequest>
+                                        </controls:CircleImage>
+                                        <Label Style="{StaticResource AltDetailLabel2}" Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="End"/>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1"></TapGestureRecognizer>
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </control:CarouselView.ItemTemplate>
+                        </control:CarouselView>
+                        --><!--<customControls:CarouselIndicators IndicatorHeight="16" IndicatorWidth="16" UnselectedIndicator="unselected_circle.png" SelectedIndicator="selected_circle.png" Position="{Binding Position}" ItemsSource="{Binding petsCarouselView}" />--><!--
+                    </StackLayout>
+                </ContentView>-->
+                <ScrollView Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal" x:Name="petListStackLayout" BackgroundColor="#F5F6F8" Padding="10">
+                    </StackLayout>
+                </ScrollView>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

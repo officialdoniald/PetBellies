@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 using PetBellies.BLL.Helper;
 using Plugin.CurrentActivity;
 using Plugin.Permissions;
@@ -17,7 +18,10 @@ namespace PetBellies.Droid
             
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
+            Window window = this.Window;
+            window.ClearFlags(WindowManagerFlags.TranslucentStatus);
+            window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+            window.SetStatusBarColor(Android.Graphics.Color.Rgb(255, 203, 182));
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             ImageCircle.Forms.Plugin.Droid.ImageCircleRenderer.Init();

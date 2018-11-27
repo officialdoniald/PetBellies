@@ -50,6 +50,8 @@ namespace PetBellies.View
                 GlobalVariables.AddedPhoto = false;
             }
 
+            pictureImage.IsVisible = false;
+
             petPicker.ItemsSource = GlobalVariables.MyPetsString;
         }
 
@@ -60,6 +62,8 @@ namespace PetBellies.View
                 await DisplayAlert(English.Failed(), English.NoPicking(), English.OK());
                 return;
             }
+
+            pictureImage.IsVisible = true;
 
             var file = await CrossMedia.Current.PickPhotoAsync();
             

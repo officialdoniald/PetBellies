@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 using System.Threading.Tasks;
 
 namespace PetBellies.Droid
@@ -14,6 +15,10 @@ namespace PetBellies.Droid
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.SplashScreenLayout);
+            Window window = this.Window;
+            window.ClearFlags(WindowManagerFlags.TranslucentStatus);
+            window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+            window.SetStatusBarColor(Android.Graphics.Color.Rgb(255, 203, 182));
         }
 
         protected override void OnResume()

@@ -62,5 +62,11 @@ namespace PetBellies.View
         {
             Navigation.PushAsync(new BlockedPeople());
         }
+
+        private void updateProfileButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new UpdateProfilePage());
+        }
+
     }
 }

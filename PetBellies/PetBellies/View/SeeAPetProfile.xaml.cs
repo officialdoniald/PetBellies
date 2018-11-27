@@ -53,8 +53,8 @@ namespace PetBellies.View
                     ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
                     kindLabel.Text = thisPet.PetType;
 
-                    profilePictureImage.HeightRequest = optimalWidth;
-                    profilePictureImage.WidthRequest = optimalWidth;
+                    //profilePictureImage.HeightRequest = optimalWidth;
+                    //profilePictureImage.WidthRequest = optimalWidth;
 
                     if (thisPet.ProfilePictureURL != null)
                         profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.ProfilePictureURL));
@@ -63,10 +63,11 @@ namespace PetBellies.View
 
                 if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(thisPet.Uploader))
                 {
-                    Device.BeginInvokeOnMainThread(()=> 
+                    Device.BeginInvokeOnMainThread(()=>
                     {
+                        NavigationPage.SetHasNavigationBar(this, true);
                         detailGrid.IsVisible = true;
-                        buttonGrid.IsVisible = true;
+                        //buttonGrid.IsVisible = true;
                         blockedLabel.IsVisible = false;
                     });
 
@@ -116,8 +117,8 @@ namespace PetBellies.View
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        if (HaveIAlreadyFollow) followButton.Text = GlobalVariables.petProfileFragmentViewModel.unfollowText;
-                        else followButton.Text = GlobalVariables.petProfileFragmentViewModel.followText;
+                        if (HaveIAlreadyFollow) followToolbarItem.Text = GlobalVariables.petProfileFragmentViewModel.unfollowText;
+                        else followToolbarItem.Text = GlobalVariables.petProfileFragmentViewModel.followText;
                     });
                 }
                 else
@@ -125,9 +126,10 @@ namespace PetBellies.View
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         detailGrid.IsVisible = false;
-                        buttonGrid.IsVisible = false;
+                        //buttonGrid.IsVisible = false;
                         blockedLabel.IsVisible = true;
                         blockedLabel.Text = English.BlockedPetUser();
+                        NavigationPage.SetHasNavigationBar(this, false);
                     });
                 }
             });
@@ -147,7 +149,7 @@ namespace PetBellies.View
                 }
                 else
                 {
-                    followButton.Text = GlobalVariables.petProfileFragmentViewModel.followText;
+                    followToolbarItem.Text = GlobalVariables.petProfileFragmentViewModel.followText;
                 }
             }
             else
@@ -162,7 +164,7 @@ namespace PetBellies.View
                 }
                 else
                 {
-                    followButton.Text = GlobalVariables.petProfileFragmentViewModel.unfollowText;
+                    followToolbarItem.Text = GlobalVariables.petProfileFragmentViewModel.unfollowText;
                 }
             }
         }

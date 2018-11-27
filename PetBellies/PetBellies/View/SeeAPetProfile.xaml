@@ -4,6 +4,10 @@
              x:Class="PetBellies.View.SeeAPetProfile"
              Title="Pet profile" 
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="followToolbarItem" Activated="followButton_ClickedAsync" Order="Primary" Text="" Priority="1" />
+        <ToolbarItem x:Name="ownerToolbarItem" Activated="goToOwnerPageButton_Clicked" Order="Secondary" Text="Go to owner" Priority="1" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Style="{StaticResource NormalStackLayout}">
@@ -42,10 +46,11 @@
                     </Label>
                     <Label Grid.Column="1" Grid.Row="0" x:Name="ageLabel" Style="{StaticResource DetailLabel}" />
                     <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="years old"/>
-                    <Label Grid.Column="2" Grid.RowSpan="2" x:Name="kindLabel" Style="{StaticResource DetailLabel}" />
+                    <Label Grid.Column="2" Grid.Row="0" x:Name="kindLabel" Style="{StaticResource DetailLabel}" />
+                    <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="kind"/>
                 </Grid>
                 <Label x:Name="blockedLabel" IsVisible="False" Style="{StaticResource NormalLabel}" />
-                <Grid x:Name="buttonGrid" IsVisible="False">
+                <!--<Grid x:Name="buttonGrid" IsVisible="False">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -54,8 +59,8 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Button x:Name="followButton" Grid.Column="1" Grid.Row="0" Clicked="followButton_ClickedAsync" Style="{StaticResource NormalButton}" />
-                    <Button x:Name="goToOwnerPageButton" Grid.Column="0" Grid.Row="0" Clicked="goToOwnerPageButton_Clicked" Style="{StaticResource NormalButton}" Text="Go to the owner's page" />
-                </Grid>
+                    <Button x:Name="goToOwnerPageButton" Grid.Column="0" Grid.Row="0" Clicked="goToOwnerPageButton_Clicked" Style="{StaticResource NormalButton}" Text="Owner" />
+                </Grid>-->
                 <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*">
