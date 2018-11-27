@@ -12,7 +12,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
-                            <Grid>
+                          <Grid BackgroundColor="White">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto">
                                     </RowDefinition>
