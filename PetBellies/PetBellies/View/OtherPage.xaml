@@ -6,25 +6,25 @@
     <ContentPage.Content>
         <StackLayout Style="{StaticResource NormalStackLayout}">
             <Button
-                Margin="50,25,50,0"
+                Margin="15,25,15,0"
                 Text="Edit my profile"
                 Style="{StaticResource NormalButton}"
                 x:Name="editAcoountPageButton"
                 Clicked="updateProfileButton_Clicked"/>
             <Button
-                Margin="50,25,50,0"
+                Margin="15,25,15,0"
                 Text="Blocked People"
                 Style="{StaticResource NormalButton}"
                 x:Name="blockedPeopleButton"
                 Clicked="blockedPeopleButton_Clicked"/>
             <Button
-                Margin="50,25,50,0"
+                Margin="15,25,15,0"
                 Text="Delete my account"
                 Style="{StaticResource NormalButton}"
                 x:Name="deleteAcoountPageButton"
                 Clicked="deleteAcoountPageButton_ClickedAsync"/>
             <Button
-                Margin="50,25,50,0"
+                Margin="15,25,15,0"
                 Text="Logout"
                 Style="{StaticResource NormalButton}"
                 x:Name="loguotButton"

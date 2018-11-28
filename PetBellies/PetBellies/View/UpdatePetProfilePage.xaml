@@ -27,7 +27,7 @@
                 <DatePicker x:Name="ageDatePicker" Style="{StaticResource NormalDatePicker}"/>
                 <Label Text="Species:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="typeEntry" Style="{StaticResource NormalEnrty}" />
-                <StackLayout Orientation="Horizontal" Margin="50,10,50,10">
+                <StackLayout Orientation="Horizontal" Margin="15,10,15,10">
                     <Switch x:Name="shelterpetSwitch" />
                     <Label Text="Shelter pet?:" Style="{StaticResource NormalLabel}" Margin="10,0,0,0" VerticalOptions="Center" />
                 </StackLayout>
