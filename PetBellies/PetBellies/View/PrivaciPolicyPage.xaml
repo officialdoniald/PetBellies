@@ -5,7 +5,7 @@
              Title="Privacy Policy">
     <ContentPage.Content>
         <ScrollView>
-            <Label Style="{StaticResource NormalLabel}" Margin="10,0,10,0">
+            <Label Style="{StaticResource NormalLabel}" Margin="15,0,15,0">
                 Privacy Policy
 
 Bence Lénárt built the PetBellies app as a Free app. This SERVICE is provided by Bence Lénárt at no cost and is intended for use as is.

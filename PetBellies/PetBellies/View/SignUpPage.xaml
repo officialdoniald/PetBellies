@@ -5,16 +5,7 @@
              Title="Sign up">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Style="{StaticResource NormalStackLayout}">
-                <Label Style="{StaticResource LogoAboveText}" Text="PetBellies" />
-                <!--<Image
-                Style="{StaticResource Logo}"
-                Source="logo.jpg"/>-->
-                <!--<Button
-                Style="{StaticResource FacebookButton}"
-                x:Name="loginFacebookButton"
-                Text="Sign up with Facebook"
-                Clicked="loginFacebookButton_Clicked"/>-->
+            <StackLayout>
                 <Label Text="Last name:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="lastnameEntry" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnLastNameEntry" />
                 <Label Text="First name:" Style="{StaticResource EntryAboveLabel}" />

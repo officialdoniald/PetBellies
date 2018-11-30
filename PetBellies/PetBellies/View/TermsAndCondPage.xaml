@@ -5,7 +5,7 @@
     Title="Terms and Conditions">
     <ContentPage.Content>
         <ScrollView>
-            <Label Style="{StaticResource NormalLabel}" Margin="10,0,10,0">
+            <Label Style="{StaticResource NormalLabel}" Margin="15,0,15,0">
                 Terms and Conditions
 Last updated: April 22, 2018
 These Terms and Conditions ("Terms", "Terms and Conditions") govern your relationship with PetBellies mobile application (the "Service") operated by PetBellies ("us", "we", or "our").

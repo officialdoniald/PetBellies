@@ -8,7 +8,7 @@
             <StackLayout Style="{StaticResource NormalStackLayout}">
                 <Button Text="Gallery" x:Name="galleryButton" Clicked="galleryButton_ClickedAsync" Style="{StaticResource NormalButton}" />
                 <Image Style="{StaticResource FillImageStyle}" x:Name="pictureImage" IsVisible="False"/>
-                <Picker x:Name="petPicker" Title="My pets" VerticalOptions="Center" Style="{StaticResource NormalPicker}" SelectedIndexChanged="petPicker_SelectedIndexChanged" Margin="15,10,50,15"/>
+                <Picker x:Name="petPicker" Title="My pets" VerticalOptions="Center" Style="{StaticResource NormalPicker}" SelectedIndexChanged="petPicker_SelectedIndexChanged"/>
                 <Entry x:Name="hashtagsEntry" Placeholder="Hashtags (eg.: #beautiful)" Style="{StaticResource NormalEnrty}" Completed="Handle_Completed"/>
                 <Button Text="Upload photo" x:Name="addPhotoButton" Clicked="addPhotoButton_ClickedAsync" Style="{StaticResource NormalButton}" />
                 <ActivityIndicator IsRunning="false" x:Name="uploadActivity" Style="{StaticResource NormalActivityIndicator}" />

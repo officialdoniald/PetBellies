@@ -22,12 +22,6 @@
                         <RowDefinition Height="Auto">
                         </RowDefinition>
                     </Grid.RowDefinitions>
-                    <!--<Image x:Name="profilePictureImage" Aspect="AspectFit" Grid.Column="0" Grid.Row="0" HeightRequest="45">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped">
-                            </TapGestureRecognizer>
-                        </Image.GestureRecognizers>
-                    </Image>-->
                     <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Aspect="AspectFill">
                         <controls:CircleImage.WidthRequest>
                             <OnPlatform x:TypeArguments="x:Double">

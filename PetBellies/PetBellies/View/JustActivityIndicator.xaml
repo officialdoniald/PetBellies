@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.View.JustActivityIndicator">
     <ContentPage.Content>
-        <ActivityIndicator IsRunning="true" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalActivityIndicator}">
+        <ActivityIndicator IsRunning="true" Style="{StaticResource NormalActivityIndicator}">
         </ActivityIndicator>
     </ContentPage.Content>
 </ContentPage>
