@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.View.SeeAPetProfile"
@@ -6,25 +6,25 @@
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="followToolbarItem" Activated="followButton_ClickedAsync" Order="Primary" Text="" Priority="1" />
-        <ToolbarItem x:Name="ownerToolbarItem" Activated="goToOwnerPageButton_Clicked" Order="Secondary" Text="Go to owner" Priority="1" />
+        <ToolbarItem x:Name="ownerToolbarItem" Activated="goToOwnerPageButton_Clicked" Order="Primary" Text="Owner"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Style="{StaticResource NormalStackLayout}">
-                <Label x:Name="petnameLabel" Style="{StaticResource DetailLabel}" Margin="0,0,0,20"/>
-                <controls:CircleImage x:Name="profilePictureImage" Source="{Binding profilePictureImage}" Aspect="AspectFill" HorizontalOptions="Center">
-                    <controls:CircleImage.WidthRequest>
-                        <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android, iOS">75</On>
-                        </OnPlatform>
-                    </controls:CircleImage.WidthRequest>
-                    <controls:CircleImage.HeightRequest>
-                        <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android, iOS">75</On>
-                        </OnPlatform>
-                    </controls:CircleImage.HeightRequest>
-                </controls:CircleImage>
-                <Grid x:Name="detailGrid" IsVisible="False" Margin="0,20,0,0">
+            <StackLayout>
+                <Label x:Name="petnameLabel" Style="{StaticResource DetailLabel}"/>
+                <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,15,0,0">
+                        <controls:CircleImage.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">75</On>
+                            </OnPlatform>
+                        </controls:CircleImage.WidthRequest>
+                        <controls:CircleImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">75</On>
+                            </OnPlatform>
+                        </controls:CircleImage.HeightRequest>
+                    </controls:CircleImage>
+                <Grid x:Name="detailGrid" IsVisible="False">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>

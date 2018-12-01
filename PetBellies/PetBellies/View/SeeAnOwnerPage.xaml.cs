@@ -62,7 +62,7 @@ namespace PetBellies.View
 
                     optimalWidth = currentWidth / 5;
 
-                    userNameLabel.Text = user.FirstName + " " + user.LastName;
+                    Title = user.FirstName + " " + user.LastName;
                 });
 
                 if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(userID))//ha nem blokkolt

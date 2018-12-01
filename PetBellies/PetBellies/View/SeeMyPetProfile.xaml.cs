@@ -57,8 +57,8 @@ namespace PetBellies.View
 
                     kindLabel.Text = thisPet.PetType;
 
-                    //profilePictureImage.HeightRequest = optimalWidth;
-                    //profilePictureImage.WidthRequest = optimalWidth;
+                    profilePictureImage.HeightRequest = optimalWidth;
+                    profilePictureImage.WidthRequest = optimalWidth;
 
                     if (thisPet.ProfilePictureURL != null)
                         profilePictureImage.Source = ImageSource.FromStream(()=> new System.IO.MemoryStream(thisPet.ProfilePictureURL));

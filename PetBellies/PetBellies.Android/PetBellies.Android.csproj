@@ -15,7 +15,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>
@@ -30,9 +29,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
     <AndroidSupportedAbis />
     <MandroidI18n>West</MandroidI18n>
   </PropertyGroup>
@@ -112,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PetBellies\PetBellies.csproj">
-      <Project>{26425172-A8C8-423A-9814-73560477A5E7}</Project>
+      <Project>{0CB37339-0436-4011-A47C-CC6E33CB98F7}</Project>
       <Name>PetBellies</Name>
     </ProjectReference>
   </ItemGroup>

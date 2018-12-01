@@ -48,10 +48,6 @@ namespace PetBellies.View
                 {
                     nameLabel.Text = thisPet.Name;
 
-                    //profilePictureImage.Source = ImageSource.FromUri(new Uri(thisPet.ProfilePictureURL));
-
-                    //pictureImage.Source = ImageSource.FromUri(new Uri(petpictures.PictureURL));
-
                     profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.ProfilePictureURL));
 
                     pictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(petpictures.PictureURL));

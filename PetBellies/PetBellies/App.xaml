@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.App">
@@ -112,6 +112,11 @@
             <Style TargetType="ContentView" x:Key="NormalContentView">
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            </Style>
+            <Style TargetType="Image" x:Key="FillImageStyle">
+                <Setter Property="VerticalOptions" Value="Fill" />
+                <Setter Property="Aspect" Value="AspectFill" />
+                <Setter Property="HeightRequest" Value="400" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

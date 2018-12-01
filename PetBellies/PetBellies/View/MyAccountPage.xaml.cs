@@ -20,7 +20,7 @@ namespace PetBellies.View
             InitializeComponent();
 
             Device.BeginInvokeOnMainThread(() => {
-                userNameLabel.Text = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
+                Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
             });
         }
 
@@ -47,7 +47,7 @@ namespace PetBellies.View
                 profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePictureURL));
             else profilePictureImage.Source = "account.png";
 
-            userNameLabel.Text = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
+            Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
 
             followings = GlobalVariables.myAccountPageViewModel.GetMyFollowing();
 
