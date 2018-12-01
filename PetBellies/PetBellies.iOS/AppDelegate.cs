@@ -19,15 +19,14 @@ namespace PetBellies.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            //Custom iOS Tabbar Theme new UIColor(red: 0.91f, green: 0.63f, blue: 0.57f, alpha: 1.0f)
             UITabBar.Appearance.BarTintColor = UIColor.White;
-            UITabBar.Appearance.TintColor = new UIColor(red: 0.91f, green: 0.63f, blue: 0.57f, alpha: 1.0f);
+            UITabBar.Appearance.TintColor = new UIColor(red: 1.0f, green: 0.80f, blue: 0.71f, alpha: 1.0f);
             UIProgressView.Appearance.TintColor = UIColor.LightTextColor;
 
             var statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
             if (statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
             {
-                statusBar.BackgroundColor = new UIColor(red: 0.91f, green: 0.63f, blue: 0.57f, alpha: 1.0f);
+                statusBar.BackgroundColor = new UIColor(red: 1.0f, green: 0.80f, blue: 0.71f, alpha: 1.0f);
                 statusBar.TintColor = UIColor.White;
             }
 
@@ -35,7 +34,6 @@ namespace PetBellies.iOS
 
             LoadApplication(new App());
             ImageCircleRenderer.Init();
-            // Set app theme
 
             return base.FinishedLaunching(app, options);
         }

@@ -1,13 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.View.LoginPage"
              Title="PetBellies" 
-             BackgroundImage="loginbackground.jpg" 
              xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies">
-    <ScrollView>
-        <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" Margin="0,0,0,15">
-            <Label Text="E-Mail:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
+    <RelativeLayout Padding="0">    
+        <Image
+            Aspect="AspectFill"
+            Source="loginbackground.jpg"
+            RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+            RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+        </Image>    
+    <StackLayout Orientation="Vertical"
+                 VerticalOptions="EndAndExpand" 
+                 Margin="0,0,0,15"
+                 RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                 RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+        <Label Text="E-Mail:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
             <customControls:CustomEntry TextColor="White" x:Name="emailEntry" Keyboard="Email" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnEmail" />
             <Label Text="Password:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
             <customControls:CustomEntry TextColor="White" x:Name="pwEntry" IsPassword="True" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnPassword" />
@@ -21,5 +30,5 @@
             <Label Text="Are you not a member yet?" Style="{StaticResource NormalLabel}" TextColor="White"/>
             <Button BorderColor="White" TextColor="White" x:Name="signUpButton" Style="{StaticResource NormalButton}" Text="Sign up" Clicked="signUpButton_Clicked" />
         </StackLayout>
-    </ScrollView>
+        </RelativeLayout>
 </ContentPage>

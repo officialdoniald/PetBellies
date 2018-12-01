@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="PetBellies.View.SignUpPage" 
              Title="Sign up">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
+            <StackLayout Margin="0,15,0,0">
                 <Label Text="Last name:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="lastnameEntry" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnLastNameEntry" />
                 <Label Text="First name:" Style="{StaticResource EntryAboveLabel}" />
