@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using System;
+using Foundation;
 using ImageCircle.Forms.Plugin.iOS;
 using UIKit;
 
@@ -22,6 +23,11 @@ namespace PetBellies.iOS
             UITabBar.Appearance.BarTintColor = UIColor.White;
             UITabBar.Appearance.TintColor = new UIColor(red: 1.0f, green: 0.80f, blue: 0.71f, alpha: 1.0f);
             UIProgressView.Appearance.TintColor = UIColor.LightTextColor;
+            //var titleAttribute = new UITextAttributes { Font = GetFont(50) };
+            //// Updates the ToolbarItem appearance.
+            //UIBarButtonItem.Appearance.SetTitleTextAttributes(titleAttribute, UIControlState.Normal);
+            //// Sets the NavigationBar title items. Also sets the format for TabbedPage tab items for some reason.
+            //UINavigationBar.Appearance.SetTitleTextAttributes(titleAttribute);
 
             var statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
             if (statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
@@ -37,5 +43,13 @@ namespace PetBellies.iOS
 
             return base.FinishedLaunching(app, options);
         }
+
+        public static UIFont GetFont(nfloat fontSize)
+        {
+            return UIFont.FromName(StandardFontName, fontSize);
+        }
+
+
+        public static string StandardFontName => "AvenirNextCondensed-Regular";
     }
 }

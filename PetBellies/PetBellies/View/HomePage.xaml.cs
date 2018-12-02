@@ -37,6 +37,10 @@ namespace PetBellies.View
         {
             Device.BeginInvokeOnMainThread(() => {
                 wallListView.IsRefreshing = true;
+                if (Device.OS == TargetPlatform.iOS)
+                {
+                    SpecialStackLayout.Margin = new Thickness(0, 25, 0, 0);
+                }
             });
 
             GlobalVariables.wallListViewAdapter = new List<WallListViewAdapter>();

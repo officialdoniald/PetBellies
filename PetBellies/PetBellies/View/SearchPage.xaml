@@ -5,8 +5,8 @@
              xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" 
              Title="Search hashtags">
     <ContentPage.Content>
-        <StackLayout>
-            <Entry x:Name="searchEntry" Unfocused="Handle_Unfocused" Focused="Handle_Focused" Placeholder="eg.:beautiful" TextChanged="searchEntry_TextChanged" Style="{StaticResource NormalEnrty}" Margin="15,50,15,0" />
+        <StackLayout x:Name="SpecialStackLayout">
+            <Entry x:Name="searchEntry" Unfocused="Handle_Unfocused" Focused="Handle_Focused" Placeholder="eg.:beautiful" TextChanged="searchEntry_TextChanged" Style="{StaticResource NormalEnrty}" Margin="15,0,15,0" />
             <StackLayout x:Name="hashtagsListStackLayout">
                 <ListView ItemTapped="searchListView_ItemTapped" SeparatorVisibility="None" ItemsSource="{Binding searchModelList}" Margin="5,0,5,0" x:Name="searchListView" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing">
                     <ListView.ItemTemplate>

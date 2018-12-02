@@ -21,6 +21,13 @@ namespace PetBellies.View
 
             //Itt letölthetné az első 10et vagy randomba letölthetne 10et 
             //es azt jelenítené meg
+            Device.BeginInvokeOnMainThread(()=> 
+            {
+                if (Device.OS == TargetPlatform.iOS)
+                {
+                    SpecialStackLayout.Margin = new Thickness(0, 50, 0, 0);
+                }
+            });
 
             Initialize();
         }

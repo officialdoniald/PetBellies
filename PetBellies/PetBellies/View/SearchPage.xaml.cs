@@ -26,6 +26,11 @@ namespace PetBellies.View
                 hashtagsListStackLayout.IsVisible = false;
                 randomPicturesStackLayout.IsVisible = true;
 
+                if (Device.OS == TargetPlatform.iOS)
+                {
+                    SpecialStackLayout.Margin = new Thickness(0, 50, 0, 0);
+                }
+
                 searchListView.IsRefreshing = true;
             });
         }

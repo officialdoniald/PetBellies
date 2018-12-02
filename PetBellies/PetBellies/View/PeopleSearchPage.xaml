@@ -6,8 +6,8 @@
     xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" 
     xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
     <ContentPage.Content>
-        <StackLayout>
-            <Entry x:Name="searchEntry" Placeholder="Type min. 3 charachter to search..." TextChanged="Handle_TextChanged" Style="{StaticResource NormalEnrty}" Margin="15,50,15,0" Completed="Handle_Completed"/>
+        <StackLayout x:Name="SpecialStackLayout">
+            <Entry x:Name="searchEntry" Placeholder="Type min. 3 charachter to search..." TextChanged="Handle_TextChanged" Style="{StaticResource NormalEnrty}" Margin="15,0,15,0" Completed="Handle_Completed"/>
             <ListView ItemsSource="{Binding userJustWithPicAndName}" SeparatorVisibility="None" x:Name="userListView" ItemTapped="Handle_ItemTapped" IsPullToRefreshEnabled="true" IsRefreshing="false" Refreshing="Handle_Refreshing">
                 <ListView.ItemTemplate>
                     <DataTemplate>
