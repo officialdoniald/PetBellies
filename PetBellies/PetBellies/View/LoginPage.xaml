@@ -11,10 +11,10 @@
             Source="loginbackground.jpg"
             RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
             RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
-        </Image>    
+        </Image>  
     <StackLayout Orientation="Vertical"
                  VerticalOptions="EndAndExpand" 
-                 Margin="0,0,0,15"
+                 Margin="15,0,15,25"
                  RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
                  RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
         <Label Text="E-Mail:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
@@ -32,5 +32,5 @@
             <Button BorderColor="White" TextColor="White" x:Name="signUpButton" Style="{StaticResource NormalButton}" Text="Sign up" Clicked="signUpButton_Clicked" />
         </StackLayout>
         </RelativeLayout>
-    </ScrollView>
+        </ScrollView >
 </ContentPage>

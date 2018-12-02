@@ -5,7 +5,7 @@
              Title="Sign up">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Margin="0,15,0,0">
+            <StackLayout Margin="15,15,15,0">
                 <Label Text="Last name:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="lastnameEntry" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnLastNameEntry" />
                 <Label Text="First name:" Style="{StaticResource EntryAboveLabel}" />
@@ -14,9 +14,9 @@
                 <Entry x:Name="emailEntry" Keyboard="Email" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnEmailEntry" />
                 <Label Text="Password:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="pwEntry" IsPassword="true" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnPasswordEntry" />
-                <StackLayout Orientation="Horizontal" Margin="15,0,15,0">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="I am over 13 years old." Style="{StaticResource NormalLabel}" VerticalOptions="Center" />
                     <Switch x:Name="imover13Switch" Toggled="Handle_Toggled"/>
-                    <Label Text="I am over 13 years old." Margin="10,0,0,0" Style="{StaticResource NormalLabel}" VerticalOptions="Center" />
                 </StackLayout>
                 <Button Text="Sign up" x:Name="signupButton" Style="{StaticResource NormalButton}" Clicked="signupButton_ClickedAsync" IsEnabled="false"/>
                 <Label Style="{StaticResource NormalLabel}" Text="By clicking Sign up, you agree to our" />
