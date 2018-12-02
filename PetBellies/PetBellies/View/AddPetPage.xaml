@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.View.AddPetPage"
@@ -20,18 +20,18 @@
                         </OnPlatform>
                     </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
-                <Label Text="Name:" Style="{StaticResource EntryAboveLabel}" />
+                <Label Margin="0,10,0,0" Text="Name:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="nameEntry" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnNameEntry"/>
-                <Label Text="Born date:" Style="{StaticResource EntryAboveLabel}" />
+                <Label Margin="0,10,0,0" Text="Born date:" Style="{StaticResource EntryAboveLabel}" />
                 <DatePicker x:Name="ageDatePicker" Style="{StaticResource NormalDatePicker}"/>
-                <Label Text="Species:" Style="{StaticResource EntryAboveLabel}" />
+                <Label Margin="0,10,0,0" Text="Species:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="typeEntry" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnTypeEntry"/>
-                <StackLayout Orientation="Horizontal" Margin="15,0,15,0">
+                <StackLayout Margin="0,10,0,0" Orientation="Horizontal">
+                    <Label Text="Shelter pet?" Style="{StaticResource NormalLabel}" VerticalOptions="Center" />
                     <Switch x:Name="shelterpetSwitch" />
-                    <Label Text="Shelter pet?" Margin="10,0,0,0" Style="{StaticResource NormalLabel}" VerticalOptions="Center" />
                 </StackLayout>
-                <Button Text="Add" x:Name="addPetButton" Style="{StaticResource NormalButton}" Clicked="addPetButton_ClickedAsync" />
-                <ActivityIndicator x:Name="addPetActivator" IsRunning="false" Style="{StaticResource NormalActivityIndicator}">
+                <Button Margin="0,10,0,0" Text="Add" x:Name="addPetButton" Style="{StaticResource NormalButton}" Clicked="addPetButton_ClickedAsync" />
+                <ActivityIndicator Margin="0,10,0,0" x:Name="addPetActivator" IsRunning="false" Style="{StaticResource NormalActivityIndicator}">
                 </ActivityIndicator>
             </StackLayout>
         </ScrollView>

@@ -141,7 +141,7 @@ namespace PetBellies.BLL.Helper
 
         public static string BadPasswordOrEmail()
         {
-            return "Wrong E-Mail Address Password!";
+            return "Wrong E-Mail or Password!";
         }
 
         public static string NotNegNumber()
