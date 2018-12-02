@@ -16,7 +16,28 @@
                     <view key="view" contentMode="scaleToFill" id="yd7-JS-zBw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" customColorSpace="sRGB" colorSpace="calibratedRGB" red="0.96862745098039216" green="0.792156862745098" blue="0.70980392156862748" alpha="1"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="198" translatesAutoresizingMaskIntoConstraints="NO" image="finalylogo.png" misplaced="YES">
+                                <rect key="frame" x="166" y="327" width="83" height="83"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PetBellies 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6108" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
+                                <rect key="frame" x="0.0" y="616" width="414" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
+                                <nil key="highlightedColor"/>
+                                <rect key="contentStretch" x="0" y="0" width="1" height="1"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint id="613" firstItem="198" firstAttribute="centerY" secondItem="yd7-JS-zBw" secondAttribute="centerY"/>
+                            <constraint id="822" firstAttribute="trailingMargin" secondItem="198" secondAttribute="trailing" constant="145"/>
+                            <constraint id="823" firstItem="198" firstAttribute="leading" secondItem="yd7-JS-zBw" secondAttribute="leadingMargin" constant="146"/>
+                            <constraint id="1043" firstItem="198" firstAttribute="top" secondItem="Y8P-hJ-Z43" secondAttribute="bottom" constant="307"/>
+                            <constraint id="6109" firstItem="6108" firstAttribute="top" secondItem="198" secondAttribute="bottom" constant="206"/>
+                            <constraint id="6522" firstItem="6108" firstAttribute="trailing" secondItem="yd7-JS-zBw" secondAttribute="trailingMargin" constant="20"/>
+                            <constraint id="6523" firstAttribute="leadingMargin" secondItem="6108" secondAttribute="leading" constant="20"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XAI-xm-WK6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +45,7 @@
             <point key="canvasLocation" x="349" y="339"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="finalylogo.png" width="70" height="70"/>
+    </resources>
 </document>

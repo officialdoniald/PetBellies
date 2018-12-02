@@ -10,8 +10,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -25,7 +23,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>PetBellies</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.PetBellies</string>
+	<string>com.officialdoniald.petbellies</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -40,5 +38,7 @@
 	<string>This app needs access to photos.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This app needs access to the photo gallery.</string>
+	<key>CFBundleShortVersionString</key>
+	<string>3.0</string>
 </dict>
 </plist>

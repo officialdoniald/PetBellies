@@ -4,7 +4,8 @@
              x:Class="PetBellies.View.LoginPage"
              Title="PetBellies" 
              xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies">
-    <RelativeLayout Padding="0">    
+        <ScrollView>
+        <RelativeLayout Padding="0">    
         <Image
             Aspect="AspectFill"
             Source="loginbackground.jpg"
@@ -31,4 +32,5 @@
             <Button BorderColor="White" TextColor="White" x:Name="signUpButton" Style="{StaticResource NormalButton}" Text="Sign up" Clicked="signUpButton_Clicked" />
         </StackLayout>
         </RelativeLayout>
+    </ScrollView>
 </ContentPage>
