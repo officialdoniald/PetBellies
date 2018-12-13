@@ -16,30 +16,34 @@ namespace PetBellies.View
 
         private async System.Threading.Tasks.Task deleteAcoountPageButton_ClickedAsync(object sender, EventArgs e)
         {
-            loguotButton.IsEnabled = false;
-            deleteAcoountPageButton.IsEnabled = false;
-            deleteActivity.IsRunning = true;
-
-            string success = GlobalVariables.otherFragmentViewModel.DeleteAccount();
-
-            if (!String.IsNullOrEmpty(success))
+            var action = await DisplayActionSheet("Are you sure?", "Cancel", "Delete");
+            if (action == "Delete")
             {
-                await DisplayAlert(English.Failed(), success, English.OK());
-            }
-            else
-            {
-                FileStoreAndLoading.InsertToFile(GlobalVariables.logintxt, String.Empty);
+                loguotButton.IsEnabled = false;
+                deleteAcoountPageButton.IsEnabled = false;
+                deleteActivity.IsRunning = true;
 
-                var page = new LoginPage();
+                string success = GlobalVariables.otherFragmentViewModel.DeleteAccount();
 
-                await Navigation.PushModalAsync(new NavigationPage(page)
+                if (!String.IsNullOrEmpty(success))
                 {
-                    Style = GlobalVariables.NavigationPageStyle
-                });
+                    await DisplayAlert(English.Failed(), success, English.OK());
+                }
+                else
+                {
+                    FileStoreAndLoading.InsertToFile(GlobalVariables.logintxt, String.Empty);
+
+                    var page = new LoginPage();
+
+                    await Navigation.PushModalAsync(new NavigationPage(page)
+                    {
+                        Style = GlobalVariables.NavigationPageStyle
+                    });
+                }
+                loguotButton.IsEnabled = true;
+                deleteAcoountPageButton.IsEnabled = true;
+                deleteActivity.IsRunning = false;
             }
-            loguotButton.IsEnabled = true;
-            deleteAcoountPageButton.IsEnabled = true;
-            deleteActivity.IsRunning = false;
         }
 
         private async System.Threading.Tasks.Task loguotButton_Clicked(object sender, EventArgs e)
