@@ -61,7 +61,7 @@ namespace PetBellies.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Source=tcp:projektfifi.database.windows.net,1433;Initial Catalog=projektfifi;User ID=doniald@projektfifi;Password=96kEHTPp2o0206;.
+        ///   Looks up a localized string similar to Data Source=193.39.13.193;Persist Security Info=True;User ID=sa;Password=96kEHTPp2o0206;Initial Catalog=PetBellies;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;.
         /// </summary>
         internal static string AzureDBConnectionString {
             get {

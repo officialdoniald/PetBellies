@@ -29,7 +29,9 @@ namespace PetBellies.BLL.ViewModel
                 return English.NoAcoountFoundWithThisEmail();
             }
 
-            user.Password = segédfüggvények.RandomString(8, false);
+            string passwordWithoutEncrypt = segédfüggvények.RandomString(8, false);
+
+            user.Password = segédfüggvények.EncryptPassword(passwordWithoutEncrypt);
 
             bool success = GlobalVariables.databaseConnection.UpdateUser(user.id, user);
 
@@ -38,7 +40,7 @@ namespace PetBellies.BLL.ViewModel
                 return English.SomethingWentWrong();
             }
 
-            string url = String.Format("http://petbellies.com/php/petbelliesforgotp.php?email={0}&nev={1}&pw={2}", EMAIL, user.FirstName, user.Password);
+            string url = String.Format("http://petbellies.com/php/petbelliesforgotp.php?email={0}&nev={1}&pw={2}", EMAIL, user.FirstName, passwordWithoutEncrypt);
             Uri uri = new Uri(url);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";

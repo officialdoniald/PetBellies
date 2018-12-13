@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AzureDBConnectionString" xml:space="preserve">
-    <value>Data Source=tcp:projektfifi.database.windows.net,1433;Initial Catalog=projektfifi;User ID=doniald@projektfifi;Password=96kEHTPp2o0206;</value>
+    <value>Data Source=193.39.13.193;Persist Security Info=True;User ID=sa;Password=96kEHTPp2o0206;Initial Catalog=PetBellies;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;</value>
   </data>
   <data name="GlobalPassword" xml:space="preserve">
     <value>96kEHTPp2o0206</value>

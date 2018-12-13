@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace PetBellies.DAL
+namespace PetBellies.WCF
 {
-    public class DatabaseConnections
+    public class DatabaseService : IDatabaseService
     {
         private Segédfüggvények Segédfüggvények = new Segédfüggvények();
-        
+
         #region strings
 
         //GET
@@ -38,7 +38,7 @@ namespace PetBellies.DAL
         public static string GET_USERSBYKEYWORD_SQL { get; } =
             //"SELECT * FROM [dbo].[User] Where FirstName LIKE " + '%' + "@keyword" + '%' + " OR LastName= LIKE "+'%'+"@keyword"+'%';
             "SELECT id,Email,FirstName,LastName,ProfilePicture FROM [dbo].[User]";
-        
+
         //GETBYID
         public static string GET_USERBYEMAIL_SQL { get; } =
                     "SELECT * FROM [dbo].[User] WHERE EMAIL=@EMAIL";
@@ -75,7 +75,7 @@ namespace PetBellies.DAL
         public static string DELETE_USER_SQL { get; } =
                    "DELETE FROM [dbo].[User] WHERE ID=@id";
         public static string DELETE_BlockedPeople_SQL { get; } =
-                   "DELETE FROM [dbo].[Blockedpeople] WHERE UserID=@UserID AND BlockedUserID=@BlockedUserID;"+
+                   "DELETE FROM [dbo].[Blockedpeople] WHERE UserID=@UserID AND BlockedUserID=@BlockedUserID;" +
                    "DELETE FROM [dbo].[Blockedpeople] WHERE BlockedUserID=@UserID AND UserID=@BlockedUserID;";
         public static string DELETE_Following_SQL { get; } =
                    "DELETE FROM [dbo].[Following] WHERE userID=@userid AND fuserid=@petid";
@@ -196,7 +196,7 @@ namespace PetBellies.DAL
             "INSERT INTO [dbo].[Blockedpeople]" +
             "([UserID], [BlockedUserID]) " +
             "VALUES(" +
-            "@UserID,@BlockedUserID);"+
+            "@UserID,@BlockedUserID);" +
             "INSERT INTO [dbo].[Blockedpeople]" +
             "([UserID], [BlockedUserID]) " +
             "VALUES(" +
@@ -247,7 +247,7 @@ namespace PetBellies.DAL
                                 if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length == 0)
                                     user.ProfilePictureURL = null;
                                 else user.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
-                                
+
                                 users.Add(user);
                             }
                         }
@@ -606,7 +606,7 @@ namespace PetBellies.DAL
                 return null;
             }
         }
-        
+
         #endregion
 
         #region GetByIDFunctions
@@ -691,7 +691,7 @@ namespace PetBellies.DAL
                                 {
                                     user.FacebookId = null;
                                 }
-                                if(reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
+                                if (reader.GetStream(reader.GetOrdinal("ProfilePicture")).Length != 0)
                                     user.ProfilePictureURL = Segédfüggvények.ReadFully(reader.GetStream(reader.GetOrdinal("ProfilePicture")));
                                 else user.ProfilePictureURL = null;
                             }
@@ -1202,7 +1202,7 @@ namespace PetBellies.DAL
         #endregion
 
         #region InsertFunctions
-        
+
         public bool InsertUser(User user)
         {
             try
@@ -1296,7 +1296,7 @@ namespace PetBellies.DAL
                             SqlDbType = System.Data.SqlDbType.Int
                         }
                      );
-                    
+
                     if (pet.ProfilePictureURL is null)
                     {
                         pet.ProfilePictureURL = GlobalVariables.GlobalCasualImage;
@@ -1629,7 +1629,7 @@ namespace PetBellies.DAL
                         cmd.Parameters.AddWithValue("@FacebookId", user.FacebookId);
                         cmd.Parameters.AddWithValue("@ProfilePictureURL", user.ProfilePictureURL);
                         cmd.Parameters.AddWithValue("@Email", user.Email);
-                        
+
                         cmd.Parameters.Add(
                             new SqlParameter("@Password", user.Password)
                             {
