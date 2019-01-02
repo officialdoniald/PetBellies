@@ -5,7 +5,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer (typeof(CustomEntry), typeof(CustomEntryRenderer))]
-
 namespace PetBellies.Droid.CustomRenderers
 {
     public class CustomEntryRenderer : EntryRenderer
