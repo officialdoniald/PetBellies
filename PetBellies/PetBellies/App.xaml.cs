@@ -22,7 +22,6 @@ namespace PetBellies
                 while (!CrossConnectivity.Current.IsConnected) { }
             }
             GlobalVariables.InitializeUsersEmail();
-            GlobalVariables.InitializeGlobalCasualImage();
 
             if (!GlobalVariables.HaveToLogin)
             {

@@ -34,6 +34,8 @@ namespace PetBellies.View
         {
             base.OnAppearing();
 
+            GlobalVariables.InitializeGlobalCasualImage();
+
             GlobalVariables.CanIGoBackWithTheBackButton = false;
 
             Task.Run(()=>
