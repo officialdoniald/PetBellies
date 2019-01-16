@@ -37,9 +37,9 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This app needs access to the photo gallery.</string>
 	<key>CFBundleShortVersionString</key>
-	<string>6</string>
+	<string>8</string>
 	<key>CFBundleVersion</key>
-	<string>6.0</string>
+	<string>8.0</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>This app needs access to calendars.</string>
 </dict>
