@@ -2,6 +2,7 @@
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using Xamarin.Forms;
 
@@ -107,6 +108,29 @@ namespace PetBellies.BLL.ViewModel
             else
             {
                 return false;
+            }
+        }
+
+        public User GetUser(int id)
+        {
+            var reportedPet = GlobalVariables.databaseConnection.GetPetByID(id);
+
+            if (reportedPet.Name != null)
+            {
+                var reported = GlobalVariables.databaseConnection.GetUserByID(reportedPet.Uploader);
+
+                if (reported.Email != null)
+                {
+                    return reported;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
             }
         }
 

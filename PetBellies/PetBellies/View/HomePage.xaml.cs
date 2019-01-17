@@ -3,6 +3,7 @@ using PetBellies.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -235,8 +236,27 @@ namespace PetBellies.View
 
                 if (success)
                 {
+                    try
+                    {
+                        var user = GlobalVariables.seePictureFragmentViewModel.GetUser(wallListViewAdapterClicked.wallItem.petpictures.PetID);
+
+                        //Aki reportolt
+                        string url = string.Format("http://petbellies.com/php/petbelliesreppic.php?email={0}&nev={1}&host={2}", user.Email, user.FirstName, 0);
+                        Uri uri = new Uri(url);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                        request.Method = "GET";
+                        WebResponse res = await request.GetResponseAsync();
+
+                        //Akinek a képe van
+                        string url1 = string.Format("http://petbellies.com/php/petbelliesreppic.php?email={0}&nev={1}&host={2}", GlobalVariables.ActualUsersEmail, GlobalVariables.ActualUser.FirstName, 1);
+                        Uri uri1 = new Uri(url);
+                        HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(url);
+                        request.Method = "GET";
+                        WebResponse res1 = await request.GetResponseAsync();
+                    }
+                    catch (Exception) { }
+
                     await DisplayAlert("Success", "Thanks..", "OK");
-                    //Küldeni emailt az éritett feleknek...
                 }
                 else
                 {
