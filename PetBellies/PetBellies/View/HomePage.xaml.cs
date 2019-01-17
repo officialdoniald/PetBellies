@@ -121,7 +121,6 @@ namespace PetBellies.View
 
         private void Button_Clicked_1(object sender, EventArgs e)
         {
-
             Image button = (Image)sender;
 
             var asd = (Grid)button.Parent;
@@ -214,6 +213,36 @@ namespace PetBellies.View
             base.OnDisappearing();
 
             GlobalVariables.CanIGoBackWithTheBackButton = true;
+        }
+
+        private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
+        {
+            var reported = await DisplayActionSheet("More", "Cancel", "Report");
+
+            if (reported == "Report")
+            {
+                Image pic = (Image)sender;
+
+                var asd = (Grid)pic.Parent;
+
+                var collection = (Grid.IGridList<Xamarin.Forms.View>)asd.Children;
+
+                Image button = (Image)collection[5];
+
+                var wallListViewAdapterClicked = (WallListViewAdapter)button.BindingContext;
+
+                var success = GlobalVariables.seePictureFragmentViewModel.ReportPicture(wallListViewAdapterClicked.wallItem.petpictures.id);
+
+                if (success)
+                {
+                    await DisplayAlert("Success", "Thanks..", "OK");
+                    //Küldeni emailt az éritett feleknek...
+                }
+                else
+                {
+                    await DisplayAlert("Failed", "Something went wrong", "OK");
+                }
+            }
         }
     }
 }

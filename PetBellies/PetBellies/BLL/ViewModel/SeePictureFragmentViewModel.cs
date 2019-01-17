@@ -96,6 +96,20 @@ namespace PetBellies.BLL.ViewModel
             }
         }
 
+        public bool ReportPicture(int petpicturesid)
+        {
+            bool reported = GlobalVariables.databaseConnection.UpdatePetpicturesReported(petpicturesid);
+
+            if (reported)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public Petpictures GetPetpicturesByID(int id)
         {
             return GlobalVariables.databaseConnection.GetOnePetpicturesByID(id);

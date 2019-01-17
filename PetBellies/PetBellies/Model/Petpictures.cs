@@ -14,5 +14,7 @@ namespace PetBellies.Model
         public byte[] PictureURL { get; set; }
 
         public string UploadDate { get; set; }
+
+        public int Reported { get; set; }
     }
 }

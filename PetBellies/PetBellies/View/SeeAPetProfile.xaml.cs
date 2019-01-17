@@ -13,6 +13,8 @@ namespace PetBellies.View
 	{
         private int petid = -1;
 
+        private string followOrNot = string.Empty;
+
         private double currentWidth = 0;
         private double optimalWidth = 0;
 
@@ -67,7 +69,6 @@ namespace PetBellies.View
                     {
                         NavigationPage.SetHasNavigationBar(this, true);
                         detailGrid.IsVisible = true;
-                        //buttonGrid.IsVisible = true;
                         blockedLabel.IsVisible = false;
                     });
 
@@ -117,8 +118,8 @@ namespace PetBellies.View
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        if (HaveIAlreadyFollow) followToolbarItem.Text = GlobalVariables.petProfileFragmentViewModel.unfollowText;
-                        else followToolbarItem.Text = GlobalVariables.petProfileFragmentViewModel.followText;
+                        if (HaveIAlreadyFollow) followOrNot = GlobalVariables.petProfileFragmentViewModel.unfollowText;
+                        else followOrNot = GlobalVariables.petProfileFragmentViewModel.followText;
                     });
                 }
                 else
@@ -126,52 +127,12 @@ namespace PetBellies.View
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         detailGrid.IsVisible = false;
-                        //buttonGrid.IsVisible = false;
                         blockedLabel.IsVisible = true;
                         blockedLabel.Text = English.BlockedPetUser();
                         NavigationPage.SetHasNavigationBar(this, false);
                     });
                 }
             });
-        }
-
-        private async Task followButton_ClickedAsync(object sender, EventArgs e)
-        {
-            if (HaveIAlreadyFollow)
-            {
-                string success = GlobalVariables.petProfileFragmentViewModel.UnFollow(GlobalVariables.ActualUsersEmail, petid);
-
-                HaveIAlreadyFollow = !HaveIAlreadyFollow;
-
-                if (!string.IsNullOrEmpty(success))
-                {
-                    await DisplayAlert(English.Failed(), success, English.OK());
-                }
-                else
-                {
-                    followToolbarItem.Text = GlobalVariables.petProfileFragmentViewModel.followText;
-                }
-            }
-            else
-            {
-                string success = GlobalVariables.petProfileFragmentViewModel.FollowAPet(GlobalVariables.ActualUsersEmail, petid);
-
-                HaveIAlreadyFollow = !HaveIAlreadyFollow;
-
-                if (!string.IsNullOrEmpty(success))
-                {
-                    await DisplayAlert(English.Failed(), success, English.OK());
-                }
-                else
-                {
-                    followToolbarItem.Text = GlobalVariables.petProfileFragmentViewModel.unfollowText;
-                }
-            }
-        }
-
-        private void goToOwnerPageButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new SeeAnOwnerPage(thisPet.Uploader));
         }
 
         public void OnPictureClicked(Petpictures petpictures)
@@ -182,6 +143,49 @@ namespace PetBellies.View
         void Handle_Tapped(object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new FollowersPage(thisPet.id));
+        }
+
+        private async void MoreToolbarItem_Activated(object sender, EventArgs e)
+        {
+            var reported = await DisplayActionSheet("More", "Cancel", followOrNot, "Go to owner profile");
+
+            if (reported == followOrNot)
+            {
+                if (HaveIAlreadyFollow)
+                {
+                    string success = GlobalVariables.petProfileFragmentViewModel.UnFollow(GlobalVariables.ActualUsersEmail, petid);
+
+                    HaveIAlreadyFollow = !HaveIAlreadyFollow;
+
+                    if (!string.IsNullOrEmpty(success))
+                    {
+                        await DisplayAlert(English.Failed(), success, English.OK());
+                    }
+                    else
+                    {
+                        followOrNot = GlobalVariables.petProfileFragmentViewModel.followText;
+                    }
+                }
+                else
+                {
+                    string success = GlobalVariables.petProfileFragmentViewModel.FollowAPet(GlobalVariables.ActualUsersEmail, petid);
+
+                    HaveIAlreadyFollow = !HaveIAlreadyFollow;
+
+                    if (!string.IsNullOrEmpty(success))
+                    {
+                        await DisplayAlert(English.Failed(), success, English.OK());
+                    }
+                    else
+                    {
+                        followOrNot = GlobalVariables.petProfileFragmentViewModel.unfollowText;
+                    }
+                }
+            }
+            else if (reported == "Go to owner profile")
+            {
+                await Navigation.PushAsync(new SeeAnOwnerPage(thisPet.Uploader));
+            }
         }
     }
 }

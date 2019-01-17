@@ -108,20 +108,24 @@ namespace PetBellies.View
             Navigation.PushAsync(searchResultPage);
         }
         
-        private void otherButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new OtherPage());
-        }
-
-        private void addPetButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new AddPetPage());
-        }
-
         //Following gomb
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             Navigation.PushAsync(new FollowersPage(followings));
+        }
+
+        private async void MoreToolbarItem_Activated(object sender, EventArgs e)
+        {
+            var reported = await DisplayActionSheet("More", "Cancel", "Add pet", "Settings");
+
+            if (reported == "Add pet")
+            {
+                await Navigation.PushAsync(new AddPetPage());
+            }
+            else if(reported == "Settings")
+            {
+                await Navigation.PushAsync(new OtherPage());
+            }
         }
     }
 }

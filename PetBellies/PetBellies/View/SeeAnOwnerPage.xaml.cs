@@ -71,20 +71,20 @@ namespace PetBellies.View
 
                     List<ImageAndText> imageAndTexts = new List<ImageAndText>();
 
-                    ToolbarItem BlockToolbarItem = new ToolbarItem()
+                    ToolbarItem MoreToolbarItem = new ToolbarItem()
                     {
-                        Text = "Block",
+                        Icon = "more.png",
                         Priority = 0
                     };
 
-                    BlockToolbarItem.Clicked += blockUserButton_Clicked;
-
+                    MoreToolbarItem.Clicked += ReportToolbarItem_Clicked;
+                    
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         NavigationPage.SetHasNavigationBar(this, true);
 
-                        ToolbarItems.Add(BlockToolbarItem);
-
+                        ToolbarItems.Add(MoreToolbarItem);
+                        
                         blockedLabel.IsVisible = false;
                         //petsLabel.IsVisible = true;
                         followingLabel.IsVisible = true;
@@ -163,6 +163,39 @@ namespace PetBellies.View
             });
         }
 
+        private async void ReportToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            var reported = await DisplayActionSheet("More", "Cancel", "Report", "Block");
+
+            if (reported == "Report")
+            {
+                var success = GlobalVariables.seeAnOwnerProfileViewModel.ReportUser(userID);
+
+                if (success)
+                {
+                    await DisplayAlert("Success", "Thanks..", "OK");
+                    //Küldeni emailt az éritett feleknek...
+                }
+                else
+                {
+                    await DisplayAlert("Failed", "Something went wrong", "OK");
+                }
+            }
+            else if (reported == "Block")
+            {
+                var success = GlobalVariables.blockedPeopleViewModel.InsertBlockedPeople(
+                new Model.BlockedPeople()
+                {
+                    UserID = GlobalVariables.ActualUser.id,
+                    BlockedUserID = userID
+                });
+
+                if (!string.IsNullOrEmpty(success))
+                    await DisplayAlert(English.Failed(), success, English.OK());
+                else await Navigation.PopToRootAsync();
+            }
+        }
+
         private void TapPet(int id)
         {
             var searchResultPage = new SeeAPetProfile(id);
@@ -178,16 +211,7 @@ namespace PetBellies.View
 
         private void blockUserButton_Clicked(object sender, EventArgs e)
         {
-            var success = GlobalVariables.blockedPeopleViewModel.InsertBlockedPeople(
-            new Model.BlockedPeople()
-            {
-                UserID = GlobalVariables.ActualUser.id,
-                BlockedUserID = userID
-            });
-
-            if (!string.IsNullOrEmpty(success))
-                DisplayAlert(English.Failed(), success, English.OK());
-            else Navigation.PopToRootAsync();
+            
         }
     }
 }

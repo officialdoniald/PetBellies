@@ -288,4 +288,10 @@
     <BundleResource Include="Resources\logo.png" />
     <BundleResource Include="Resources\mostjo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\more.png" />
+  </ItemGroup>
 </Project>

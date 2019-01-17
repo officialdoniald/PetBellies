@@ -16,7 +16,7 @@ namespace PetBellies.View
 
         private async System.Threading.Tasks.Task deleteAcoountPageButton_ClickedAsync(object sender, EventArgs e)
         {
-            var action = await DisplayActionSheet("Are you sure?", "Cancel", "Delete");
+            var action = await DisplayActionSheet("Delete account", "Are you sure?", "Cancel", "Delete");
             if (action == "Delete")
             {
                 loguotButton.IsEnabled = false;

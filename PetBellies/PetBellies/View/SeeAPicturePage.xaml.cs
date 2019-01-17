@@ -160,5 +160,25 @@ namespace PetBellies.View
         {
             Navigation.PushAsync(new WhosLiked(petpictures.id));
         }
+
+        private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
+        {
+            var reported = await DisplayActionSheet("More", "Cancel", "Report");
+
+            if (reported == "Report")
+            {
+                var success = GlobalVariables.seePictureFragmentViewModel.ReportPicture(petpictures.id);
+
+                if (success)
+                {
+                    await DisplayAlert("Success", "Thanks..", "OK");
+                    //Küldeni emailt az éritett feleknek...
+                }
+                else
+                {
+                    await DisplayAlert("Failed", "Something went wrong", "OK");
+                }
+            }
+        }
     }
 }

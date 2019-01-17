@@ -28,7 +28,7 @@ namespace PetBellies.DAL
         public static string GET_Pet_SQL { get; } =
                      "SELECT * FROM [dbo].[Pet]";
         public static string GET_Petpictures_SQL { get; } =
-                     "SELECT * FROM [dbo].[Petpictures]";
+                     "SELECT * FROM [dbo].[Petpictures] WHERE reported <> 1;";
         public static string GET_Following_SQL { get; } =
                     "SELECT * FROM [dbo].[Following]";
         public static string GET_HASHTAGS_SQL { get; } =
@@ -57,9 +57,9 @@ namespace PetBellies.DAL
         public static string GET_PetBYID_SQL { get; } =
                     "SELECT * FROM [dbo].[Pet] WHERE ID=@id";
         public static string GET_PetpicturesBYID_SQL { get; } =
-                    "SELECT * FROM [dbo].[Petpictures] WHERE petid=@id";
+                    "SELECT * FROM [dbo].[Petpictures] WHERE petid=@id AND reported <> 1;";
         public static string GetOnePetpicturesByID_SQL { get; } =
-                    "SELECT * FROM [dbo].[Petpictures] WHERE id=@id";
+                    "SELECT * FROM [dbo].[Petpictures] WHERE id=@id AND reported <> 1;";
         public static string GET_FollowingBYID_SQL { get; } =
                     "SELECT * FROM [dbo].[Following] WHERE UserID=@userid AND fuserid=@petid";
         public static string GET_FollowingBYfuserID_SQL { get; } =
@@ -117,6 +117,10 @@ namespace PetBellies.DAL
             "Email=@Email," +
             "Password=@Password" +
             " WHERE ID=@ID";
+        public static string UPDATE_USER_Reported_SQL { get; } =
+            "UPDATE [dbo].[USER] SET " +
+            "Reported=@reported" +
+            " WHERE ID=@ID";
         public static string UPDATE_Pet_SQL { get; } =
             "UPDATE [dbo].[Pet] SET " +
             "Name=@Name," +
@@ -139,6 +143,10 @@ namespace PetBellies.DAL
             "PetID=@PetID," +
             "PictureURL=@PictureURL," +
             "UploadDate=@UploadDate" +
+            " WHERE ID=@ID";
+        public static string UPDATE_Petpictures_Reported_SQL { get; } =
+            "UPDATE [dbo].[Petpictures] SET " +
+            "reported=@reported" +
             " WHERE ID=@ID";
         public static string UPDATE_Likes_SQL { get; } =
             "UPDATE [dbo].[Likes] SET " +
@@ -1742,6 +1750,63 @@ namespace PetBellies.DAL
             }
             catch (SqlException)
             {
+                return false;
+            }
+        }
+
+        public bool UpdatePetpicturesReported(int ID)
+        {
+            try
+            {
+                using (SqlConnection conn =
+                    new SqlConnection(GlobalVariables.AzureDBConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            UPDATE_Petpictures_Reported_SQL, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Parameters.AddWithValue("@reported", 1);
+
+                        int rows = cmd.ExecuteNonQuery();
+
+                        if (rows == 1) return true;
+                        else return false;
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateUserReported(int ID)
+        {
+            try
+            {
+                using (SqlConnection conn =
+                    new SqlConnection(GlobalVariables.AzureDBConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd =
+                        new SqlCommand(
+                            UPDATE_USER_Reported_SQL, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", ID);
+                        cmd.Parameters.AddWithValue("@reported", 1);
+
+                        int rows = cmd.ExecuteNonQuery();
+
+                        if (rows == 1) return true;
+                        else return false;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                var asd = ex.Message;
                 return false;
             }
         }

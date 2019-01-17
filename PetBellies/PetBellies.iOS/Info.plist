@@ -31,15 +31,15 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to the camera to take photos.</string>
+	<string>This app needs access to the camera to take photos to upload photos of you and your pet.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to photos.</string>
+	<string>This app needs access to the photo gallery to upload photos of you and your pet.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app needs access to the photo gallery.</string>
+	<string>This app needs access to the photo gallery to upload photos of you and your pet.</string>
 	<key>CFBundleShortVersionString</key>
-	<string>8</string>
+	<string>9</string>
 	<key>CFBundleVersion</key>
-	<string>8.0</string>
+	<string>9.0</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>This app needs access to calendars.</string>
 </dict>

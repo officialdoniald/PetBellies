@@ -6,8 +6,7 @@
              xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies"  
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="addPetToolbarItem" Activated="addPetButton_Clicked" Order="Default" Text="Add Pet" />
-        <ToolbarItem Name="settingsToolbarItem" Activated="otherButton_Clicked" Order="Primary" Text="Settings" />
+        <ToolbarItem Name="moreToolbarItem" Activated="MoreToolbarItem_Activated" Order="Primary" Icon="more.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>

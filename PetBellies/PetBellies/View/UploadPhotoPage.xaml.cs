@@ -48,11 +48,21 @@ namespace PetBellies.View
 
                 GlobalVariables.AddedPet = false;
                 GlobalVariables.AddedPhoto = false;
+
+                petPicker.Title = "Select a pet";
+
+                petPicker.IsEnabled = true;
+
+                petPicker.ItemsSource = GlobalVariables.MyPetsString;
+            }
+            else
+            {
+                petPicker.IsEnabled = false;
+
+                petPicker.Title = "Add a pet before upload a photo";
             }
 
             pictureImage.IsVisible = false;
-
-            petPicker.ItemsSource = GlobalVariables.MyPetsString;
         }
 
         private async Task galleryButton_ClickedAsync(object sender, EventArgs e)
@@ -78,11 +88,13 @@ namespace PetBellies.View
 
             pictureImage.Source = ImageSource.FromStream(() => f);
         }
-        
+
         private void addPhotoButton_ClickedAsync(object sender, EventArgs e)
         {
-            Task.Run(()=> {
-                Device.BeginInvokeOnMainThread(()=> {
+            Task.Run(() =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
                     uploadActivity.IsRunning = true;
                     addPhotoButton.IsEnabled = false;
                     galleryButton.IsEnabled = false;
@@ -92,7 +104,8 @@ namespace PetBellies.View
 
                 if (!string.IsNullOrEmpty(success))
                 {
-                    Device.BeginInvokeOnMainThread(() => {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
                         DisplayAlert(English.Failed(), success, English.OK());
                     });
                 }
@@ -101,13 +114,15 @@ namespace PetBellies.View
                     GlobalVariables.AddedPhoto = true;
                     addedPhoto = false;
 
-                    Device.BeginInvokeOnMainThread(() => {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
                         Navigation.PopToRootAsync();
                         Navigation.PushAsync(new SeeMyPetProfile(selectedPetId));
                     });
                 }
 
-                Device.BeginInvokeOnMainThread(() => {
+                Device.BeginInvokeOnMainThread(() =>
+                {
                     galleryButton.IsEnabled = true;
                     addPhotoButton.IsEnabled = true;
                     uploadActivity.IsRunning = false;
