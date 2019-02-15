@@ -42,7 +42,7 @@ namespace PetBellies.BLL.ViewModel
                 {
                     petpictures = new List<Petpictures>();
 
-                    petpictures = GlobalVariables.databaseConnection.GetPetpictureByID(item.FUserID);
+                    petpictures = GlobalVariables.databaseConnection.GetPetPicturesByPetID(item.FUserID);
 
                     foreach (var item2 in petpictures)
                     {
@@ -53,7 +53,7 @@ namespace PetBellies.BLL.ViewModel
                         wall.petpictures = item2;
                         wall.name = pet.Name;
                         wall.howmanylikes = GlobalVariables.databaseConnection.GetLikeByPetpicturesID(item2.id).Count;
-                        wall.ProfilePictureURL = pet.ProfilePictureURL;
+                        wall.ProfilePictureURL = pet.Profilepicture;
 
                         wall.haveILiked = GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, item2.id);
 

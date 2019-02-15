@@ -70,7 +70,7 @@ namespace PetBellies.DAL
         {
             try
             {
-                return JsonConvert.DeserializeObject<List<Petpictures>>(Segédfüggvények.RequestJson("Users/GetPetPictures"));
+                return JsonConvert.DeserializeObject<List<Petpictures>>(Segédfüggvények.RequestJson("Petpictures/GetPetPictures"));
             }
             catch (Exception)
             {
@@ -82,7 +82,7 @@ namespace PetBellies.DAL
         {
             try
             {
-                return JsonConvert.DeserializeObject<List<Hashtags>>(Segédfüggvények.RequestJson("Users/GetHashtags"));
+                return JsonConvert.DeserializeObject<List<Hashtags>>(Segédfüggvények.RequestJson("Hashtags/GetHashtags"));
             }
             catch (Exception)
             {
@@ -94,7 +94,7 @@ namespace PetBellies.DAL
         {
             try
             {
-                return JsonConvert.DeserializeObject<List<CasualImageTable>>(Segédfüggvények.RequestJson("Users/GetHashtags"))[0].CasualImage;
+                return JsonConvert.DeserializeObject<byte[]>(Segédfüggvények.RequestJson("CasualImage/GetCasualImage"));
             }
             catch (Exception)
             {
@@ -159,11 +159,11 @@ namespace PetBellies.DAL
             }
         }
         
-        public List<Petpictures> GetPetpictureByID(int ID)
+        public List<Petpictures> GetPetPicturesByPetID(int ID)
         {
             try
             {
-                return JsonConvert.DeserializeObject<List<Petpictures>>(Segédfüggvények.RequestJson("Petpictures/GetPetPictureByID/" + ID));
+                return JsonConvert.DeserializeObject<List<Petpictures>>(Segédfüggvények.RequestJson("Petpictures/GetPetPicturesByPetID/" + ID));
             }
             catch (Exception)
             {
@@ -361,7 +361,7 @@ namespace PetBellies.DAL
 
         public bool UpdateUser(int ID, User user)
         {
-            var message = Segédfüggvények.PostPut(HttpMethod.Post, user, "Users/UpdateUser");
+            var message = Segédfüggvények.PostPut(HttpMethod.Put, user, "Users/UpdateUser");
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -375,7 +375,7 @@ namespace PetBellies.DAL
 
         public bool UpdatePet(int ID, Pet pet)
         {
-            var message = Segédfüggvények.PostPut(HttpMethod.Post, pet, "Pets/UpdatePet");
+            var message = Segédfüggvények.PostPut(HttpMethod.Put, pet, "Pets/UpdatePet");
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -389,7 +389,7 @@ namespace PetBellies.DAL
 
         public bool UpdatePetpicturesReported(Petpictures ID)
         {
-            var message = Segédfüggvények.PostPut(HttpMethod.Post, ID, "Petpictures/ReportImage");
+            var message = Segédfüggvények.PostPut(HttpMethod.Put, ID, "Petpictures/ReportImage");
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -403,7 +403,7 @@ namespace PetBellies.DAL
 
         public bool UpdateUserReported(User ID)
         {
-            var message = Segédfüggvények.PostPut(HttpMethod.Post, ID, "Users/ReportUser");
+            var message = Segédfüggvények.PostPut(HttpMethod.Put, ID, "Users/ReportUser");
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {

@@ -106,7 +106,7 @@ namespace PetBellies.View
                             {
                                 Pet = item,
                                 Name = item.Name,
-                                ProfilePictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL))
+                                ProfilePictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.Profilepicture))
                             });
 
                             Frame frame = new Frame()
@@ -128,7 +128,7 @@ namespace PetBellies.View
                                 WidthRequest = 55,
                                 Aspect = Aspect.AspectFill,
                                 HorizontalOptions = LayoutOptions.Center,
-                                Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL))
+                                Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.Profilepicture))
                             };
 
                             Label nameLabel = new Label()

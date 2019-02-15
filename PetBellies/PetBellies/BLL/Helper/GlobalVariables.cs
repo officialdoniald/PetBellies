@@ -286,7 +286,7 @@ namespace PetBellies.BLL.Helper
                     HaveAnOwner = myPetsList.HaveAnOwner,
                     Name = myPetsList.Name,
                     PetType = myPetsList.PetType,
-                    ProfilePictureURL = myPetsList.ProfilePictureURL,
+                    Profilepicture = myPetsList.ProfilePictureURL,
                     Uploader = myPetsList.Uploader
                 };
             }
@@ -306,7 +306,7 @@ namespace PetBellies.BLL.Helper
                 Name = pet.Name,
                 petid = pet.id,
                 PetType = pet.PetType,
-                ProfilePictureURL = pet.ProfilePictureURL,
+                ProfilePictureURL = pet.Profilepicture,
                 Uploader = pet.Uploader
             };
         }

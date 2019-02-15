@@ -9,7 +9,7 @@ namespace PetBellies.BLL.ViewModel
     {
         public string DeletePet(int petid)
         {
-            var petpictureList = GlobalVariables.databaseConnection.GetPetpictureByID(petid);
+            var petpictureList = GlobalVariables.databaseConnection.GetPetPicturesByPetID(petid);
 
             foreach (var item in petpictureList)
             {
@@ -91,7 +91,7 @@ namespace PetBellies.BLL.ViewModel
         {
             if (addedPhoto)
             {
-                pet.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
+                pet.Profilepicture = new Segédfüggvények().ReadFully(f);
 
                 if (!GlobalVariables.databaseConnection.UpdatePet(pet.id, pet))
                 {
@@ -105,7 +105,7 @@ namespace PetBellies.BLL.ViewModel
                     {
                         if (item.petid == pet.id)
                         {
-                            GlobalVariables.Mypetlist[i].ProfilePictureURL = pet.ProfilePictureURL;
+                            GlobalVariables.Mypetlist[i].ProfilePictureURL = pet.Profilepicture;
 
                             break;
                         }

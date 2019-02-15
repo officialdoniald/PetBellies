@@ -33,8 +33,8 @@ namespace PetBellies.View
                 ageDatePicker.Date = thisPet.Age;
                 typeEntry.Placeholder = thisPet.PetType;
 
-                if (thisPet.ProfilePictureURL != null)
-                    profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.ProfilePictureURL));
+                if (thisPet.Profilepicture != null)
+                    profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
 
                 if (thisPet.HaveAnOwner == 0) shelterpetSwitch.IsToggled = true;
                 else shelterpetSwitch.IsToggled = false;

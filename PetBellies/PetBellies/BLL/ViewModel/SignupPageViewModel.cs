@@ -26,8 +26,13 @@ namespace PetBellies.BLL.ViewModel
 
             var isItAUser = GlobalVariables.databaseConnection.GetUserByEmail(user.Email);
 
-            if (isItAUser.Email is null)
+            if (isItAUser is null)
             {
+                GlobalVariables.InitializeGlobalCasualImage();
+
+                user.ProfilePicture = GlobalVariables.GlobalCasualImage;
+                user.Password = new Segédfüggvények().EncryptPassword(user.Password);
+
                 var success = GlobalVariables.databaseConnection.InsertUserAsync(user);
 
                 if (success)

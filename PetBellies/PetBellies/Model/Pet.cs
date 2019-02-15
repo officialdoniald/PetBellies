@@ -14,7 +14,7 @@ namespace PetBellies.Model
 
         public int HaveAnOwner { get; set; }
 
-        public byte[] ProfilePictureURL { get; set; }
+        public byte[] Profilepicture { get; set; }
 
         public int Uploader { get; set; }
     }

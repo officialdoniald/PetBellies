@@ -14,9 +14,9 @@ namespace PetBellies.BLL.ViewModel
             }
             else if (addedPhoto)
             {
-                pet.ProfilePictureURL = new Segédfüggvények().ReadFully(f);
+                pet.Profilepicture = new Segédfüggvények().ReadFully(f);
             }
-            else pet.ProfilePictureURL = null;
+            else pet.Profilepicture = null;
 
             pet.Uploader = GlobalVariables.ActualUser.id;
 

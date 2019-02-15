@@ -163,6 +163,11 @@ namespace PetBellies.BLL.Helper
         {
             return "This pet's user is blocked!";
         }
+
+        public static string SuccessfulReg()
+        {
+            return "Successful registration!";
+        }
     }
 }
 

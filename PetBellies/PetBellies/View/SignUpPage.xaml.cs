@@ -30,6 +30,7 @@ namespace PetBellies.View
             }
             else
             {
+                await DisplayAlert(English.Successful(), English.SuccessfulReg(), English.OK());
                 await Navigation.PopToRootAsync();
             }
 
@@ -51,7 +52,7 @@ namespace PetBellies.View
                 Password = pwEntry.Text,
                 FirstName = firstnameEntry.Text,
                 LastName = lastnameEntry.Text,
-                FacebookId = "",
+                FacebookId = null,
                 ProfilePicture = null
             };
 

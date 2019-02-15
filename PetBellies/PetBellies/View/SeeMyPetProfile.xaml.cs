@@ -60,8 +60,8 @@ namespace PetBellies.View
                     profilePictureImage.HeightRequest = optimalWidth;
                     profilePictureImage.WidthRequest = optimalWidth;
 
-                    if (thisPet.ProfilePictureURL != null)
-                        profilePictureImage.Source = ImageSource.FromStream(()=> new System.IO.MemoryStream(thisPet.ProfilePictureURL));
+                    if (thisPet.Profilepicture != null)
+                        profilePictureImage.Source = ImageSource.FromStream(()=> new System.IO.MemoryStream(thisPet.Profilepicture));
                     else profilePictureImage.Source = "account.png";
                 });
 

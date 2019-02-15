@@ -19,7 +19,7 @@ namespace PetBellies.BLL.ViewModel
         {
             List<Petpictures> petpictureList = new List<Petpictures>();
 
-            petpictureList = GlobalVariables.databaseConnection.GetPetpictureByID(petid);
+            petpictureList = GlobalVariables.databaseConnection.GetPetPicturesByPetID(petid);
 
             return petpictureList;
         }
