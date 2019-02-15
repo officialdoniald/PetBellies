@@ -85,19 +85,10 @@ namespace PetBellies.BLL.ViewModel
 
         public bool HaveILiked(int petpicturesid)
         {
-            Likes like = GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, petpicturesid);
-
-            if (like is null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, petpicturesid);
         }
 
-        public bool ReportPicture(int petpicturesid)
+        public bool ReportPicture(Petpictures petpicturesid)
         {
             bool reported = GlobalVariables.databaseConnection.UpdatePetpicturesReported(petpicturesid);
 

@@ -58,7 +58,7 @@ namespace PetBellies.View
                             blockedPeople = item
                         };
 
-                        listViewWith.ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(blockedUser.ProfilePictureURL));
+                        listViewWith.ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(blockedUser.ProfilePicture));
 
                         listViewWithPictureAndSomeText.Add(listViewWith);
                     }

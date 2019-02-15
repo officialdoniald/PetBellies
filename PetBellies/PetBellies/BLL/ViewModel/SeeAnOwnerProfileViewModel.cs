@@ -44,7 +44,7 @@ namespace PetBellies.BLL.ViewModel
             return GlobalVariables.databaseConnection.GetFollowingByuserID(id);
         }
         
-        public bool ReportUser(int userid)
+        public bool ReportUser(User userid)
         {
             bool reported = GlobalVariables.databaseConnection.UpdateUserReported(userid);
 

@@ -76,9 +76,9 @@ namespace PetBellies.BLL.ViewModel
         {
             if (addedPhoto)
             {
-                GlobalVariables.ActualUser.ProfilePictureURL = new Segédfüggvények().ReadFully(GlobalVariables.SelectedImageFromGallery);
+                GlobalVariables.ActualUser.ProfilePicture = new Segédfüggvények().ReadFully(GlobalVariables.SelectedImageFromGallery);
             }
-            else GlobalVariables.ActualUser.ProfilePictureURL = null;
+            else GlobalVariables.ActualUser.ProfilePicture = null;
 
             return UpdateUser(GlobalVariables.ActualUser);
         }

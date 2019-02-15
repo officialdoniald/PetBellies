@@ -53,16 +53,7 @@ namespace PetBellies.BLL.ViewModel
         {
             int userid = GlobalVariables.databaseConnection.GetUserByEmail(userEmail).id;
 
-            Following following = GlobalVariables.databaseConnection.GetFollowingByID(userid, petid);
-
-            if (following is null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return GlobalVariables.databaseConnection.GetFollowingByID(userid, petid);
         }
 
         public string FollowAPet(string userEmail, int petid)

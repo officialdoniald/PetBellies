@@ -22,7 +22,7 @@ namespace PetBellies.View
                 lastnameEntry.Placeholder = GlobalVariables.ActualUser.LastName;
                 firstnameEntry.Placeholder = GlobalVariables.ActualUser.FirstName;
                 emailEntry.Placeholder = GlobalVariables.ActualUser.Email;
-                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePictureURL));
+                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePicture));
             });
         }
 

@@ -55,16 +55,7 @@ namespace PetBellies.BLL.ViewModel
                         wall.howmanylikes = GlobalVariables.databaseConnection.GetLikeByPetpicturesID(item2.id).Count;
                         wall.ProfilePictureURL = pet.ProfilePictureURL;
 
-                        Likes like = GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, item2.id);
-
-                        if (like is null)
-                        {
-                            wall.haveILiked = false;
-                        }
-                        else
-                        {
-                            wall.haveILiked = true;
-                        }
+                        wall.haveILiked = GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, item2.id);
 
                         if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(pet.Uploader))
                         {

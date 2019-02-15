@@ -3,11 +3,62 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace PetBellies.BLL.Helper
 {
     public class Segédfüggvények
     {
+        public string RequestJson(string uri)
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://petbelliespwd.azurewebsites.net/api/" + uri);
+            request.Method = HttpMethod.Get;//Get Put Post Delete
+            request.Headers.Add("Accept", "aaplication/json");//we would like JSON as response
+            var client = new HttpClient();
+            HttpResponseMessage response = client.SendAsync(request).Result;
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK) { }
+
+            HttpContent content = response.Content;
+            var json = content.ReadAsStringAsync().Result;
+
+            return json;
+        }
+
+        public HttpResponseMessage PostPut(HttpMethod method, object sendingObject, string uri)
+        {
+            string json = JsonConvert.SerializeObject(sendingObject);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://petbelliespwd.azurewebsites.net/api/" + uri);
+            request.Method = method;
+            request.Content = content;
+
+            var client = new HttpClient();
+            return client.SendAsync(request).Result;
+        }
+
+        public HttpResponseMessage Delete(string url, object sendingObject = null)
+        {
+            string json = JsonConvert.SerializeObject(sendingObject);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://petbelliespwd.azurewebsites.net/api/" + url);
+            request.Method = HttpMethod.Delete;
+
+            if (sendingObject != null)
+            {
+                request.Content = content;
+            }
+
+            var client = new HttpClient();
+            return client.SendAsync(request).Result;
+        }
+
         public bool IsValidEmailAddress(string emailaddress)
         {
             try

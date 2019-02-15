@@ -65,8 +65,8 @@ namespace PetBellies.View
                         Name = item.LastName + " " + item.FirstName
                     };
 
-                    if (item.ProfilePictureURL != null)
-                        listViewWith.ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL));
+                    if (item.ProfilePicture != null)
+                        listViewWith.ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePicture));
                     else listViewWith.ProfilePicture = "";
 
                     listViewWithPictureAndSomeText.Add(listViewWith);

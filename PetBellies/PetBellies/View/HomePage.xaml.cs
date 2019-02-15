@@ -232,7 +232,7 @@ namespace PetBellies.View
 
                 var wallListViewAdapterClicked = (WallListViewAdapter)button.BindingContext;
 
-                var success = GlobalVariables.seePictureFragmentViewModel.ReportPicture(wallListViewAdapterClicked.wallItem.petpictures.id);
+                var success = GlobalVariables.seePictureFragmentViewModel.ReportPicture(wallListViewAdapterClicked.wallItem.petpictures);
 
                 if (success)
                 {

@@ -39,9 +39,9 @@ namespace PetBellies.View
                         //pet = thisPet
                     };
 
-                    if (item.ProfilePictureURL != null)
+                    if (item.ProfilePicture != null)
                     {
-                        listViewWith.ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL));
+                        listViewWith.ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePicture));
                     }
                     else
                     {

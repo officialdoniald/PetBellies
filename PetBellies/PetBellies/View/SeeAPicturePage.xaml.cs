@@ -168,7 +168,7 @@ namespace PetBellies.View
 
             if (reported == "Report")
             {
-                var success = GlobalVariables.seePictureFragmentViewModel.ReportPicture(petpictures.id);
+                var success = GlobalVariables.seePictureFragmentViewModel.ReportPicture(petpictures);
 
                 if (success)
                 {

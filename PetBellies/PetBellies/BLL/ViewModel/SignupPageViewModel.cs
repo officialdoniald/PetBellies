@@ -28,7 +28,7 @@ namespace PetBellies.BLL.ViewModel
 
             if (isItAUser.Email is null)
             {
-                var success = GlobalVariables.databaseConnection.InsertUser(user);
+                var success = GlobalVariables.databaseConnection.InsertUserAsync(user);
 
                 if (success)
                 {

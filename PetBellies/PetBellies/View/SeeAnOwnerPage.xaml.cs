@@ -44,7 +44,7 @@ namespace PetBellies.View
             {
                 user = GlobalVariables.databaseConnection.GetUserByID(userID);
 
-                if (user.ProfilePictureURL != null)
+                if (user.ProfilePicture != null)
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -55,7 +55,7 @@ namespace PetBellies.View
                         profilePictureImage.HeightRequest = optimalWidth;
                         profilePictureImage.WidthRequest = optimalWidth;
 
-                        profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(user.ProfilePictureURL));
+                        profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(user.ProfilePicture));
                     });
                 }
 
@@ -172,7 +172,7 @@ namespace PetBellies.View
 
             if (reported == "Report")
             {
-                var success = GlobalVariables.seeAnOwnerProfileViewModel.ReportUser(userID);
+                var success = GlobalVariables.seeAnOwnerProfileViewModel.ReportUser(user);
 
                 if (success)
                 {

@@ -52,7 +52,7 @@ namespace PetBellies.View
                 FirstName = firstnameEntry.Text,
                 LastName = lastnameEntry.Text,
                 FacebookId = "",
-                ProfilePictureURL = null
+                ProfilePicture = null
             };
 
             string success = await GlobalVariables.signupPageViewModel.SignUpAsync(user);

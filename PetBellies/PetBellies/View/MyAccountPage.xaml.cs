@@ -43,8 +43,8 @@ namespace PetBellies.View
             profilePictureImage.HeightRequest = optimalWidth;
             profilePictureImage.WidthRequest = optimalWidth;
 
-            if (GlobalVariables.ActualUser.ProfilePictureURL != null)
-                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePictureURL));
+            if (GlobalVariables.ActualUser.ProfilePicture != null)
+                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePicture));
             else profilePictureImage.Source = "account.png";
 
             Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;

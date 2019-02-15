@@ -46,7 +46,7 @@ namespace PetBellies.View
                     {
                         Name = item.FirstName + " " + item.LastName,
                         id = item.id,
-                        ProfilePicture = item.ProfilePictureURL == null ? "" : ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
+                        ProfilePicture = item.ProfilePicture == null ? "" : ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePicture)),
                         Email = item.Email
                     });
                 }

@@ -1,4 +1,5 @@
 ﻿using PetBellies.BLL.Helper;
+using PetBellies.View;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +12,7 @@ namespace PetBellies
         public App()
         {
             InitializeComponent();
-            
+
             GlobalVariables.GlobalPassword = PetBellies.Properties.Resources.ResourceManager.GetString("GlobalPassword");
             GlobalVariables.AzureDBConnectionString = PetBellies.Properties.Resources.ResourceManager.GetString("AzureDBConnectionString");
             GlobalVariables.NormalLabel = (Style)Resources["NormalLabel"];
@@ -27,11 +28,11 @@ namespace PetBellies
             {
                 GlobalVariables.InitializeUser();
 
-                MainPage = new View.JustActivityIndicator();
+                MainPage = new JustActivityIndicator();
             }
             else
             {
-                var page = new View.LoginPage();
+                var page = new LoginPage();
 
                 MainPage = new NavigationPage(page)
                 {
