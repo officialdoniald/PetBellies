@@ -7,30 +7,30 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                    <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,15,0,0">
-                        <controls:CircleImage.WidthRequest>
-                            <OnPlatform x:TypeArguments="x:Double">
-                                <On Platform="Android, iOS">75</On>
-                            </OnPlatform>
-                        </controls:CircleImage.WidthRequest>
-                        <controls:CircleImage.HeightRequest>
-                            <OnPlatform x:TypeArguments="x:Double">
-                                <On Platform="Android, iOS">75</On>
-                            </OnPlatform>
-                        </controls:CircleImage.HeightRequest>
-                    </controls:CircleImage>
-                        <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label x:Name="followingLabel" IsVisible="false" Style="{StaticResource DetailLabel}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label Style="{StaticResource AltDetailLabel}" IsVisible="false" x:Name="followingAltLabel" Text="following">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </StackLayout>
+                <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,15,0,0">
+                    <controls:CircleImage.WidthRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">75</On>
+                        </OnPlatform>
+                    </controls:CircleImage.WidthRequest>
+                    <controls:CircleImage.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">75</On>
+                        </OnPlatform>
+                    </controls:CircleImage.HeightRequest>
+                </controls:CircleImage>
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label x:Name="followingLabel" IsVisible="false" Style="{StaticResource DetailLabel}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Style="{StaticResource AltDetailLabel}" IsVisible="false" x:Name="followingAltLabel" Text="following">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
                 <Label Margin="15,0,15,0" x:Name="blockedLabel" IsVisible="False" Style="{StaticResource DetailLabel}" />
                 <ScrollView Orientation="Horizontal">
                     <StackLayout Orientation="Horizontal" x:Name="petListStackLayout" Padding="10">
