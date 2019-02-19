@@ -103,6 +103,18 @@ namespace PetBellies.DAL
             }
         }
 
+        public List<int> GetPetpicturesIDSByPetID(int id)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<int>>(Segédfüggvények.RequestJson("Petpictures/GetPetpicturesIDSByPetID/" + id));
+            }
+            catch (Exception)
+            {
+                return new List<int>();
+            }
+        }
+
         public List<int> GetPetpicturesIDS()
         {
             try

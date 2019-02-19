@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class HomePage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class HomePage : ContentPage
+    {
         private List<Wall> wallList = new List<Wall>();
 
         public HomePage()
@@ -36,52 +36,58 @@ namespace PetBellies.View
 
         private void Initialize()
         {
-            Device.BeginInvokeOnMainThread(() => {
-                wallListView.IsRefreshing = true;
-                if (Device.OS == TargetPlatform.iOS)
-                {
-                    SpecialStackLayout.Margin = new Thickness(0, 25, 0, 0);
-                }
-            });
-
-            GlobalVariables.wallListViewAdapter = new List<WallListViewAdapter>();
-
-            wallList = GlobalVariables.homeFragmentViewModel.GetWallList();
-
-            foreach (var item in wallList)
+            Task.Run(() =>
             {
-                if (!GlobalVariables.whosLikedViewModel.IsMyPet(item.petpictures.PetID))
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    GlobalVariables.wallListViewAdapter.Add(new WallListViewAdapter()
+                    wallListView.IsRefreshing = true;
+                    if (Device.OS == TargetPlatform.iOS)
                     {
-                        wallItem = item,
-                        howManyLikes = item.howmanylikes.ToString() + English.GetLike(),
-                        petName = item.name,
-                        profilepictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
-                        pictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.petpictures.PictureURL)),
-                        followButtonText = followButtonText(item.haveILiked),
-                        hashtags = GlobalVariables.homeFragmentViewModel.GetHashtags(item.petpictures.id)
-                    });
-                }
-            }
+                        SpecialStackLayout.Margin = new Thickness(0, 25, 0, 0);
+                    }
+                });
 
-            Device.BeginInvokeOnMainThread(() => {
-                if (GlobalVariables.wallListViewAdapter.Count == 0)
+                GlobalVariables.wallListViewAdapter = new List<WallListViewAdapter>();
+
+                wallList = GlobalVariables.homeFragmentViewModel.GetWallList();
+
+                foreach (var item in wallList)
                 {
-                    nothingFoundStackLayout.IsVisible = true;
+                    if (!GlobalVariables.whosLikedViewModel.IsMyPet(item.petpictures.PetID))
+                    {
+                        GlobalVariables.wallListViewAdapter.Add(new WallListViewAdapter()
+                        {
+                            wallItem = item,
+                            howManyLikes = item.howmanylikes.ToString() + English.GetLike(),
+                            petName = item.name,
+                            profilepictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
+                            pictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.petpictures.PictureURL)),
+                            followButtonText = followButtonText(item.haveILiked),
+                            hashtags = GlobalVariables.homeFragmentViewModel.GetHashtags(item.petpictures.id)
+                        });
+                    }
                 }
-                else
+
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    nothingFoundStackLayout.IsVisible = false;
-                }
-                wallListView.ItemsSource = GlobalVariables.wallListViewAdapter;
-                wallListView.IsRefreshing = false;
+                    if (GlobalVariables.wallListViewAdapter.Count == 0)
+                    {
+                        nothingFoundStackLayout.IsVisible = true;
+                    }
+                    else
+                    {
+                        nothingFoundStackLayout.IsVisible = false;
+                    }
+                    wallListView.ItemsSource = GlobalVariables.wallListViewAdapter;
+                    wallListView.IsRefreshing = false;
+                });
             });
         }
 
         async void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 Initialize();
             });
         }

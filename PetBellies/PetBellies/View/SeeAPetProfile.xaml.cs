@@ -2,15 +2,16 @@
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SeeAPetProfile : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class SeeAPetProfile : ContentPage
+    {
         private int petid = -1;
 
         private string followOrNot = string.Empty;
@@ -35,92 +36,68 @@ namespace PetBellies.View
             InitializeThePetPictures();
         }
 
-        private async Task InitializeThePetPictures()
+        private void InitializeThePetPictures()
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
-                petPictureListfromDB = GlobalVariables.petProfileFragmentViewModel.GetPetPictureURL(petid);
-
                 thisPet = GlobalVariables.petProfileFragmentViewModel.GetPetFromDBByID(petid);
 
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    followersLabel.Text = GlobalVariables.followersViewModel.GetUserList(this.petid).Count.ToString();
+                currentWidth = Application.Current.MainPage.Width;
 
-                    currentWidth = Application.Current.MainPage.Width;
+                optimalWidth = currentWidth / 3;
 
-                    optimalWidth = currentWidth / 3;
-
+                Device.BeginInvokeOnMainThread(()=> {
                     petnameLabel.Text = thisPet.Name;
                     ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
                     kindLabel.Text = thisPet.PetType;
 
                     profilePictureImage.HeightRequest = optimalWidth;
                     profilePictureImage.WidthRequest = optimalWidth;
-
-                    if (thisPet.Profilepicture != null)
-                        profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
-                    else profilePictureImage.Source = "account.png";
                 });
+
+                if (thisPet.Profilepicture != null)
+                    profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
+                else profilePictureImage.Source = "account.png";
 
                 if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(thisPet.Uploader))
                 {
-                    Device.BeginInvokeOnMainThread(()=>
-                    {
-                        NavigationPage.SetHasNavigationBar(this, true);
-                        detailGrid.IsVisible = true;
-                        blockedLabel.IsVisible = false;
-                    });
+                    NavigationPage.SetHasNavigationBar(this, true);
+                    detailGrid.IsVisible = true;
+                    blockedLabel.IsVisible = false;
 
                     HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);
-                    
-                    int left = 0;
-                    int top = 0;
 
-                    int i = 1;
+                    thisPet = GlobalVariables.petProfileFragmentViewModel.GetPetFromDBByID(petid);
 
-                    foreach (var item in petPictureListfromDB)
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            Image image = new Image();
+                    GetFollowers();
 
-                            image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
+                    currentWidth = Application.Current.MainPage.Width;
 
-                            image.HeightRequest = optimalWidth;
-
-                            image.GestureRecognizers.Add(new TapGestureRecognizer()
-                            {
-                                NumberOfTapsRequired = 1,
-                                TappedCallback = delegate
-                                {
-                                    OnPictureClicked(item);
-                                }
-                            });
-
-                            image.Aspect = Aspect.AspectFill;
-
-                            pictureListGrid.Children.Add(image, top, left);
-
-                            if (i == 3)
-                            {
-                                left++;
-                                i = 1;
-                                top = 0;
-                            }
-                            else
-                            {
-                                i++;
-                                top++;
-                            }
-                        });
-                    }
+                    optimalWidth = currentWidth / 3;
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        if (HaveIAlreadyFollow) followOrNot = GlobalVariables.petProfileFragmentViewModel.unfollowText;
-                        else followOrNot = GlobalVariables.petProfileFragmentViewModel.followText;
+                        petnameLabel.Text = thisPet.Name;
+
+                        ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
+
+                        kindLabel.Text = thisPet.PetType;
+
+                        profilePictureImage.HeightRequest = optimalWidth;
+                        profilePictureImage.WidthRequest = optimalWidth;
+
+                        if (thisPet.Profilepicture != null)
+                            profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
+                        else profilePictureImage.Source = "account.png";
                     });
+
+                    Task.Run(() =>
+                    {
+                        GetPetsPictures();
+                    });
+
+                    if (HaveIAlreadyFollow) followOrNot = GlobalVariables.petProfileFragmentViewModel.unfollowText;
+                    else followOrNot = GlobalVariables.petProfileFragmentViewModel.followText;
                 }
                 else
                 {
@@ -134,6 +111,79 @@ namespace PetBellies.View
                 }
             });
         }
+
+        private void GetPetsPictures()
+        {
+            int left = 0;
+            int top = 0;
+
+            int i = 1;
+
+            var list = GlobalVariables.databaseConnection.GetPetpicturesIDSByPetID(thisPet.id);
+
+            Dictionary<int, int[]> keyValuePairs = new Dictionary<int, int[]>();
+
+            foreach (var item in list)
+            {
+                keyValuePairs.Add(item, new int[2] { top, left });
+
+                if (i == 3)
+                {
+                    left++;
+                    i = 1;
+                    top = 0;
+                }
+                else
+                {
+                    i++;
+                    top++;
+                }
+            }
+
+            foreach (var item in list)
+            {
+                Task.Run(() =>
+                {
+                    var petpicture = GlobalVariables.databaseConnection.GetOnePetpicturesByID(item);
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Image image = new Image();
+
+                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(petpicture.PictureURL));
+
+                        image.HeightRequest = optimalWidth;
+
+                        image.GestureRecognizers.Add(new TapGestureRecognizer()
+                        {
+                            NumberOfTapsRequired = 1,
+                            TappedCallback = delegate
+                            {
+                                OnPictureClicked(petpicture);
+                            }
+                        });
+
+                        image.Aspect = Aspect.AspectFill;
+
+                        pictureListGrid.Children.Add(image, keyValuePairs[item][0], keyValuePairs[item][1]);
+                    });
+                });
+            }
+        }
+
+        private void GetFollowers()
+        {
+            Task.Run(() =>
+            {
+                var text = GlobalVariables.followersViewModel.GetUserList(this.petid).Count.ToString();
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    followersLabel.Text = text;
+                });
+            });
+        }
+
 
         public void OnPictureClicked(Petpictures petpictures)
         {
