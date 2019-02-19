@@ -11,22 +11,24 @@ using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SearchResultPage : ContentPage
-	{
-        List<Petpictures> petpicturesList =
-            new List<Petpictures>();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class SearchResultPage : ContentPage
+    {
+        List<int> petpicturesList =
+            new List<int>();
+
+        private string hashtag = string.Empty;
 
         public SearchResultPage()
         {
             InitializeComponent();
         }
 
-        public SearchResultPage(List<Petpictures> petpicturesList, string hashtag)
+        public SearchResultPage(string hashtag)
         {
-            this.Title = "#" + hashtag;
+            this.hashtag = hashtag;
 
-            this.petpicturesList = petpicturesList;
+            this.Title = "#" + hashtag;
 
             InitializeComponent();
 
@@ -35,30 +37,50 @@ namespace PetBellies.View
 
         private async Task Initialize()
         {
-            await Task.Run(() => {
-                Device.BeginInvokeOnMainThread(() => {
-                    var currentWidth = Application.Current.MainPage.Width;
+            var currentWidth = Application.Current.MainPage.Width;
 
-                    var optimalWidth = currentWidth / 3;
+            var optimalWidth = currentWidth / 3;
 
-                    int left = 0;
-                    int top = 0;
+            await Task.Run(() =>
+            {
+                int left = 0;
+                int top = 0;
 
-                    int i = 1;
+                int i = 1;
 
-                    foreach (var item in petpicturesList)
+                petpicturesList = GlobalVariables.databaseConnection.GetPetpicturesByHashtags(hashtag);
+
+                Dictionary<int, int[]> keyValuePairs = new Dictionary<int, int[]>();
+
+                foreach (var item in petpicturesList)
+                {
+                    keyValuePairs.Add(item, new int[2] { top, left });
+
+                    if (i == 3)
                     {
-                        var pet = GlobalVariables.databaseConnection.GetPetByID(item.PetID);
+                        left++;
+                        i = 1;
+                        top = 0;
+                    }
+                    else
+                    {
+                        i++;
+                        top++;
+                    }
+                }
 
-                        if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(pet.Uploader))
+                foreach (var petpictureid in petpicturesList)
+                {
+                    Task.Run(() =>
+                    {
+                        var item = GlobalVariables.databaseConnection.GetOnePetpicturesByID(petpictureid);
+
+                        Image image = new Image();
+
+                        Device.BeginInvokeOnMainThread(() =>
                         {
-                            Image image = new Image();
-
                             image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
-
                             image.HeightRequest = optimalWidth;
-
-                            image.Aspect = Aspect.AspectFill;
 
                             image.GestureRecognizers.Add(new TapGestureRecognizer()
                             {
@@ -69,22 +91,12 @@ namespace PetBellies.View
                                 }
                             });
 
-                            searchResultGrid.Children.Add(image, top, left);
+                            image.Aspect = Aspect.AspectFill;
 
-                            if (i == 3)
-                            {
-                                left++;
-                                i = 1;
-                                top = 0;
-                            }
-                            else
-                            {
-                                i++;
-                                top++;
-                            }
-                        }
-                    }
-                });
+                            searchResultGrid.Children.Add(image, keyValuePairs[petpictureid][0], keyValuePairs[petpictureid][1]);
+                        });
+                    });
+                }
             });
         }
 

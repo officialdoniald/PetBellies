@@ -25,26 +25,15 @@ namespace PetBellies.BLL.ViewModel
 
             SearchModel searchModel = new SearchModel();
 
-            searchModelList.Add(new SearchModel()
-            {
-                hashtag = "#all",
-                petpicturesList = GlobalVariables.databaseConnection.GetPetpictures()
-            });
+            //searchModelList.Add(new SearchModel()
+            //{
+            //    hashtag = "#all",
+            //});
 
             foreach (var item in hastagsordered)
             {
-                foreach (var item1 in item)
-                {
-                    petpictures.Add(GlobalVariables.databaseConnection.GetOnePetpicturesByID(item1.petpicturesid));
-                }
-
                 searchModel.hashtag = "#" + item.Key;
-                searchModel.petpicturesList = petpictures;
-
                 searchModelList.Add(searchModel);
-
-                petpictures = new List<Petpictures>();
-
                 searchModel = new SearchModel();
             }
 
@@ -74,11 +63,11 @@ namespace PetBellies.BLL.ViewModel
             return searchablelist;
         }
 
-        public List<Petpictures> GetPetpictures()
+        public List<int> GetPetpictures()
         {
-            List<Petpictures> petpicturelist = GlobalVariables.databaseConnection.GetPetpictures();
+            List<int> petpicturelist = GlobalVariables.databaseConnection.GetPetpicturesIDS();
 
-            return ShuffleList<Petpictures>(petpicturelist);
+            return ShuffleList<int>(petpicturelist);
         }
 
         private List<E> ShuffleList<E>(List<E> inputList)

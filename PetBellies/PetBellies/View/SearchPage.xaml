@@ -5,10 +5,15 @@
              xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" 
              Title="Search hashtags">
     <ContentPage.Content>
-        <StackLayout x:Name="SpecialStackLayout">
-            <Entry x:Name="searchEntry" Unfocused="Handle_Unfocused" Focused="Handle_Focused" Placeholder="eg.:beautiful" TextChanged="searchEntry_TextChanged" Style="{StaticResource NormalEnrty}" Margin="15,0,15,0" />
-            <StackLayout x:Name="hashtagsListStackLayout">
-                <ListView ItemTapped="searchListView_ItemTapped" SeparatorVisibility="None" ItemsSource="{Binding searchModelList}" Margin="5,0,5,0" x:Name="searchListView" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing">
+        <ScrollView>
+            <StackLayout x:Name="SpecialStackLayout">
+                <SearchBar x:Name="hashtagsSearchBar"
+                       TextChanged="searchEntry_TextChanged"
+                       Placeholder="eg.:beautiful"
+                       Unfocused="Handle_Unfocused"
+                       Focused="Handle_Focused">
+                </SearchBar>
+                <ListView ItemTapped="searchListView_ItemTapped" ItemsSource="{Binding searchModelList}" Margin="5,0,5,0" x:Name="searchListView" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
@@ -19,25 +24,21 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+                        </RowDefinition>
+                    </Grid.RowDefinitions>
+                </Grid>
             </StackLayout>
-            <StackLayout x:Name="randomPicturesStackLayout">
-                <ScrollView>
-                    <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*">
-                            </ColumnDefinition>
-                            <ColumnDefinition Width="*">
-                            </ColumnDefinition>
-                            <ColumnDefinition Width="*">
-                            </ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition>
-                            </RowDefinition>
-                        </Grid.RowDefinitions>
-                    </Grid>
-                </ScrollView>
-            </StackLayout>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

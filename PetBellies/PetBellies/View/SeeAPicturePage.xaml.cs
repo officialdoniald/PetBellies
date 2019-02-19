@@ -79,13 +79,7 @@ namespace PetBellies.View
                         };
                         onHashtagClickedTap.Tapped += (s, e) =>
                         {
-                            SearchFragmentViewModel searchFragmentViewModel = new SearchFragmentViewModel();
-
-                            List<SearchModel> searchModelList = searchFragmentViewModel.GetSearchModel();
-
-                            var asd24 = (from q in searchModelList where q.hashtag == item2 select q);
-
-                            Navigation.PushAsync(new SearchResultPage(asd24.First().petpicturesList, item2.Split('#')[1]));
+                            Navigation.PushAsync(new SearchResultPage(item2.Split('#')[1]));
                         };
 
                         hashtagLabel.GestureRecognizers.Add(onHashtagClickedTap);

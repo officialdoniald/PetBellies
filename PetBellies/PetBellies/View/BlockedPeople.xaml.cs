@@ -34,9 +34,9 @@ namespace PetBellies.View
             InitializeBlockedUserList();
         }
 
-        private async Task InitializeBlockedUserList()
+        private void InitializeBlockedUserList()
         {
-            await Task.Run(()=> {
+            Task.Run(()=> {
                 Device.BeginInvokeOnMainThread(() => {
                     userListView.ItemsSource = null;
                 });

@@ -50,9 +50,9 @@ namespace PetBellies.View
             InitializePetFollowingList();
         }
 
-        private async Task InitializePetFollowingList()
+        private void InitializePetFollowingList()
         {
-            await Task.Run(() => {
+            Task.Run(() => {
                 users = GlobalVariables.followersViewModel.GetUserList(petpicturesid);
 
                 List<ListViewWithPictureAndSomeText> listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
@@ -80,9 +80,9 @@ namespace PetBellies.View
             });
         }
 
-        private async Task InitializeUserFollowingList()
+        private void InitializeUserFollowingList()
         {
-            await Task.Run(() => {
+            Task.Run(() => {
                 pets = GlobalVariables.followersViewModel.GetPetList(followings);
 
                 List<ListViewWithPictureAndSomeText> listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();

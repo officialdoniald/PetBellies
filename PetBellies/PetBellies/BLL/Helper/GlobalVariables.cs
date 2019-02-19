@@ -86,6 +86,8 @@ namespace PetBellies.BLL.Helper
 
         public static string explorepng = "explore.png";
 
+        public static string WebApiURL { get; set; } = "https://petbelliespwa.azurewebsites.net/api/";
+
         public static Style NormalLabel;
         public static Style NavigationPageStyle;
 

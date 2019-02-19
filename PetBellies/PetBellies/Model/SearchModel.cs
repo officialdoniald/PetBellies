@@ -6,8 +6,8 @@ namespace PetBellies.Model
 {
     public class SearchModel
     {
-        public List<Petpictures> petpicturesList { get; set; }
-
         public string hashtag { get; set; }
+
+        public List<int> petpictureidlist { get; set; }
     }
 }

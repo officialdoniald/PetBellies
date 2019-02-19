@@ -32,9 +32,9 @@ namespace PetBellies.View
             Initialize();
         }
 
-        private async Task Initialize()
+        private void Initialize()
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
                 var list = GlobalVariables.peopleSearchPageViewModel.GetUserWithKeyword("");
 
@@ -113,9 +113,9 @@ namespace PetBellies.View
             });
         }
 
-        async void Handle_Refreshing(object sender, System.EventArgs e)
+        void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            await Initialize();
+            Initialize();
 
             SetList();
         }

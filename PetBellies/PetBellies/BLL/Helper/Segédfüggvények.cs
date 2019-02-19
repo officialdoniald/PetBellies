@@ -13,7 +13,7 @@ namespace PetBellies.BLL.Helper
         public string RequestJson(string uri)
         {
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://petbelliespwd.azurewebsites.net/api/" + uri);
+            request.RequestUri = new Uri(GlobalVariables.WebApiURL + uri);
             request.Method = HttpMethod.Get;//Get Put Post Delete
             request.Headers.Add("Accept", "aaplication/json");//we would like JSON as response
             var client = new HttpClient();
@@ -33,7 +33,7 @@ namespace PetBellies.BLL.Helper
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://petbelliespwd.azurewebsites.net/api/" + uri);
+            request.RequestUri = new Uri(GlobalVariables.WebApiURL + uri);
             request.Method = method;
             request.Content = content;
 
@@ -47,7 +47,7 @@ namespace PetBellies.BLL.Helper
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://petbelliespwd.azurewebsites.net/api/" + url);
+            request.RequestUri = new Uri(GlobalVariables.WebApiURL + url);
             request.Method = HttpMethod.Delete;
 
             if (sendingObject != null)

@@ -66,6 +66,19 @@ namespace PetBellies.DAL
             }
         }
 
+        public string GetWebApiURL()
+        {
+            try
+            {
+                return Segédfüggvények.RequestJson("CasualRequests/GetWebApiURL");
+            }
+            catch (Exception ex)
+            {
+                var asd = ex.Message;
+                return null;
+            }
+        }
+
         public List<Petpictures> GetPetpictures()
         {
             try
@@ -74,7 +87,31 @@ namespace PetBellies.DAL
             }
             catch (Exception)
             {
-                return null;
+                return new List<Petpictures>();
+            }
+        }
+
+        public List<int> GetPetpicturesByHashtags(string id)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<int>>(Segédfüggvények.RequestJson("Petpictures/GetPetpicturesByHashtags/" + id));
+            }
+            catch (Exception)
+            {
+                return new List<int>();
+            }
+        }
+
+        public List<int> GetPetpicturesIDS()
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<int>>(Segédfüggvények.RequestJson("Petpictures/GetPetPictureIDS"));
+            }
+            catch (Exception)
+            {
+                return new List<int>();
             }
         }
 
