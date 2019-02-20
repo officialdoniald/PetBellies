@@ -42,13 +42,16 @@ namespace PetBellies.View
 
                 foreach (var item in list)
                 {
-                    userJustWithPicAndName.Add(new UserJustWithPicAndName()
+                    if (item.id != GlobalVariables.ActualUser.id)
                     {
-                        Name = item.FirstName + " " + item.LastName,
-                        id = item.id,
-                        ProfilePicture = item.ProfilePicture == null ? "" : ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePicture)),
-                        Email = item.Email
-                    });
+                        userJustWithPicAndName.Add(new UserJustWithPicAndName()
+                        {
+                            Name = item.FirstName + " " + item.LastName,
+                            id = item.id,
+                            ProfilePicture = item.ProfilePicture == null ? "" : ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePicture)),
+                            Email = item.Email
+                        });
+                    }
                 }
 
                 isItFinished = true;

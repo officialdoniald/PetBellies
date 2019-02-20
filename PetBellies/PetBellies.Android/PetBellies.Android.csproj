@@ -145,16 +145,10 @@
     <AndroidResource Include="Resources\drawable\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icontwo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\like.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\loginbackground.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\logo.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\people.png" />
@@ -170,9 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\nothing.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\report.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\more.png" />

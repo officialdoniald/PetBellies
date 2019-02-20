@@ -104,9 +104,52 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="camera.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="delete.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="explore.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="finalylogo.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="home.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="icon.png">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
+    <Content Include="Assets\like - Copy.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="like.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="loginbackground.jpg">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="more.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="nothing.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="people.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="profile.png">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="search.png">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-200.png" />
     <Content Include="Assets\SmallTile.scale-400.png" />
@@ -128,66 +171,13 @@
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="unlike.png">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="camera.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="delete.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="explore.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="finalylogo.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="home.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="icon.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Icontwo.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="like.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="loginbackground.jpg">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="logo.jpg">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="people.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="profile.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="search.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="unlike.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

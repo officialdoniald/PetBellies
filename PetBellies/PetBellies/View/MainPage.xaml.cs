@@ -18,8 +18,8 @@ namespace PetBellies.View
             if (Device.OS == TargetPlatform.Android)
             {
                 On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
-                On<Xamarin.Forms.PlatformConfiguration.Android>().SetBarItemColor(Color.Gray);
-                On<Xamarin.Forms.PlatformConfiguration.Android>().SetBarSelectedItemColor(Color.White);
+                On<Xamarin.Forms.PlatformConfiguration.Android>().SetBarItemColor(Color.FromHex("#FFCBB6"));
+                On<Xamarin.Forms.PlatformConfiguration.Android>().SetBarSelectedItemColor(Color.Gray);
             }
 
             Title = "MainPage";

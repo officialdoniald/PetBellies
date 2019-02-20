@@ -80,9 +80,19 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout IsVisible="False" x:Name="nothingFoundStackLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                <Image HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Source="nothing.png"/>
-                <Label HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Text="Nothing found, please pull to refresh!"/>
+            <StackLayout IsVisible="False" x:Name="nothingFoundStackLayout" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image HorizontalOptions="Center" VerticalOptions="Center" Source="nothing.png"/>
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Nothing found, please follow a pet!"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Please go to " Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Image Source="people.png" Grid.Column="1" Grid.Row="0" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Text=" and select an owner" Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="or go to " Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Image Source="search.png" Grid.Column="1" Grid.Row="1" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Text=" and select a photo and then a pet." Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
