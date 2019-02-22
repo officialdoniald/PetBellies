@@ -72,10 +72,12 @@ namespace PetBellies.View
                 {
                     if (GlobalVariables.wallListViewAdapter.Count == 0)
                     {
+                        wallListView.IsVisible = false;
                         nothingFoundStackLayout.IsVisible = true;
                     }
                     else
                     {
+                        wallListView.IsVisible = true;
                         nothingFoundStackLayout.IsVisible = false;
                     }
                     wallListView.ItemsSource = GlobalVariables.wallListViewAdapter;

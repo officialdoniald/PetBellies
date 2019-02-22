@@ -6,8 +6,8 @@
              xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" 
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
     <ContentPage.Content>
-        <StackLayout x:Name="SpecialStackLayout">
-            <ListView BackgroundColor="Transparent" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" SeparatorVisibility="None" HasUnevenRows="True" ItemsSource="{Binding GlobalVariables.wallListViewAdapter}" x:Name="wallListView">
+        <StackLayout x:Name="SpecialStackLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <ListView BackgroundColor="Transparent" IsVisible="False" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" SeparatorVisibility="None" HasUnevenRows="True" ItemsSource="{Binding GlobalVariables.wallListViewAdapter}" x:Name="wallListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
@@ -80,20 +80,20 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout IsVisible="False" x:Name="nothingFoundStackLayout" HorizontalOptions="Center" VerticalOptions="Center">
-                <Image HorizontalOptions="Center" VerticalOptions="Center" Source="nothing.png"/>
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Nothing found, please follow a pet!"/>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="Please go to " Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Image Source="people.png" Grid.Column="1" Grid.Row="0" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label Text=" and select an owner" Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="or go to " Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Image Source="search.png" Grid.Column="1" Grid.Row="1" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label Text=" and select a photo and then a pet." Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
-                </StackLayout>
+        <StackLayout IsVisible="False" x:Name="nothingFoundStackLayout">
+            <Image HorizontalOptions="Center" VerticalOptions="Center" Source="nothing.png"/>
+            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Nothing found, please follow a pet!"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="Please go to " Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Image Source="people.png" Grid.Column="1" Grid.Row="0" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text=" and select an owner" Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center"/>
             </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="or go to " Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Image Source="search.png" Grid.Column="1" Grid.Row="1" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text=" and select a photo and then a pet." Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </StackLayout>
+        </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
