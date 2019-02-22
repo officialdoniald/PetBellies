@@ -4,10 +4,10 @@
              x:Class="PetBellies.View.SeeMyPetProfile"
              Title="My pet profile" 
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem Name="editToolbarItem" Activated="updateButton_Clicked" Order="Primary" Text="Edit" Priority="1" />
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="moreToolbarItem" Activated="MoreToolbarItem_Activated" Order="Primary" Icon="more.png" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
         <ScrollView>
             <StackLayout>
                 <Grid>

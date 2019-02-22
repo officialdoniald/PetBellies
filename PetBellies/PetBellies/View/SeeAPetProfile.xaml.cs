@@ -197,7 +197,7 @@ namespace PetBellies.View
 
         private async void MoreToolbarItem_Activated(object sender, EventArgs e)
         {
-            var reported = await DisplayActionSheet("More", "Cancel", followOrNot, "Go to owner profile");
+            var reported = await DisplayActionSheet("More", "Cancel", null, followOrNot, "Go to owner profile");
 
             if (reported == followOrNot)
             {

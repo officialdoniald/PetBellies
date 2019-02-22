@@ -158,7 +158,7 @@ namespace PetBellies.View
 
         private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
         {
-            var reported = await DisplayActionSheet("More", "Cancel", "Report");
+            var reported = await DisplayActionSheet("More", "Cancel", null, "Report");
 
             if (reported == "Report")
             {

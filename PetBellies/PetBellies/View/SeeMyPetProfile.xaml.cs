@@ -143,14 +143,19 @@ namespace PetBellies.View
             Navigation.PushAsync(new SeeMyPicturePage(petpictures));
         }
 
-        private void updateButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new UpdatePetProfilePage(thisPet.id));
-        }
-
         void Handle_Tapped(object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new FollowersPage(thisPet.id));
+        }
+
+        private async void MoreToolbarItem_Activated(object sender, EventArgs e)
+        {
+            var reported = await DisplayActionSheet("More", "Cancel", null, "Edit");
+
+            if (reported == "Edit")
+            {
+                await Navigation.PushAsync(new UpdatePetProfilePage(thisPet.id));
+            }
         }
     }
 }

@@ -180,7 +180,7 @@ namespace PetBellies.View
 
         private async void ReportToolbarItem_Clicked(object sender, EventArgs e)
         {
-            var reported = await DisplayActionSheet("More", "Cancel", "Report", "Block");
+            var reported = await DisplayActionSheet("More", "Cancel", null, "Report", "Block");
 
             if (reported == "Report")
             {
