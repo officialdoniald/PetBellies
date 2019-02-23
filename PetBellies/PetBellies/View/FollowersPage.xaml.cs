@@ -10,8 +10,6 @@ namespace PetBellies.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FollowersPage : ContentPage
 	{
-        private int petpicturesid = -1;
-
         private List<User> users = new List<User>();
 
         private List<Following> followings = new List<Following>();
@@ -39,9 +37,9 @@ namespace PetBellies.View
         /// Ha egy petnek akarjuk kilistázni a followerjeit.
         /// </summary>
         /// <param name="petpicturesid"></param>
-        public FollowersPage(int petpicturesid)
+        public FollowersPage(List<User> users)
         {
-            this.petpicturesid = petpicturesid;
+            this.users = users;
 
             isPetFollowingList = true;
 
@@ -53,8 +51,6 @@ namespace PetBellies.View
         private void InitializePetFollowingList()
         {
             Task.Run(() => {
-                users = GlobalVariables.followersViewModel.GetUserList(petpicturesid);
-
                 List<ListViewWithPictureAndSomeText> listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
 
                 foreach (var item in users)

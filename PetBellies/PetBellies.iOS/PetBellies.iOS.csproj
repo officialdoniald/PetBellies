@@ -72,7 +72,7 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignProvision>petbellies publish</CodesignProvision>
-    <MtouchI18n>cjk, mideast, other, rare, west</MtouchI18n>
+    <MtouchI18n>cjk,mideast,other,rare,west</MtouchI18n>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignExtraArgs />
     <CodesignResourceRules />

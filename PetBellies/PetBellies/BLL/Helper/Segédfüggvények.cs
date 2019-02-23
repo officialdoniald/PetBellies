@@ -12,51 +12,72 @@ namespace PetBellies.BLL.Helper
     {
         public string RequestJson(string uri)
         {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri(GlobalVariables.WebApiURL + uri);
-            request.Method = HttpMethod.Get;//Get Put Post Delete
-            request.Headers.Add("Accept", "aaplication/json");//we would like JSON as response
-            var client = new HttpClient();
-            HttpResponseMessage response = client.SendAsync(request).Result;
+            try
+            {
+                var request = new HttpRequestMessage();
+                request.RequestUri = new Uri(GlobalVariables.WebApiURL + uri);
+                request.Method = HttpMethod.Get;//Get Put Post Delete
+                request.Headers.Add("Accept", "aaplication/json");//we would like JSON as response
+                var client = new HttpClient();
+                HttpResponseMessage response = client.SendAsync(request).Result;
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK) { }
+                if (response.StatusCode == System.Net.HttpStatusCode.OK) { }
 
-            HttpContent content = response.Content;
-            var json = content.ReadAsStringAsync().Result;
+                HttpContent content = response.Content;
+                var json = content.ReadAsStringAsync().Result;
 
-            return json;
+                return json;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
         }
 
         public HttpResponseMessage PostPut(HttpMethod method, object sendingObject, string uri)
         {
-            string json = JsonConvert.SerializeObject(sendingObject);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            try
+            {
+                string json = JsonConvert.SerializeObject(sendingObject);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri(GlobalVariables.WebApiURL + uri);
-            request.Method = method;
-            request.Content = content;
+                var request = new HttpRequestMessage();
+                request.RequestUri = new Uri(GlobalVariables.WebApiURL + uri);
+                request.Method = method;
+                request.Content = content;
 
-            var client = new HttpClient();
-            return client.SendAsync(request).Result;
+                var client = new HttpClient();
+                return client.SendAsync(request).Result;
+            }
+            catch (Exception)
+            {
+                return new HttpResponseMessage() { StatusCode = System.Net.HttpStatusCode.NoContent };
+            }
         }
 
         public HttpResponseMessage Delete(string url, object sendingObject = null)
         {
-            string json = JsonConvert.SerializeObject(sendingObject);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri(GlobalVariables.WebApiURL + url);
-            request.Method = HttpMethod.Delete;
-
-            if (sendingObject != null)
+            try
             {
-                request.Content = content;
-            }
+                string json = JsonConvert.SerializeObject(sendingObject);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var client = new HttpClient();
-            return client.SendAsync(request).Result;
+                var request = new HttpRequestMessage();
+                request.RequestUri = new Uri(GlobalVariables.WebApiURL + url);
+                request.Method = HttpMethod.Delete;
+
+                if (sendingObject != null)
+                {
+                    request.Content = content;
+                }
+
+                var client = new HttpClient();
+                return client.SendAsync(request).Result;
+            }
+            catch (Exception)
+            {
+                return new HttpResponseMessage() { StatusCode = System.Net.HttpStatusCode.NoContent };
+            }
         }
 
         public bool IsValidEmailAddress(string emailaddress)

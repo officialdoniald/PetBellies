@@ -37,11 +37,15 @@ namespace PetBellies.BLL.ViewModel
 
                 if (success)
                 {
-                    string url = string.Format("http://petbellies.com/php/petbelliesreg.php?email={0}&nev={1}", user.Email, user.FirstName);
-                    Uri uri = new Uri(url);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                    request.Method = "GET";
-                    WebResponse res = await request.GetResponseAsync();
+                    try
+                    {
+                        string url = string.Format("http://petbellies.com/php/petbelliesreg.php?email={0}&nev={1}", user.Email, user.FirstName);
+                        Uri uri = new Uri(url);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                        request.Method = "GET";
+                        WebResponse res = await request.GetResponseAsync();
+                    }
+                    catch (Exception) { }
 
                     return English.Empty();
                 }
