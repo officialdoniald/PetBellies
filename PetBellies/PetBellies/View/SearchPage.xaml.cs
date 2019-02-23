@@ -62,9 +62,9 @@ namespace PetBellies.View
 
         private async void searchEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (hashtagsSearchBar.Text.Length > 0)
+            if (searchEntry.Text.Length > 0)
             {
-                var list = GlobalVariables.searchFragmentViewModel.GetSearchModelWithKeyword(hashtagsSearchBar.Text.ToLower(), searchModelList);
+                var list = GlobalVariables.searchFragmentViewModel.GetSearchModelWithKeyword(searchEntry.Text.ToLower(), searchModelList);
 
                 searchListView.ItemsSource = list;
             }
@@ -204,7 +204,7 @@ namespace PetBellies.View
 
         void Handle_Unfocused(object sender, Xamarin.Forms.FocusEventArgs e)
         {
-            if (String.IsNullOrEmpty(hashtagsSearchBar.Text))
+            if (String.IsNullOrEmpty(searchEntry.Text))
             {
                 searchListView.IsVisible = false;
                 pictureListGrid.IsVisible = true;
