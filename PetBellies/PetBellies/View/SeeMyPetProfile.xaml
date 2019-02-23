@@ -48,15 +48,15 @@
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
                         </Label.GestureRecognizers>
                     </Label>
-                    <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="followers">
+                    <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="Followers">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Grid.Column="1" Grid.Row="0" x:Name="ageLabel" Style="{StaticResource DetailLabel}" />
-                    <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="years old"/>
+                    <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="Years old"/>
                     <Label Grid.Column="2" Grid.Row="0" x:Name="kindLabel" Style="{StaticResource DetailLabel}" />
-                    <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="kind"/>
+                    <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource AltDetailLabel}" Text="Kind"/>
                 </Grid>
                 <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
                     <Grid.ColumnDefinitions>

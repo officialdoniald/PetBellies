@@ -32,7 +32,7 @@
                     <Switch x:Name="shelterpetSwitch" />
                 </StackLayout>
                 <Button Margin="0,10,0,0" Text="Change" x:Name="changePetButton" Style="{StaticResource NormalButton}" Clicked="changePetButton_ClickedAsync" />
-                <Button Text="Delete profile" Style="{StaticResource NormalButton}" Margin="0,10,0,0" x:Name="deletePetButton" Clicked="deletePetButton_ClickedAsync" />
+                <Button Text="Delete profile" BorderColor="Red" TextColor="Red" Style="{StaticResource NormalButton}" Margin="0,10,0,0" x:Name="deletePetButton" Clicked="deletePetButton_ClickedAsync" />
                 <ActivityIndicator x:Name="updatePetProfileActivator" Margin="0,10,0,0" IsRunning="false" Style="{StaticResource NormalActivityIndicator}">
                 </ActivityIndicator>
             </StackLayout>
