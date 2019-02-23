@@ -10,7 +10,9 @@
             <SearchBar x:Name="searchEntry"
                        TextChanged="Handle_TextChanged"
                        Placeholder="Type min. 3 charachter to search..." 
-                       SearchButtonPressed="Handle_Completed">
+                       SearchButtonPressed="Handle_Completed"
+                           BackgroundColor="#FFCBB6"
+                       CancelButtonColor="#FFCBB6">
             </SearchBar>
             <ListView ItemsSource="{Binding userJustWithPicAndName}" SeparatorVisibility="None" x:Name="userListView" ItemTapped="Handle_ItemTapped" IsPullToRefreshEnabled="true" IsRefreshing="false" Refreshing="Handle_Refreshing">
                 <ListView.ItemTemplate>

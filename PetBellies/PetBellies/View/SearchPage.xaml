@@ -10,7 +10,9 @@
                        TextChanged="searchEntry_TextChanged"
                        Placeholder="eg.:beautiful"
                        Unfocused="Handle_Unfocused"
-                       Focused="Handle_Focused">
+                       Focused="Handle_Focused"
+                           BackgroundColor="#FFCBB6"
+                       CancelButtonColor="#FFCBB6">
                 </SearchBar>
                 <ListView ItemTapped="searchListView_ItemTapped" ItemsSource="{Binding searchModelList}" Margin="5,0,5,0" x:Name="searchListView" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing">
                     <ListView.ItemTemplate>
