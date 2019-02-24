@@ -110,9 +110,6 @@
     <Content Include="delete.png">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="explore.png">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="finalylogo.png">
       <SubType>Designer</SubType>
     </Content>
@@ -136,9 +133,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="more.png">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="nothing.png">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="people.png">

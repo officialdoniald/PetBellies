@@ -209,10 +209,6 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </BundleResource>
-    <BundleResource Include="Resources\explore.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </BundleResource>
     <BundleResource Include="Resources\finalylogo.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
@@ -225,23 +221,11 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </BundleResource>
-    <BundleResource Include="Resources\Icontwo.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </BundleResource>
     <BundleResource Include="Resources\like.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </BundleResource>
     <BundleResource Include="Resources\loginbackground.jpg">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </BundleResource>
-    <BundleResource Include="Resources\logo.jpg">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </BundleResource>
-    <BundleResource Include="Resources\nothing.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </BundleResource>
@@ -293,9 +277,6 @@
     <BundleResource Include="Resources\iTunesArtwork%403x.png" />
     <BundleResource Include="Resources\logo.png" />
     <BundleResource Include="Resources\mostjo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\report.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\more.png" />

@@ -133,9 +133,6 @@
     <AndroidResource Include="Resources\drawable\delete.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\explore.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\finalylogo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\unlike.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\nothing.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\more.png" />
