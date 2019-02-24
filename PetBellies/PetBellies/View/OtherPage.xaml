@@ -21,6 +21,8 @@
                 Margin="15,25,15,0"
                 Text="Delete my account"
                 Style="{StaticResource NormalButton}"
+                BorderColor="Red"
+                TextColor="Red"
                 x:Name="deleteAcoountPageButton"
                 Clicked="deleteAcoountPageButton_ClickedAsync"/>
             <Button

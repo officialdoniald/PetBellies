@@ -24,6 +24,7 @@ namespace PetBellies.View
         private Pet thisPet = new Pet();
 
         private List<Petpictures> petPictureListfromDB = new List<Petpictures>();
+        private List<User> followerList = new List<User>();
 
         private Petpictures petpictures = new Petpictures();
 
@@ -175,15 +176,24 @@ namespace PetBellies.View
         {
             Task.Run(() =>
             {
-                var text = GlobalVariables.followersViewModel.GetUserList(this.petid).Count.ToString();
+                followerList = GlobalVariables.followersViewModel.GetUserList(this.petid);
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    followersLabel.Text = text;
+                    followersLabel.Text = followerList.Count.ToString();
+                    followersLabel.GestureRecognizers.Add(new TapGestureRecognizer()
+                    {
+                        NumberOfTapsRequired = 1,
+                        TappedCallback = (arg1, arg2) => Handle_Tapped(followersLabel, null)
+                    });
+                    followersTextLabel.GestureRecognizers.Add(new TapGestureRecognizer()
+                    {
+                        NumberOfTapsRequired = 1,
+                        TappedCallback = (arg1, arg2) => Handle_Tapped(followersLabel, null)
+                    });
                 });
             });
         }
-
 
         public void OnPictureClicked(Petpictures petpictures)
         {
@@ -192,7 +202,7 @@ namespace PetBellies.View
 
         void Handle_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new FollowersPage(thisPet.id));
+            Navigation.PushAsync(new FollowersPage(followerList));
         }
 
         private async void MoreToolbarItem_Activated(object sender, EventArgs e)

@@ -81,8 +81,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         <StackLayout IsVisible="False" x:Name="nothingFoundStackLayout">
-            <Image HorizontalOptions="Center" VerticalOptions="Center" Source="nothing.png"/>
-            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Nothing found, please follow a pet!"/>
+            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Please follow a pet!"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
                 <Label Text="Please go to " Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Image Source="people.png" Grid.Column="1" Grid.Row="0" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>

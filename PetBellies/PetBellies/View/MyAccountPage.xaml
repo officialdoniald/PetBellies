@@ -29,7 +29,7 @@
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
                                 </Label.GestureRecognizers>
                             </Label>
-                            <Label Style="{StaticResource AltDetailLabel}" Text="following" Grid.Column="0" Grid.Row="1">
+                            <Label Style="{StaticResource AltDetailLabel}" Text="Following" Grid.Column="0" Grid.Row="1">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
                                 </Label.GestureRecognizers>
