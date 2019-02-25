@@ -8,32 +8,34 @@
         <StackLayout x:Name="SpecialStackLayout">
             <Entry x:Name="searchEntry" Unfocused="Handle_Unfocused" Focused="Handle_Focused" Placeholder="eg.:beautiful" TextChanged="searchEntry_TextChanged" Style="{StaticResource NormalEnrty}" Margin="15,0,15,0" />
             <ListView ItemTapped="searchListView_ItemTapped" ItemsSource="{Binding searchModelList}" Margin="5,0,5,0" x:Name="searchListView" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
-                                <Grid BackgroundColor="White">
-                                    <Label Text="{Binding hashtag}" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabel}" Margin="5,0,5,0" />
-                                </Grid>
-                            </customControls:ExtendedViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
+                            <Grid BackgroundColor="White">
+                                <Label Text="{Binding hashtag}" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabel}" Margin="5,0,5,0" />
+                            </Grid>
+                        </customControls:ExtendedViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
-            <ScrollView>
-                <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*">
-                        </ColumnDefinition>
-                        <ColumnDefinition Width="*">
-                        </ColumnDefinition>
-                        <ColumnDefinition Width="*">
-                        </ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition>
-                        </RowDefinition>
-                    </Grid.RowDefinitions>
-                </Grid>
-            </ScrollView>
+            <ListView IsPullToRefreshEnabled="True" Refreshing="ListView_Refreshing" IsRefreshing="False">
+                <ListView.Header>
+                    <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*">
+                            </ColumnDefinition>
+                            <ColumnDefinition Width="*">
+                            </ColumnDefinition>
+                            <ColumnDefinition Width="*">
+                            </ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition>
+                            </RowDefinition>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </ListView.Header>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

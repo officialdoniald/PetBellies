@@ -32,6 +32,8 @@ namespace PetBellies.View
                 }
 
                 searchListView.IsRefreshing = true;
+
+                ListView_Refreshing(this, null);
             });
         }
 
@@ -41,25 +43,7 @@ namespace PetBellies.View
 
             GlobalVariables.CanIGoBackWithTheBackButton = true;
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = false;
-
-            if (GlobalVariables.IsPictureDeleted)
-            {
-                searchListView.IsRefreshing = true;
-
-                searchListView.ItemsSource = new List<SearchModel>();
-
-                GlobalVariables.IsPictureDeleted = false;
-            }
-
-            InitializeThePetPictures();
-        }
-
+        
         private async void searchEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (searchEntry.Text.Length > 0)
@@ -209,6 +193,27 @@ namespace PetBellies.View
                 searchListView.IsVisible = false;
                 pictureListGrid.IsVisible = true;
             }
+        }
+
+        private void ListView_Refreshing(object sender, EventArgs e)
+        {
+            GlobalVariables.CanIGoBackWithTheBackButton = false;
+
+            if (GlobalVariables.IsPictureDeleted)
+            {
+                searchListView.IsRefreshing = true;
+
+                searchListView.ItemsSource = new List<SearchModel>();
+
+                GlobalVariables.IsPictureDeleted = false;
+            }
+
+            InitializeThePetPictures();
+
+            try
+            {
+                ((ListView)sender).IsRefreshing = false;
+            } catch (Exception) { }
         }
     }
 }
