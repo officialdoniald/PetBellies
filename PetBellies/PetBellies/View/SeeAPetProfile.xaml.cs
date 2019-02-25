@@ -197,7 +197,14 @@ namespace PetBellies.View
 
         public void OnPictureClicked(Petpictures petpictures)
         {
-            Navigation.PushAsync(new SeeAPicturePage(petpictures));
+            if (!GlobalVariables.databaseConnection.GetPetpicturesExistByPetPicturesID(petpictures.id))
+            {
+                Navigation.PushAsync(new NoPictureFoundPage());
+            }
+            else
+            {
+                Navigation.PushAsync(new SeeAPicturePage(petpictures));
+            }
         }
 
         void Handle_Tapped(object sender, System.EventArgs e)

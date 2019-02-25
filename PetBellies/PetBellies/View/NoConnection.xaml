@@ -4,7 +4,7 @@
              x:Class="PetBellies.View.NoConnection">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="No Internet connection..." Style="{StaticResource NormalLabel}"/>
+            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="No Internet connection, waiting for reconnection..." Style="{StaticResource NormalLabel}"/>
             <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" IsRunning="true" Style="{StaticResource NormalActivityIndicator}"></ActivityIndicator>
         </StackLayout>
     </ContentPage.Content>

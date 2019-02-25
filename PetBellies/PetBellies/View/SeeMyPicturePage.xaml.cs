@@ -103,19 +103,24 @@ namespace PetBellies.View
             Navigation.PushAsync(new WhosLiked(petpictures.id));
         }
 
-        private async Task deleteButton_ClickedAsync(object sender, EventArgs e)
+        private async void MoreToolbarItem_Activated(object sender, EventArgs e)
         {
-            if (!GlobalVariables.seePictureFragmentViewModel.DeletePicture(this.petpictures))
-            {
-                await DisplayAlert(English.Failed(), English.SomethingWentWrong(), English.OK());
-            }
-            else
-            {
-                GlobalVariables.IsPictureDeleted = true;
+            var reported = await DisplayActionSheet("More", "Cancel", "Delete");
 
-                await Navigation.PopToRootAsync();
+            if (reported == "Delete")
+            {
+                if (!GlobalVariables.seePictureFragmentViewModel.DeletePicture(this.petpictures))
+                {
+                    await DisplayAlert(English.Failed(), English.SomethingWentWrong(), English.OK());
+                }
+                else
+                {
+                    GlobalVariables.IsPictureDeleted = true;
 
-                await DisplayAlert(English.Successful(), English.SuccessfulDeletedThePicture(), English.OK());
+                    await Navigation.PopToRootAsync();
+
+                    await DisplayAlert(English.Successful(), English.SuccessfulDeletedThePicture(), English.OK());
+                }
             }
         }
     }

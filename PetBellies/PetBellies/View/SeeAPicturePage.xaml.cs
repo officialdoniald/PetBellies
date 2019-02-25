@@ -33,9 +33,9 @@ namespace PetBellies.View
 
         public SeeAPicturePage(Petpictures petpictures)
         {
-            InitializeComponent();
-
             this.petpictures = petpictures;
+
+            InitializeComponent();
 
             Thickness.Bottom = 0;
             Thickness.Left = 0;

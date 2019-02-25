@@ -4,6 +4,9 @@
              x:Class="PetBellies.View.SeeMyPicturePage"
              Title="My picture" 
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="moreToolbarItem" Activated="MoreToolbarItem_Activated" Order="Primary" Icon="more.png" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Orientation="Vertical">
@@ -14,8 +17,6 @@
                         <ColumnDefinition>
                         </ColumnDefinition>
                         <ColumnDefinition Width="60">
-                        </ColumnDefinition>
-                        <ColumnDefinition Width="Auto">
                         </ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -49,13 +50,6 @@
                             </TapGestureRecognizer>
                         </Label.GestureRecognizers>
                     </Label>
-                    <!--<Button Style="{StaticResource NormalButton}" Margin="0,0,0,0" Grid.Column="3" Grid.Row="0" x:Name="deleteButton" Text="Delete" Clicked="deleteButton_ClickedAsync" VerticalOptions="Center" HorizontalOptions="End" />-->
-                    <Image Source="delete.png" Margin="0,0,0,0" Grid.Column="3" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="deleteButton_ClickedAsync">
-                            </TapGestureRecognizer>
-                        </Image.GestureRecognizers>
-                    </Image>
                 </Grid>
                 <Image x:Name="pictureImage" Style="{StaticResource FillImageStyle}"/>
                 <StackLayout x:Name="mainStackLayout" Orientation="Horizontal" Margin="15,0,15,0">
