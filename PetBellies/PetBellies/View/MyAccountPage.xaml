@@ -11,8 +11,8 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                    <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,15,0,0">
-                <controls:CircleImage.WidthRequest>
+                <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,15,0,0">
+                    <controls:CircleImage.WidthRequest>
                         <OnPlatform x:TypeArguments="x:Double">
                             <On Platform="Android, iOS">75</On>
                         </OnPlatform>
@@ -21,20 +21,12 @@
                         <OnPlatform x:TypeArguments="x:Double">
                             <On Platform="Android, iOS">75</On>
                         </OnPlatform>
-                    </controls:CircleImage.HeightRequest>    
+                    </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
-                         <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label x:Name="followingLabel" Style="{StaticResource DetailLabel}" Grid.Column="0" Grid.Row="0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label Style="{StaticResource AltDetailLabel}" Text="Following" Grid.Column="0" Grid.Row="1">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </StackLayout>
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label x:Name="followingLabel" Style="{StaticResource DetailLabel}" Grid.Column="0" Grid.Row="0"/>
+                    <Label Style="{StaticResource AltDetailLabel}" x:Name="followersTextLabel" Text="Following" Grid.Column="0" Grid.Row="1"/>
+                </StackLayout>
                 <ScrollView Orientation="Horizontal">
                     <StackLayout Orientation="Horizontal" x:Name="petListStackLayout"  Padding="10">
                     </StackLayout>

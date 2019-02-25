@@ -20,16 +20,8 @@
                     </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
                 <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
-                    <Label x:Name="followingLabel" IsVisible="false" Style="{StaticResource DetailLabel}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Style="{StaticResource AltDetailLabel}" IsVisible="false" x:Name="followingAltLabel" Text="Following">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
+                    <Label x:Name="followingLabel" Style="{StaticResource DetailLabel}" Grid.Column="0" Grid.Row="0"/>
+                    <Label Style="{StaticResource AltDetailLabel}" x:Name="followersTextLabel" Text="Following" Grid.Column="0" Grid.Row="1"/>
                 </StackLayout>
                 <Label Margin="15,0,15,0" x:Name="blockedLabel" IsVisible="False" Style="{StaticResource DetailLabel}" />
                 <ScrollView Orientation="Horizontal">
