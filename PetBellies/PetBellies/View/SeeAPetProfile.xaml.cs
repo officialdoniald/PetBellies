@@ -48,7 +48,7 @@ namespace PetBellies.View
                 optimalWidth = currentWidth / 3;
 
                 Device.BeginInvokeOnMainThread(()=> {
-                    petnameLabel.Text = thisPet.Name;
+                    Title = thisPet.Name;
                     ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
                     kindLabel.Text = thisPet.PetType;
 
@@ -78,7 +78,7 @@ namespace PetBellies.View
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        petnameLabel.Text = thisPet.Name;
+                        Title = thisPet.Name;
 
                         ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
 

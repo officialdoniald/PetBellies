@@ -93,12 +93,7 @@ namespace PetBellies.BLL.Helper
 
         public static DatabaseConnections databaseConnection =
             new DatabaseConnections();
-
-        /// <summary>
-        /// Can I go back with the Back Button?
-        /// </summary>
-        public static bool CanIGoBackWithTheBackButton { get; set; } = false;
-
+        
         /// <summary>
         /// Application password.
         /// </summary>

@@ -48,7 +48,7 @@ namespace PetBellies.View
 
             optimalWidth = currentWidth / 3;
 
-            petnameLabel.Text = thisPet.Name;
+            Title = thisPet.Name;
 
             ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
 

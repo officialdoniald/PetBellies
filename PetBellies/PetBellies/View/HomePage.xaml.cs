@@ -209,21 +209,7 @@ namespace PetBellies.View
                 likeNumberLabel.Text = wallListViewAdapterClicked.wallItem.howmanylikes.ToString() + English.GetLike();
             }
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = false;
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = true;
-        }
-
+        
         private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
         {
             var reported = await DisplayActionSheet("More", "Cancel", null, "Report");

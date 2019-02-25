@@ -36,13 +36,6 @@ namespace PetBellies.View
                 ListView_Refreshing(this, null);
             });
         }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = true;
-        }
         
         private async void searchEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -204,8 +197,6 @@ namespace PetBellies.View
 
         private void ListView_Refreshing(object sender, EventArgs e)
         {
-            GlobalVariables.CanIGoBackWithTheBackButton = false;
-
             if (GlobalVariables.IsPictureDeleted)
             {
                 searchListView.IsRefreshing = true;
