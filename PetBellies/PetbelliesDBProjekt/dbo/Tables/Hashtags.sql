@@ -3,6 +3,6 @@
     [petpicturesid] INT            NOT NULL,
     [hashtag]       NVARCHAR (150) NOT NULL,
     PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_Hashtags_ToPetpictures] FOREIGN KEY ([petpicturesid]) REFERENCES [dbo].[Petpictures] ([id])
+    CONSTRAINT [FK_Hashtags_ToPetpictures] FOREIGN KEY ([petpicturesid]) REFERENCES [dbo].[Petpictures] ([id]) ON DELETE CASCADE
 );
 

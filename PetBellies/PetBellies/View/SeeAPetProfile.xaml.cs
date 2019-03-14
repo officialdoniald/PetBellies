@@ -63,8 +63,11 @@ namespace PetBellies.View
                 if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(thisPet.Uploader))
                 {
                     NavigationPage.SetHasNavigationBar(this, true);
-                    detailGrid.IsVisible = true;
-                    blockedLabel.IsVisible = false;
+
+                    Device.BeginInvokeOnMainThread(()=> {
+                        detailGrid.IsVisible = true;
+                        blockedLabel.IsVisible = false;
+                    });
 
                     HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);
 

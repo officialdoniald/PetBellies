@@ -104,7 +104,7 @@ namespace PetBellies.View
             });
         }
 
-        private async Task likeOrNotButton_ClickedAsync(object sender, EventArgs e)
+        private async void likeOrNotButton_ClickedAsync(object sender, EventArgs e)
         {
             if (haveiliked)
             {
