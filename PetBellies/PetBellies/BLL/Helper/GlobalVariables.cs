@@ -12,11 +12,11 @@ namespace PetBellies.BLL.Helper
 {
     public static class GlobalVariables
     {
-        public static MyAccountPageViewModel myAccountPageViewModel =
-            new MyAccountPageViewModel();
-
         public static ObservableCollection<WallListViewAdapter> wallListViewAdapter =
             new ObservableCollection<WallListViewAdapter>();
+
+        public static MyAccountPageViewModel myAccountPageViewModel =
+            new MyAccountPageViewModel();
 
         public static SignupPageViewModel signupPageViewModel =
             new SignupPageViewModel();
@@ -94,16 +94,26 @@ namespace PetBellies.BLL.Helper
 
         public static DatabaseConnections databaseConnection =
             new DatabaseConnections();
-        
+
         /// <summary>
-        /// 
+        /// Amelyiktől induljon.
+        /// </summary>
+        public static int PetPicturesStartIndex { get; set; } = 0;
+
+        /// <summary>
+        /// Hány itemet szedjen ki egyszerre.
+        /// </summary>
+        public static int PetPicturesCount { get; set; } = 2;
+
+        /// <summary>
+        /// Amelyiktől induljon.
         /// </summary>
         public static int WallStartIndex { get; set; } = 0;
 
         /// <summary>
-        /// 
+        /// Hány itemet szedjen ki egyszerre.
         /// </summary>
-        public static int WallCount { get; set; } = 2;
+        public static int WallCount { get; set; } = 10;
 
         /// <summary>
         /// Can I go back with the Back Button?

@@ -2,6 +2,7 @@
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace PetBellies.BLL.ViewModel
@@ -13,15 +14,15 @@ namespace PetBellies.BLL.ViewModel
             return GlobalVariables.databaseConnection.GetHashtags();
         }
 
-        public List<SearchModel> GetSearchModel()
+        public ObservableCollection<SearchModel> GetSearchModel()
         {
-            List<Hashtags> hashtags = GetHashtags();
+            ObservableCollection<Hashtags> hashtags = new ObservableCollection<Hashtags>(GetHashtags());
 
             var hastagsordered = hashtags.OrderBy(a => a.hashtag).GroupBy(a => a.hashtag);
 
-            List<SearchModel> searchModelList = new List<SearchModel>();
+            ObservableCollection<SearchModel> searchModelList = new ObservableCollection<SearchModel>();
 
-            List<Petpictures> petpictures = new List<Petpictures>();
+            ObservableCollection<Petpictures> petpictures = new ObservableCollection<Petpictures>();
 
             SearchModel searchModel = new SearchModel();
 
@@ -40,20 +41,20 @@ namespace PetBellies.BLL.ViewModel
             return searchModelList;
         }
 
-        public List<SearchModel> GetSearchModelWithKeyword(string searchword, List<SearchModel> searchModelList)
+        public ObservableCollection<SearchModel> GetSearchModelWithKeyword(string searchword, ObservableCollection<SearchModel> searchModelList)
         {
-            List<SearchModel> searchablelist = new List<SearchModel>();
+            ObservableCollection<SearchModel> searchablelist = new ObservableCollection<SearchModel>();
 
             if (!String.IsNullOrEmpty(searchword))
             {
-                searchablelist = (
+                searchablelist = new ObservableCollection<SearchModel>((
 
                                  from g
                                  in searchModelList
                                  where g.hashtag.Contains(searchword)
                                  select g
 
-                                 ).ToList();
+                                 ).ToList());
             }
             else
             {
@@ -65,9 +66,7 @@ namespace PetBellies.BLL.ViewModel
 
         public List<int> GetPetpictures()
         {
-            List<int> petpicturelist = GlobalVariables.databaseConnection.GetPetpicturesIDS();
-
-            return ShuffleList<int>(petpicturelist);
+            return GlobalVariables.databaseConnection.GetPetPicturesByRange();
         }
 
         private List<E> ShuffleList<E>(List<E> inputList)

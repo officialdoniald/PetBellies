@@ -35,6 +35,9 @@
                         </Grid.RowDefinitions>
                     </Grid>
                 </ListView.Header>
+                <ListView.Footer>
+                    <Button Text="More..." x:Name="MoreButton" Style="{StaticResource NormalButton}" Clicked="MoreButton_Clicked"/>
+                </ListView.Footer>
             </ListView>
         </StackLayout>
     </ContentPage.Content>

@@ -2,6 +2,7 @@
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,7 +13,15 @@ namespace PetBellies.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchPage : ContentPage
     {
-        List<SearchModel> searchModelList = new List<SearchModel>();
+        private ObservableCollection<SearchModel> searchModelList = new ObservableCollection<SearchModel>();
+
+        private List<int> petpicturesList = new List<int>();
+
+        private Dictionary<int, int[]> keyValuePairs = new Dictionary<int, int[]>();
+
+        private int top = 0;
+        private int left = 0;
+        private int i = 1;
 
         private double currentWidth = 0;
         private double optimalWidth = 0;
@@ -36,7 +45,7 @@ namespace PetBellies.View
                 ListView_Refreshing(this, null);
             });
         }
-        
+
         private async void searchEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (searchEntry.Text.Length > 0)
@@ -94,69 +103,22 @@ namespace PetBellies.View
                 pictureListGrid.Children.Clear();
             });
 
-            await Task.Run(()=> 
+            await Task.Run(() =>
             {
                 SetTheListView();
             });
 
-            List<int> petpicturesList = GlobalVariables.searchFragmentViewModel.GetPetpictures();
+            GlobalVariables.PetPicturesStartIndex = 0;
+
+            petpicturesList = new List<int>();
 
             currentWidth = Application.Current.MainPage.Width;
 
             optimalWidth = currentWidth / 3;
 
-            int left = 0;
-            int top = 0;
+            keyValuePairs = new Dictionary<int, int[]>();
 
-            int i = 1;
-
-            Dictionary<int, int[]> keyValuePairs = new Dictionary<int, int[]>();
-
-            foreach (var item in petpicturesList)
-            {
-                keyValuePairs.Add(item, new int[2] { top, left });
-
-                if (i == 3)
-                {
-                    left++;
-                    i = 1;
-                    top = 0;
-                }
-                else
-                {
-                    i++;
-                    top++;
-                }
-            }
-
-            foreach (var petpictureid in petpicturesList)
-            {
-                Task.Run(() =>
-                {
-                    var item = GlobalVariables.databaseConnection.GetOnePetpicturesByID(petpictureid);
-
-                    Image image = new Image();
-
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
-                        image.HeightRequest = optimalWidth;
-
-                        image.GestureRecognizers.Add(new TapGestureRecognizer()
-                        {
-                            NumberOfTapsRequired = 1,
-                            TappedCallback = delegate
-                                {
-                                    OnPictureClicked(item);
-                                }
-                        });
-
-                        image.Aspect = Aspect.AspectFill;
-
-                        pictureListGrid.Children.Add(image, keyValuePairs[petpictureid][0], keyValuePairs[petpictureid][1]);
-                    });
-                });
-            }
+            FillGrid();
         }
 
         public void OnPictureClicked(Petpictures petpictures)
@@ -211,7 +173,80 @@ namespace PetBellies.View
             try
             {
                 ((ListView)sender).IsRefreshing = false;
-            } catch (Exception) { }
+            }
+            catch (Exception) { }
+        }
+
+        private void MoreButton_Clicked(object sender, EventArgs e)
+        {
+            Device.BeginInvokeOnMainThread(()=> {
+                ((ListView)((Button)sender).Parent).IsRefreshing = true;
+
+                GlobalVariables.PetPicturesStartIndex += GlobalVariables.PetPicturesCount;
+
+                FillGrid();
+
+                ((ListView)((Button)sender).Parent).IsRefreshing = false;
+            });
+        }
+
+        public void FillGrid()
+        {
+            petpicturesList = GlobalVariables.searchFragmentViewModel.GetPetpictures();
+
+            if (petpicturesList.Count == 0)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    MoreButton.IsVisible = false;
+                });
+            }
+            
+            foreach (var item in petpicturesList)
+            {
+                keyValuePairs.Add(item, new int[2] { top, left });
+
+                if (i == 3)
+                {
+                    left++;
+                    i = 1;
+                    top = 0;
+                }
+                else
+                {
+                    i++;
+                    top++;
+                }
+            }
+
+            foreach (var petpictureid in petpicturesList)
+            {
+                Task.Run(() =>
+                {
+                    var item = GlobalVariables.databaseConnection.GetOnePetpicturesByID(petpictureid);
+
+                    Image image = new Image();
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
+                        image.HeightRequest = optimalWidth;
+
+                        image.GestureRecognizers.Add(new TapGestureRecognizer()
+                        {
+                            NumberOfTapsRequired = 1,
+                            TappedCallback = delegate
+                            {
+                                OnPictureClicked(item);
+                            }
+                        });
+
+                        image.Aspect = Aspect.AspectFill;
+
+                        pictureListGrid.Children.Add(image, keyValuePairs[petpictureid][0], keyValuePairs[petpictureid][1]);
+                    });
+                });
+            }
         }
     }
 }

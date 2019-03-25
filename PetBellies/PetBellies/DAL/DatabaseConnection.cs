@@ -39,6 +39,19 @@ namespace PetBellies.DAL
             }
         }
 
+        //Indexed
+        public List<int> GetPetPicturesByRange()
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<int>>(Segédfüggvények.RequestJson("PetPictures/GetPetPicturesByRange?from=" + GlobalVariables.PetPicturesStartIndex + "&count=" + GlobalVariables.PetPicturesCount));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public List<User> GetUsers()
         {
             try
