@@ -24,19 +24,9 @@ namespace PetBellies.View
                 Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
             });
         }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = true;
-        }
-
+        
         protected override void OnAppearing()
         {
-            //Ha leszkedved szenvedj vele, mert bugos lesz, ha más pageről hívod be.
-            GlobalVariables.CanIGoBackWithTheBackButton = false;
-
             var currentWidth = Application.Current.MainPage.Width;
 
             var optimalWidth = currentWidth / 3;
@@ -116,6 +106,16 @@ namespace PetBellies.View
 
                 Device.BeginInvokeOnMainThread(()=> {
                     followingLabel.Text = followings.Count.ToString();
+                    followingLabel.GestureRecognizers.Add(new TapGestureRecognizer()
+                    {
+                        NumberOfTapsRequired = 1,
+                        TappedCallback = (arg1, arg2) => TapGestureRecognizer_Tapped(followingLabel, null)
+                    });
+                    followersTextLabel.GestureRecognizers.Add(new TapGestureRecognizer()
+                    {
+                        NumberOfTapsRequired = 1,
+                        TappedCallback = (arg1, arg2) => TapGestureRecognizer_Tapped(followersTextLabel, null)
+                    });
                 });
             });
         }

@@ -17,7 +17,7 @@ namespace PetBellies.View
             InitializeComponent();
         }
 
-        private async Task signupButton_ClickedAsync(object sender, EventArgs e)
+        private async void signupButton_ClickedAsync(object sender, EventArgs e)
         {
             await Task.Run(() => {
                 RegistrationAsync();
@@ -75,11 +75,11 @@ namespace PetBellies.View
             emailEntry.Focus();
         }
 
-        async Task Handle_CompletedOnPasswordEntry(object sender, System.EventArgs e)
+        void Handle_CompletedOnPasswordEntry(object sender, System.EventArgs e)
         {
             if (signupButton.IsEnabled)
             {
-                await signupButton_ClickedAsync(this, new EventArgs());
+                signupButton_ClickedAsync(this, new EventArgs());
             }
         }
         

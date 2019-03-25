@@ -14,11 +14,11 @@ namespace PetBellies.View
             InitializeComponent();
         }
 
-        private async System.Threading.Tasks.Task sendNewPassword_ClickedAsync(object sender, EventArgs e)
+        private async void sendNewPassword_ClickedAsync(object sender, EventArgs e)
         {
             var success = await GlobalVariables.forgotPasswordPageViewModel.SendEmailAsync(emailEntry.Text);
 
-            if (String.IsNullOrEmpty(success))
+            if (string.IsNullOrEmpty(success))
             {
                 await Navigation.PopToRootAsync();
             }
@@ -28,9 +28,9 @@ namespace PetBellies.View
             }
         }
 
-        async Task Handle_Completed(object sender, System.EventArgs e)
+        async void Handle_Completed(object sender, System.EventArgs e)
         {
-            await sendNewPassword_ClickedAsync(this, new EventArgs());
+            sendNewPassword_ClickedAsync(this, new EventArgs());
         }
     }
 }

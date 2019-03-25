@@ -22,18 +22,9 @@ namespace PetBellies.View
 
             currentWidth = Application.Current.MainPage.Width;
         }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = true;
-        }
-
+        
         protected override void OnAppearing()
         {
-            GlobalVariables.CanIGoBackWithTheBackButton = false;
-
             if (GlobalVariables.AddedPet || GlobalVariables.AddedPhoto)
                 Initialize();
         }
@@ -65,7 +56,7 @@ namespace PetBellies.View
             pictureImage.IsVisible = false;
         }
 
-        private async Task galleryButton_ClickedAsync(object sender, EventArgs e)
+        private async void galleryButton_ClickedAsync(object sender, EventArgs e)
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {

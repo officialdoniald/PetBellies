@@ -35,9 +35,7 @@ namespace PetBellies.View
             base.OnAppearing();
 
             GlobalVariables.InitializeGlobalCasualImage();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = false;
-
+            
             Task.Run(()=>
             {
                 if (!string.IsNullOrEmpty(isEmpty))
@@ -67,13 +65,6 @@ namespace PetBellies.View
                     });
                 }
             });
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = true;
         }
     }
 }

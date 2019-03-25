@@ -6,6 +6,6 @@
     [cashtype]   NVARCHAR (50) NOT NULL,
     [petid]      INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_Donates_ToPet] FOREIGN KEY ([petid]) REFERENCES [dbo].[Pet] ([id])
+    CONSTRAINT [FK_Donates_ToPet] FOREIGN KEY ([petid]) REFERENCES [dbo].[Pet] ([id]) ON DELETE CASCADE
 );
 

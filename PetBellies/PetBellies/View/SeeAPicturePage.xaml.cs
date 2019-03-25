@@ -33,9 +33,9 @@ namespace PetBellies.View
 
         public SeeAPicturePage(Petpictures petpictures)
         {
-            InitializeComponent();
-
             this.petpictures = petpictures;
+
+            InitializeComponent();
 
             Thickness.Bottom = 0;
             Thickness.Left = 0;
@@ -104,7 +104,7 @@ namespace PetBellies.View
             });
         }
 
-        private async Task likeOrNotButton_ClickedAsync(object sender, EventArgs e)
+        private async void likeOrNotButton_ClickedAsync(object sender, EventArgs e)
         {
             if (haveiliked)
             {

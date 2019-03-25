@@ -48,7 +48,7 @@ namespace PetBellies.View
                 optimalWidth = currentWidth / 3;
 
                 Device.BeginInvokeOnMainThread(()=> {
-                    petnameLabel.Text = thisPet.Name;
+                    Title = thisPet.Name;
                     ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
                     kindLabel.Text = thisPet.PetType;
 
@@ -63,8 +63,11 @@ namespace PetBellies.View
                 if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(thisPet.Uploader))
                 {
                     NavigationPage.SetHasNavigationBar(this, true);
-                    detailGrid.IsVisible = true;
-                    blockedLabel.IsVisible = false;
+
+                    Device.BeginInvokeOnMainThread(()=> {
+                        detailGrid.IsVisible = true;
+                        blockedLabel.IsVisible = false;
+                    });
 
                     HaveIAlreadyFollow = GlobalVariables.petProfileFragmentViewModel.HaveIAlreadyFollow(GlobalVariables.ActualUsersEmail, petid);
 
@@ -78,7 +81,7 @@ namespace PetBellies.View
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        petnameLabel.Text = thisPet.Name;
+                        Title = thisPet.Name;
 
                         ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
 
@@ -197,7 +200,14 @@ namespace PetBellies.View
 
         public void OnPictureClicked(Petpictures petpictures)
         {
-            Navigation.PushAsync(new SeeAPicturePage(petpictures));
+            if (!GlobalVariables.databaseConnection.GetPetpicturesExistByPetPicturesID(petpictures.id))
+            {
+                Navigation.PushAsync(new NoPictureFoundPage());
+            }
+            else
+            {
+                Navigation.PushAsync(new SeeAPicturePage(petpictures));
+            }
         }
 
         void Handle_Tapped(object sender, System.EventArgs e)

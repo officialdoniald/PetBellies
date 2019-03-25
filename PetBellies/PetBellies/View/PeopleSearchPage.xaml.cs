@@ -122,19 +122,5 @@ namespace PetBellies.View
 
             SetList();
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = false;
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            GlobalVariables.CanIGoBackWithTheBackButton = true;
-        }
     }
 }

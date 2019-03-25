@@ -110,15 +110,22 @@ namespace PetBellies.View
 
         public void OnPictureClicked(Petpictures petpictures)
         {
-            var isThisMyPet = GlobalVariables.Mypetlist.Where(u => u.petid == petpictures.PetID).FirstOrDefault();
-
-            if (isThisMyPet is null)
+            if (!GlobalVariables.databaseConnection.GetPetpicturesExistByPetPicturesID(petpictures.id))
             {
-                Navigation.PushAsync(new SeeAPicturePage(petpictures));
+                Navigation.PushAsync(new NoPictureFoundPage());
             }
             else
             {
-                Navigation.PushAsync(new SeeMyPicturePage(petpictures));
+                var isThisMyPet = GlobalVariables.Mypetlist.Where(u => u.petid == petpictures.PetID).FirstOrDefault();
+
+                if (isThisMyPet is null)
+                {
+                    Navigation.PushAsync(new SeeAPicturePage(petpictures));
+                }
+                else
+                {
+                    Navigation.PushAsync(new SeeMyPicturePage(petpictures));
+                }
             }
         }
     }

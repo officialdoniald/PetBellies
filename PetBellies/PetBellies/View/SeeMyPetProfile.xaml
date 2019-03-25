@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.View.SeeMyPetProfile"
-             Title="My pet profile" 
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="moreToolbarItem" Activated="MoreToolbarItem_Activated" Order="Primary" Icon="more.png" />
@@ -10,7 +9,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Grid>
+                <!--<Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -20,7 +19,7 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Label Grid.Column="1" Grid.Row="0" x:Name="petnameLabel" Style="{StaticResource DetailLabel}"/>
-                </Grid>
+                </Grid>-->
                 <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Source="{Binding profilePictureImage}" Aspect="AspectFill" Margin="0,15,0,0">
                         <controls:CircleImage.WidthRequest>
                             <OnPlatform x:TypeArguments="x:Double">

@@ -92,7 +92,7 @@ namespace PetBellies.View
                             blockedLabel.IsVisible = false;
                             //petsLabel.IsVisible = true;
                             followingLabel.IsVisible = true;
-                            followingAltLabel.IsVisible = true;
+                            followersTextLabel.IsVisible = true;
                             petListStackLayout.IsVisible = true;
 
                             GetFollowings();
@@ -160,7 +160,7 @@ namespace PetBellies.View
                         blockedLabel.IsVisible = true;
                         //petsLabel.IsVisible = false;
                         followingLabel.IsVisible = false;
-                        followingAltLabel.IsVisible = false;
+                        followersTextLabel.IsVisible = false;
                         petListStackLayout.IsVisible = false;
                     });
                 }
@@ -174,6 +174,16 @@ namespace PetBellies.View
 
                 Device.BeginInvokeOnMainThread(() => {
                     followingLabel.Text = followings.Count.ToString();
+                    followingLabel.GestureRecognizers.Add(new TapGestureRecognizer()
+                    {
+                        NumberOfTapsRequired = 1,
+                        TappedCallback = (arg1, arg2) => TapGestureRecognizer_Tapped(followingLabel, null)
+                    });
+                    followersTextLabel.GestureRecognizers.Add(new TapGestureRecognizer()
+                    {
+                        NumberOfTapsRequired = 1,
+                        TappedCallback = (arg1, arg2) => TapGestureRecognizer_Tapped(followersTextLabel, null)
+                    });
                 });
             });
         }

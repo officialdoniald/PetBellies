@@ -14,7 +14,7 @@ namespace PetBellies.View
             InitializeComponent();
         }
 
-        private async System.Threading.Tasks.Task deleteAcoountPageButton_ClickedAsync(object sender, EventArgs e)
+        private async void deleteAcoountPageButton_ClickedAsync(object sender, EventArgs e)
         {
             var action = await DisplayActionSheet("Delete account", "Are you sure?", "Cancel", "Delete");
             if (action == "Delete")
@@ -46,7 +46,7 @@ namespace PetBellies.View
             }
         }
 
-        private async System.Threading.Tasks.Task loguotButton_Clicked(object sender, EventArgs e)
+        private async void loguotButton_Clicked(object sender, EventArgs e)
         {
             loguotButton.IsEnabled = false;
 

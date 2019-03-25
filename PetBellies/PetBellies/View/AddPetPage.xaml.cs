@@ -72,7 +72,7 @@ namespace PetBellies.View
             });
         }
 
-        private async Task galleryButton_ClickedAsync(object sender, EventArgs e)
+        private async void galleryButton_ClickedAsync(object sender, EventArgs args)
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {

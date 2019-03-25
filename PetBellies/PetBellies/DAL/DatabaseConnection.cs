@@ -221,14 +221,14 @@ namespace PetBellies.DAL
         {
             try
             {
-                return JsonConvert.DeserializeObject<bool>(Segédfüggvények.RequestJson("CasualRequests/GetLikesByPetpicturesIDAndUserID?userid=" + userid + "&petpicturesid=" + petpicturesid ));
+                return JsonConvert.DeserializeObject<bool>(Segédfüggvények.RequestJson("CasualRequests/GetLikesByPetpicturesIDAndUserID?userid=" + userid + "&petpicturesid=" + petpicturesid));
             }
             catch (Exception)
             {
                 return false;
             }
         }
-        
+
         public bool GetFollowingByID(int userID, int petid)
         {
             try
@@ -298,6 +298,18 @@ namespace PetBellies.DAL
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public bool GetPetpicturesExistByPetPicturesID(int petpicturesid)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<bool>(Segédfüggvények.RequestJson("Petpictures/GetPetpicturesExistByPetPicturesID/" + petpicturesid));
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -455,7 +467,7 @@ namespace PetBellies.DAL
 
         public bool DeletePet(Pet pet)
         {
-            var message = Segédfüggvények.Delete("Pets/DeletePet");
+            var message = Segédfüggvények.Delete("Pets/DeletePet/" + pet.id);
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -497,7 +509,7 @@ namespace PetBellies.DAL
 
         public bool DeletePetpictures(Petpictures petpictures)
         {
-            var message = Segédfüggvények.Delete("Petpictures/DeleteImage");
+            var message = Segédfüggvények.Delete("Petpictures/DeleteImage", petpictures);
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
