@@ -1,8 +1,11 @@
-﻿using Xamarin.Forms;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace PetBellies.Model
 {
-    public class WallListViewAdapter
+    public class WallListViewAdapter : BindableObject
     {
         public Wall wallItem { get; set; }
 

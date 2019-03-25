@@ -4,6 +4,7 @@ using PetBellies.DAL;
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using Xamarin.Forms;
 
@@ -11,11 +12,11 @@ namespace PetBellies.BLL.Helper
 {
     public static class GlobalVariables
     {
-        public static List<WallListViewAdapter> wallListViewAdapter =
-            new List<WallListViewAdapter>();
-
         public static MyAccountPageViewModel myAccountPageViewModel =
             new MyAccountPageViewModel();
+
+        public static ObservableCollection<WallListViewAdapter> wallListViewAdapter =
+            new ObservableCollection<WallListViewAdapter>();
 
         public static SignupPageViewModel signupPageViewModel =
             new SignupPageViewModel();
@@ -93,6 +94,16 @@ namespace PetBellies.BLL.Helper
 
         public static DatabaseConnections databaseConnection =
             new DatabaseConnections();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int WallStartIndex { get; set; } = 0;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int WallCount { get; set; } = 2;
 
         /// <summary>
         /// Can I go back with the Back Button?

@@ -24,43 +24,32 @@ namespace PetBellies.BLL.ViewModel
         {
             List<Wall> wallList = new List<Wall>();
 
-            List<Petpictures> petpictureList = new List<Petpictures>();
+            List<WallFromDB> wallFromDB = new List<WallFromDB>();
+            
+            wallFromDB = GlobalVariables.databaseConnection.GetWallItemByUserIDBYRange();
 
-            List<Following> followingList = new List<Following>();
-
-            followingList = GlobalVariables.databaseConnection.GetFollowingByuserID(GlobalVariables.ActualUser.id);
-
-            List<Petpictures> petpictures = new List<Petpictures>();
-
-            if (followingList is null)
+            if (wallFromDB is null)
             {
                 return new List<Wall>();
             }
             else
             {
-                foreach (var item in followingList)
+                foreach (var item in wallFromDB)
                 {
-                    petpictures = new List<Petpictures>();
+                    Wall wall = new Wall();
+                    Pet pet = new Pet();
 
-                    petpictures = GlobalVariables.databaseConnection.GetPetPicturesByPetID(item.FUserID);
+                    pet = GlobalVariables.databaseConnection.GetPetByID(item.PetID);
+                    wall.petpictures = GlobalVariables.databaseConnection.GetOnePetpicturesByID(item.PetPicturesID);
+                    wall.name = pet.Name;
+                    wall.howmanylikes = GlobalVariables.databaseConnection.GetLikeByPetpicturesID(item.PetPicturesID).Count;
+                    wall.ProfilePictureURL = pet.Profilepicture;
 
-                    foreach (var item2 in petpictures)
+                    wall.haveILiked = GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, item.PetPicturesID);
+
+                    if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(pet.Uploader))
                     {
-                        Wall wall = new Wall();
-                        Pet pet = new Pet();
-
-                        pet = GlobalVariables.databaseConnection.GetPetByID(item.FUserID);
-                        wall.petpictures = item2;
-                        wall.name = pet.Name;
-                        wall.howmanylikes = GlobalVariables.databaseConnection.GetLikeByPetpicturesID(item2.id).Count;
-                        wall.ProfilePictureURL = pet.Profilepicture;
-
-                        wall.haveILiked = GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, item2.id);
-
-                        if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(pet.Uploader))
-                        {
-                            wallList.Add(wall);
-                        }
+                        wallList.Add(wall);
                     }
                 }
                 return wallList;

@@ -2,6 +2,7 @@
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -40,49 +41,15 @@ namespace PetBellies.View
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    wallListView.IsRefreshing = true;
                     if (Device.OS == TargetPlatform.iOS)
                     {
                         SpecialStackLayout.Margin = new Thickness(0, 25, 0, 0);
                     }
                 });
 
-                GlobalVariables.wallListViewAdapter = new List<WallListViewAdapter>();
+                GlobalVariables.wallListViewAdapter = new ObservableCollection<WallListViewAdapter>();
 
-                wallList = GlobalVariables.homeFragmentViewModel.GetWallList();
-
-                foreach (var item in wallList)
-                {
-                    if (!GlobalVariables.whosLikedViewModel.IsMyPet(item.petpictures.PetID))
-                    {
-                        GlobalVariables.wallListViewAdapter.Add(new WallListViewAdapter()
-                        {
-                            wallItem = item,
-                            howManyLikes = item.howmanylikes.ToString() + English.GetLike(),
-                            petName = item.name,
-                            profilepictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
-                            pictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.petpictures.PictureURL)),
-                            followButtonText = followButtonText(item.haveILiked),
-                            hashtags = GlobalVariables.homeFragmentViewModel.GetHashtags(item.petpictures.id)
-                        });
-                    }
-                }
-
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    if (GlobalVariables.wallListViewAdapter.Count == 0)
-                    {
-                        wallListView.IsVisible = false;
-                        nothingFoundStackLayout.IsVisible = true;
-                    }
-                    else
-                    {
-                        wallListView.IsVisible = true;
-                        nothingFoundStackLayout.IsVisible = false;
-                    }
-                    wallListView.ItemsSource = GlobalVariables.wallListViewAdapter;
-                    wallListView.IsRefreshing = false;
-                });
+                AddWallListItem();
             });
         }
 
@@ -90,6 +57,8 @@ namespace PetBellies.View
         {
             await Task.Run(() =>
             {
+                GlobalVariables.WallStartIndex = 0;
+
                 Initialize();
             });
         }
@@ -271,6 +240,64 @@ namespace PetBellies.View
                     await DisplayAlert("Failed", "Something went wrong", "OK");
                 }
             }
+        }
+
+        private void MoreButton_Clicked(object sender, EventArgs e)
+        {
+            GlobalVariables.WallStartIndex += GlobalVariables.WallCount;
+
+            AddWallListItem();
+        }
+
+        private void AddWallListItem()
+        {
+            Task.Run(() => {
+
+                Device.BeginInvokeOnMainThread(()=> {
+                    wallListView.IsRefreshing = true;
+                });
+
+                wallList = GlobalVariables.homeFragmentViewModel.GetWallList();
+
+                if (wallList.Count == 0)
+                {
+                    Device.BeginInvokeOnMainThread(() => {
+                        MoreButton.IsVisible = false;
+                    });
+                }
+
+                foreach (var item in wallList)
+                {
+                    GlobalVariables.wallListViewAdapter.Add(new WallListViewAdapter()
+                    {
+                        wallItem = item,
+                        howManyLikes = item.howmanylikes.ToString() + English.GetLike(),
+                        petName = item.name,
+                        profilepictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
+                        pictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.petpictures.PictureURL)),
+                        followButtonText = followButtonText(item.haveILiked),
+                        hashtags = GlobalVariables.homeFragmentViewModel.GetHashtags(item.petpictures.id)
+                    });
+                }
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    if (GlobalVariables.wallListViewAdapter.Count == 0)
+                    {
+                        wallListView.IsVisible = false;
+                        nothingFoundStackLayout.IsVisible = true;
+                    }
+                    else
+                    {
+                        wallListView.IsVisible = true;
+                        nothingFoundStackLayout.IsVisible = false;
+                    }
+
+                    wallListView.ItemsSource = GlobalVariables.wallListViewAdapter;
+
+                    wallListView.IsRefreshing = false;
+                });
+            });
         }
     }
 }

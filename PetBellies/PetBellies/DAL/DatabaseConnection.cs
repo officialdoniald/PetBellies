@@ -11,48 +11,33 @@ namespace PetBellies.DAL
     {
         private Segédfüggvények Segédfüggvények = new Segédfüggvények();
 
-        //public string SerializaUser()
-        //{
-        //    //var products = new List<User>
-        //    //{
-        //    //    new User() { }
-        //    //};
-        //    //return JsonConvert.SerializeObject(products);
-
-        //    var product = new User() { };
-
-        //    return JsonConvert.SerializeObject(product);
-        //}
-
-        //public List<User> DeserializeUser()
-        //{
-        //    //string jsonList = @"
-        //    //[{
-        //    //""id"":""1"",
-        //    //""name"":""Toy""m
-        //    //""price"":""2.50""
-        //    //},
-        //    //{
-        //    //""id"":""1"",
-        //    //""name"":""Toy""m
-        //    //""price"":""2.50""
-        //    //}]";
-
-        //    //var products = JsonConvert.DeserializeObject<List<User>>(jsonList);
-
-        //    string json = @"
-        //    {
-        //    ""id"":""1"",
-        //    ""name"":""Toy""m
-        //    ""price"":""2.50""
-        //    }";
-
-        //    var product = JsonConvert.DeserializeObject<List<User>>(json);
-
-        //    return product;
-        //}
-
         #region GetFunctions
+        
+        //All
+        public List<WallFromDB> GetWallItemByUserID()
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<WallFromDB>>(Segédfüggvények.RequestJson("Wall/GetWallItemByUserID/" + GlobalVariables.ActualUser.id));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        //Indexed
+        public List<WallFromDB> GetWallItemByUserIDBYRange()
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<WallFromDB>>(Segédfüggvények.RequestJson("Wall/GetWallItemByUserIDBYRange?useriD=" + GlobalVariables.ActualUser.id + "&from=" + GlobalVariables.WallStartIndex +"&count=" + GlobalVariables.WallCount));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         public List<User> GetUsers()
         {
