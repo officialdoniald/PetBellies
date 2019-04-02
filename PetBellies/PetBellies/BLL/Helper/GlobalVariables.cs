@@ -103,7 +103,7 @@ namespace PetBellies.BLL.Helper
         /// <summary>
         /// Hány itemet szedjen ki egyszerre.
         /// </summary>
-        public static int PetPicturesCount { get; set; } = 2;
+        public static int PetPicturesCount { get; set; } = 20;
 
         /// <summary>
         /// Amelyiktől induljon.

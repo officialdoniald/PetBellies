@@ -108,6 +108,10 @@ namespace PetBellies.View
                 SetTheListView();
             });
 
+            top = 0;
+            left = 0;
+            i = 1;
+
             GlobalVariables.PetPicturesStartIndex = 0;
 
             petpicturesList = new List<int>();
@@ -194,57 +198,64 @@ namespace PetBellies.View
         {
             petpicturesList = GlobalVariables.searchFragmentViewModel.GetPetpictures();
 
-            if (petpicturesList.Count == 0)
+            if (petpicturesList != null && petpicturesList.Count != 0)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    MoreButton.IsVisible = true;
+                });
+
+                foreach (var item in petpicturesList)
+                {
+                    keyValuePairs.Add(item, new int[2] { top, left });
+
+                    if (i == 3)
+                    {
+                        left++;
+                        i = 1;
+                        top = 0;
+                    }
+                    else
+                    {
+                        i++;
+                        top++;
+                    }
+                }
+
+                foreach (var petpictureid in petpicturesList)
+                {
+                    Task.Run(() =>
+                    {
+                        var item = GlobalVariables.databaseConnection.GetOnePetpicturesByID(petpictureid);
+
+                        Image image = new Image();
+
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
+                            image.HeightRequest = optimalWidth;
+
+                            image.GestureRecognizers.Add(new TapGestureRecognizer()
+                            {
+                                NumberOfTapsRequired = 1,
+                                TappedCallback = delegate
+                                {
+                                    OnPictureClicked(item);
+                                }
+                            });
+
+                            image.Aspect = Aspect.AspectFill;
+
+                            pictureListGrid.Children.Add(image, keyValuePairs[petpictureid][0], keyValuePairs[petpictureid][1]);
+                        });
+                    });
+                }
+            }
+            else
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     MoreButton.IsVisible = false;
-                });
-            }
-            
-            foreach (var item in petpicturesList)
-            {
-                keyValuePairs.Add(item, new int[2] { top, left });
-
-                if (i == 3)
-                {
-                    left++;
-                    i = 1;
-                    top = 0;
-                }
-                else
-                {
-                    i++;
-                    top++;
-                }
-            }
-
-            foreach (var petpictureid in petpicturesList)
-            {
-                Task.Run(() =>
-                {
-                    var item = GlobalVariables.databaseConnection.GetOnePetpicturesByID(petpictureid);
-
-                    Image image = new Image();
-
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
-                        image.HeightRequest = optimalWidth;
-
-                        image.GestureRecognizers.Add(new TapGestureRecognizer()
-                        {
-                            NumberOfTapsRequired = 1,
-                            TappedCallback = delegate
-                            {
-                                OnPictureClicked(item);
-                            }
-                        });
-
-                        image.Aspect = Aspect.AspectFill;
-
-                        pictureListGrid.Children.Add(image, keyValuePairs[petpictureid][0], keyValuePairs[petpictureid][1]);
-                    });
                 });
             }
         }

@@ -7,6 +7,7 @@ using Xamarin.Forms.Platform.Android;
 [assembly: ExportRenderer (typeof(CustomEntry), typeof(CustomEntryRenderer))]
 namespace PetBellies.Droid.CustomRenderers
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     public class CustomEntryRenderer : EntryRenderer
     {
         //protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
@@ -40,4 +41,5 @@ namespace PetBellies.Droid.CustomRenderers
             }
         }
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 }
