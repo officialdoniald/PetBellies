@@ -6,7 +6,7 @@
              xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" 
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
     <ContentPage.Content>
-        <StackLayout x:Name="SpecialStackLayout" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout x:Name="SpecialStackLayout" HorizontalOptions="Fill" VerticalOptions="Fill">
             <ListView HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" IsVisible="False" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" SeparatorVisibility="None" HasUnevenRows="True" ItemsSource="{Binding GlobalVariables.wallListViewAdapter, Mode=TwoWay}" x:Name="wallListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -80,22 +80,22 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Footer>
-                    <Button Text="More..." x:Name="MoreButton" Style="{StaticResource NormalButton}" Clicked="MoreButton_Clicked"/>
+                    <Button Margin="15,15,15,0" Text="More..." x:Name="MoreButton" Style="{StaticResource NormalButton}" Clicked="MoreButton_Clicked"/>
                 </ListView.Footer>
             </ListView>
-        <StackLayout IsVisible="False" x:Name="nothingFoundStackLayout">
-            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Please follow a pet!"/>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="Please go to " Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Image Source="people.png" Grid.Column="1" Grid.Row="0" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text=" and select an owner" Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <StackLayout IsVisible="False" x:Name="nothingFoundStackLayout" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand">
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Please follow a pet!"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Please go to " Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Image Source="people.png" Grid.Column="1" Grid.Row="0" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Text=" and select an owner" Grid.Column="2" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="or go to " Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Image Source="search.png" Grid.Column="1" Grid.Row="1" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Text=" and select a photo and then a pet." Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </StackLayout>
             </StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="or go to " Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Image Source="search.png" Grid.Column="1" Grid.Row="1" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text=" and select a photo and then a pet." Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center"/>
-            </StackLayout>
-        </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
