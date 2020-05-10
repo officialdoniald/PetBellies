@@ -18,7 +18,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView IsPullToRefreshEnabled="True" Refreshing="ListView_Refreshing" IsRefreshing="False">
+            <ListView x:Name="pictureListView" IsPullToRefreshEnabled="True" Refreshing="ListView_Refreshing" IsRefreshing="False">
                 <ListView.Header>
                     <Grid x:Name="pictureListGrid" Style="{StaticResource ThreePicInOneRow}">
                         <Grid.ColumnDefinitions>

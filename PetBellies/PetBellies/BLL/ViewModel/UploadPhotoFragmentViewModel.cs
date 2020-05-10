@@ -34,7 +34,7 @@ namespace PetBellies.BLL.ViewModel
                     UploadDate = DateTime.UtcNow.ToString("")
                 };
 
-                int success = GlobalVariables.databaseConnection.InsertPetpictures(petpictures);
+                int success = GlobalVariables.databaseConnection.UploadPhoto(petpictures);
 
                 if (success == -1)
                 {

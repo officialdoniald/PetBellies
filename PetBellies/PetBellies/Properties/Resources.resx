@@ -123,4 +123,7 @@
   <data name="GlobalPassword" xml:space="preserve">
     <value>96kEHTPp2o0206</value>
   </data>
+  <data name="WebApiURL" xml:space="preserve">
+    <value>http://193.39.13.210/api/PetBellies/</value>
+  </data>
 </root>

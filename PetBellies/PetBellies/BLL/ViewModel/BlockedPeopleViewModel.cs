@@ -8,7 +8,7 @@ namespace PetBellies.BLL.ViewModel
     {
         public List<BlockedPeople> GetBlockedPeoples()
         {
-            return GlobalVariables.databaseConnection.GetBlockedPeopleByID();
+            return GlobalVariables.databaseConnection.BlockedPeopleList();
         }
 
         public string InsertBlockedPeople(BlockedPeople blockedPeople)

@@ -8,9 +8,9 @@ using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PeopleSearchPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PeopleSearchPage : ContentPage
+    {
         List<UserJustWithPicAndName> userJustWithPicAndName = new List<UserJustWithPicAndName>();
 
         private bool isItFinished = false;
@@ -21,7 +21,7 @@ namespace PetBellies.View
 
             //Itt letölthetné az első 10et vagy randomba letölthetne 10et 
             //es azt jelenítené meg
-            Device.BeginInvokeOnMainThread(()=> 
+            Device.BeginInvokeOnMainThread(() =>
             {
                 if (Device.OS == TargetPlatform.iOS)
                 {
@@ -97,22 +97,31 @@ namespace PetBellies.View
 
         private void SetList()
         {
-            if (!String.IsNullOrEmpty(searchEntry.Text) && searchEntry.Text.Length >= 3 && isItFinished)
+            userListView.IsRefreshing = true;
+
+            Task.Run(() =>
             {
+                if (!String.IsNullOrEmpty(searchEntry.Text) && searchEntry.Text.Length >= 3 && isItFinished)
+                {
+                    var list = GlobalVariables.peopleSearchPageViewModel.GetUserByKeyWord(searchEntry.Text, userJustWithPicAndName);
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        userListView.ItemsSource = list;
+                    });
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        userListView.ItemsSource = userJustWithPicAndName;
+                    });
+                }
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    userListView.IsRefreshing = true;
+                    userListView.IsRefreshing = false;
                 });
-
-                userListView.ItemsSource = GlobalVariables.peopleSearchPageViewModel.GetUserByKeyWord(searchEntry.Text, userJustWithPicAndName);
-            }
-            else
-            {
-                userListView.ItemsSource = userJustWithPicAndName;
-            }
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                userListView.IsRefreshing = false;
             });
         }
 

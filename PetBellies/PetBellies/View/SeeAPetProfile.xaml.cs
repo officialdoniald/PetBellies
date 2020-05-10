@@ -2,7 +2,6 @@
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,10 +22,7 @@ namespace PetBellies.View
 
         private Pet thisPet = new Pet();
 
-        private List<Petpictures> petPictureListfromDB = new List<Petpictures>();
         private List<User> followerList = new List<User>();
-
-        private Petpictures petpictures = new Petpictures();
 
         public SeeAPetProfile(int petid)
         {
@@ -47,24 +43,24 @@ namespace PetBellies.View
 
                 optimalWidth = currentWidth / 3;
 
-                Device.BeginInvokeOnMainThread(()=> {
+                Device.BeginInvokeOnMainThread(() =>
+                {
                     Title = thisPet.Name;
                     ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
                     kindLabel.Text = thisPet.PetType;
 
                     profilePictureImage.HeightRequest = optimalWidth;
                     profilePictureImage.WidthRequest = optimalWidth;
+
+                    profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
                 });
 
-                if (thisPet.Profilepicture != null)
-                    profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
-                else profilePictureImage.Source = "account.png";
-
-                if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(thisPet.Uploader))
+                if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(GlobalVariables.ActualUser.id, thisPet.Uploader))
                 {
-                    NavigationPage.SetHasNavigationBar(this, true);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        NavigationPage.SetHasNavigationBar(this, true);
 
-                    Device.BeginInvokeOnMainThread(()=> {
                         detailGrid.IsVisible = true;
                         blockedLabel.IsVisible = false;
                     });
@@ -73,35 +69,16 @@ namespace PetBellies.View
 
                     thisPet = GlobalVariables.petProfileFragmentViewModel.GetPetFromDBByID(petid);
 
-                    GetFollowers();
-
                     currentWidth = Application.Current.MainPage.Width;
 
                     optimalWidth = currentWidth / 3;
 
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        Title = thisPet.Name;
-
-                        ageLabel.Text = new Segédfüggvények().HowOld(thisPet.Age).ToString();
-
-                        kindLabel.Text = thisPet.PetType;
-
-                        profilePictureImage.HeightRequest = optimalWidth;
-                        profilePictureImage.WidthRequest = optimalWidth;
-
-                        if (thisPet.Profilepicture != null)
-                            profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
-                        else profilePictureImage.Source = "account.png";
-                    });
-
-                    Task.Run(() =>
-                    {
-                        GetPetsPictures();
-                    });
-
                     if (HaveIAlreadyFollow) followOrNot = GlobalVariables.petProfileFragmentViewModel.unfollowText;
                     else followOrNot = GlobalVariables.petProfileFragmentViewModel.followText;
+
+                    GetFollowers();
+
+                    GetPetsPictures();
                 }
                 else
                 {
@@ -118,37 +95,37 @@ namespace PetBellies.View
 
         private void GetPetsPictures()
         {
-            int left = 0;
-            int top = 0;
-
-            int i = 1;
-
-            var list = GlobalVariables.databaseConnection.GetPetpicturesIDSByPetID(thisPet.id);
-
-            Dictionary<int, int[]> keyValuePairs = new Dictionary<int, int[]>();
-
-            foreach (var item in list)
+            Task.Run(() =>
             {
-                keyValuePairs.Add(item, new int[2] { top, left });
+                int left = 0;
+                int top = 0;
 
-                if (i == 3)
-                {
-                    left++;
-                    i = 1;
-                    top = 0;
-                }
-                else
-                {
-                    i++;
-                    top++;
-                }
-            }
+                int i = 1;
 
-            foreach (var item in list)
-            {
-                Task.Run(() =>
+                var list = GlobalVariables.databaseConnection.GetPetpicturesIDSByPetID(thisPet.id);
+
+                Dictionary<int, int[]> keyValuePairs = new Dictionary<int, int[]>();
+
+                foreach (var item in list)
                 {
-                    var petpicture = GlobalVariables.databaseConnection.GetOnePetpicturesByID(item);
+                    keyValuePairs.Add(item, new int[2] { top, left });
+
+                    if (i == 3)
+                    {
+                        left++;
+                        i = 1;
+                        top = 0;
+                    }
+                    else
+                    {
+                        i++;
+                        top++;
+                    }
+                }
+
+                foreach (var item in list)
+                {
+                    var petpicture = GlobalVariables.databaseConnection.GetPetPictureByID(item);
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -171,8 +148,8 @@ namespace PetBellies.View
 
                         pictureListGrid.Children.Add(image, keyValuePairs[item][0], keyValuePairs[item][1]);
                     });
-                });
-            }
+                }
+            });
         }
 
         private void GetFollowers()
@@ -229,6 +206,8 @@ namespace PetBellies.View
 
                     if (!string.IsNullOrEmpty(success))
                     {
+                        GlobalEvents.OnUnFollowUser_Event(this, null);
+
                         await DisplayAlert(English.Failed(), success, English.OK());
                     }
                     else
@@ -244,6 +223,8 @@ namespace PetBellies.View
 
                     if (!string.IsNullOrEmpty(success))
                     {
+                        GlobalEvents.OnUnFollowUser_Event(this, null);
+
                         await DisplayAlert(English.Failed(), success, English.OK());
                     }
                     else

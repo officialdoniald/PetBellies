@@ -30,23 +30,26 @@ namespace PetBellies.View
         {
             InitializeComponent();
 
-            Device.BeginInvokeOnMainThread(() =>
+            Task.Run(() =>
             {
-                searchListView.IsVisible = false;
-                pictureListGrid.IsVisible = true;
-
-                if (Device.OS == TargetPlatform.iOS)
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    SpecialStackLayout.Margin = new Thickness(0, 50, 0, 0);
-                }
+                    searchListView.IsVisible = false;
+                    pictureListGrid.IsVisible = true;
 
-                searchListView.IsRefreshing = true;
+                    if (Device.OS == TargetPlatform.iOS)
+                    {
+                        SpecialStackLayout.Margin = new Thickness(0, 50, 0, 0);
+                    }
+
+                    searchListView.IsRefreshing = true;
+                });
 
                 ListView_Refreshing(this, null);
             });
         }
 
-        private async void searchEntry_TextChanged(object sender, TextChangedEventArgs e)
+        private void searchEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (searchEntry.Text.Length > 0)
             {
@@ -56,7 +59,7 @@ namespace PetBellies.View
             }
             else
             {
-                await Task.Run(() =>
+                Task.Run(() =>
                 {
                     SetTheListView();
                 });
@@ -88,62 +91,74 @@ namespace PetBellies.View
             });
         }
 
-        async void Handle_Refreshing(object sender, System.EventArgs e)
+        private void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
                 SetTheListView();
             });
         }
 
-        private async Task InitializeThePetPictures()
+        private void InitializeThePetPictures()
         {
-            Device.BeginInvokeOnMainThread(() =>
+            Task.Run(() =>
             {
-                pictureListGrid.Children.Clear();
-            });
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    pictureListGrid.Children.Clear();
+                });
 
-            await Task.Run(() =>
-            {
                 SetTheListView();
+
+                top = 0;
+                left = 0;
+                i = 1;
+
+                GlobalVariables.PetPicturesStartIndex = 0;
+
+                petpicturesList = new List<int>();
+
+                currentWidth = Application.Current.MainPage.Width;
+
+                optimalWidth = currentWidth / 3;
+
+                keyValuePairs = new Dictionary<int, int[]>();
+
+                FillGrid();
             });
-
-            top = 0;
-            left = 0;
-            i = 1;
-
-            GlobalVariables.PetPicturesStartIndex = 0;
-
-            petpicturesList = new List<int>();
-
-            currentWidth = Application.Current.MainPage.Width;
-
-            optimalWidth = currentWidth / 3;
-
-            keyValuePairs = new Dictionary<int, int[]>();
-
-            FillGrid();
         }
 
         public void OnPictureClicked(Petpictures petpictures)
         {
-            if (!GlobalVariables.databaseConnection.GetPetpicturesExistByPetPicturesID(petpictures.id))
+            Task.Run(() =>
             {
-                Navigation.PushAsync(new NoPictureFoundPage());
-            }
-            else
-            {
-                var isThisMyPet = GlobalVariables.Mypetlist.Where(u => u.petid == petpictures.PetID).FirstOrDefault();
-
-                if (isThisMyPet is null)
+                if (!GlobalVariables.databaseConnection.GetPetpicturesExistByPetPicturesID(petpictures.id))
                 {
-                    Navigation.PushAsync(new SeeAPicturePage(petpictures));
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Navigation.PushAsync(new NoPictureFoundPage());
+                    });
                 }
                 else
                 {
-                    Navigation.PushAsync(new SeeMyPicturePage(petpictures));
+                    var isThisMyPet = GlobalVariables.Mypetlist.Where(u => u.petid == petpictures.PetID).FirstOrDefault();
+
+                    if (isThisMyPet is null)
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            Navigation.PushAsync(new SeeAPicturePage(petpictures));
+                        });
+                    }
+                    else
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            Navigation.PushAsync(new SeeMyPicturePage(petpictures));
+                        });
+                    }
                 }
-            }
+            });
         }
 
         void Handle_Focused(object sender, Xamarin.Forms.FocusEventArgs e)
@@ -163,101 +178,117 @@ namespace PetBellies.View
 
         private void ListView_Refreshing(object sender, EventArgs e)
         {
-            if (GlobalVariables.IsPictureDeleted)
+            Task.Run(() =>
             {
-                searchListView.IsRefreshing = true;
+                if (GlobalVariables.IsPictureDeleted)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        searchListView.IsRefreshing = true;
 
-                searchListView.ItemsSource = new List<SearchModel>();
+                        searchListView.ItemsSource = new List<SearchModel>();
+                    });
 
-                GlobalVariables.IsPictureDeleted = false;
-            }
+                    GlobalVariables.IsPictureDeleted = false;
+                }
 
-            InitializeThePetPictures();
+                InitializeThePetPictures();
 
-            try
-            {
-                ((ListView)sender).IsRefreshing = false;
-            }
-            catch (Exception) { }
+                try
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        pictureListView.IsRefreshing = false;
+                    });
+                }
+                catch (Exception) { }
+            });
         }
 
         private void MoreButton_Clicked(object sender, EventArgs e)
         {
-            Device.BeginInvokeOnMainThread(()=> {
-                ((ListView)((Button)sender).Parent).IsRefreshing = true;
+            ((ListView)((Button)sender).Parent).IsRefreshing = true;
 
+            Task.Run(() =>
+            {
                 GlobalVariables.PetPicturesStartIndex += GlobalVariables.PetPicturesCount;
 
                 FillGrid();
 
-                ((ListView)((Button)sender).Parent).IsRefreshing = false;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    ((ListView)((Button)sender).Parent).IsRefreshing = false;
+                });
             });
         }
 
         public void FillGrid()
         {
-            petpicturesList = GlobalVariables.searchFragmentViewModel.GetPetpictures();
-
-            if (petpicturesList != null && petpicturesList.Count != 0)
+            Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    MoreButton.IsVisible = true;
-                });
+                petpicturesList = GlobalVariables.searchFragmentViewModel.GetPetpictures();
 
-                foreach (var item in petpicturesList)
+                if (petpicturesList != null && petpicturesList.Count != 0)
                 {
-                    keyValuePairs.Add(item, new int[2] { top, left });
-
-                    if (i == 3)
+                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        left++;
-                        i = 1;
-                        top = 0;
+                        MoreButton.IsVisible = true;
+                    });
+
+                    foreach (var item in petpicturesList)
+                    {
+                        keyValuePairs.Add(item, new int[2] { top, left });
+
+                        if (i == 3)
+                        {
+                            left++;
+                            i = 1;
+                            top = 0;
+                        }
+                        else
+                        {
+                            i++;
+                            top++;
+                        }
                     }
-                    else
+
+                    foreach (var petpictureid in petpicturesList)
                     {
-                        i++;
-                        top++;
+                        Task.Run(() =>
+                        {
+                            var item = GlobalVariables.databaseConnection.GetPetPictureByID(petpictureid);
+
+                            Image image = new Image();
+
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
+                                image.HeightRequest = optimalWidth;
+
+                                image.GestureRecognizers.Add(new TapGestureRecognizer()
+                                {
+                                    NumberOfTapsRequired = 1,
+                                    TappedCallback = delegate
+                                    {
+                                        OnPictureClicked(item);
+                                    }
+                                });
+
+                                image.Aspect = Aspect.AspectFill;
+
+                                pictureListGrid.Children.Add(image, keyValuePairs[petpictureid][0], keyValuePairs[petpictureid][1]);
+                            });
+                        });
                     }
                 }
-
-                foreach (var petpictureid in petpicturesList)
+                else
                 {
-                    Task.Run(() =>
+                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        var item = GlobalVariables.databaseConnection.GetOnePetpicturesByID(petpictureid);
-
-                        Image image = new Image();
-
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            image.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.PictureURL));
-                            image.HeightRequest = optimalWidth;
-
-                            image.GestureRecognizers.Add(new TapGestureRecognizer()
-                            {
-                                NumberOfTapsRequired = 1,
-                                TappedCallback = delegate
-                                {
-                                    OnPictureClicked(item);
-                                }
-                            });
-
-                            image.Aspect = Aspect.AspectFill;
-
-                            pictureListGrid.Children.Add(image, keyValuePairs[petpictureid][0], keyValuePairs[petpictureid][1]);
-                        });
+                        MoreButton.IsVisible = false;
                     });
                 }
-            }
-            else
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    MoreButton.IsVisible = false;
-                });
-            }
+            });
         }
     }
 }

@@ -26,27 +26,17 @@ namespace PetBellies.BLL.ViewModel
 
             var isItAUser = GlobalVariables.databaseConnection.GetUserByEmail(user.Email);
 
-            if (isItAUser is null)
+            if (isItAUser is null || string.IsNullOrEmpty(isItAUser.Email))
             {
                 GlobalVariables.InitializeGlobalCasualImage();
 
                 user.ProfilePicture = GlobalVariables.GlobalCasualImage;
                 user.Password = new Segédfüggvények().EncryptPassword(user.Password);
 
-                var success = GlobalVariables.databaseConnection.InsertUserAsync(user);
+                var success = GlobalVariables.databaseConnection.AddUser(user);
 
                 if (success)
                 {
-                    try
-                    {
-                        string url = string.Format("http://petbellies.com/php/petbelliesreg.php?email={0}&nev={1}", user.Email, user.FirstName);
-                        Uri uri = new Uri(url);
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                        request.Method = "GET";
-                        WebResponse res = await request.GetResponseAsync();
-                    }
-                    catch (Exception) { }
-
                     return English.Empty();
                 }
             }

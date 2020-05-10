@@ -214,7 +214,7 @@ namespace PetBellies.BLL.Helper
         /// </summary>
         public static void InitializeGlobalCasualImage()
         {
-            GlobalCasualImage = databaseConnection.GetGlobalCasualImage();
+            GlobalCasualImage = databaseConnection.GetCasualImage();
         }
 
         /// <summary>
@@ -268,11 +268,14 @@ namespace PetBellies.BLL.Helper
 
             Mypetlist = new List<MyPetsList>();
 
-            foreach (var item in myPetList)
+            if (myPetList != null)
             {
-                var pet = ConvertPetToMyPetList(item);
+                foreach (var item in myPetList)
+                {
+                    var pet = ConvertPetToMyPetList(item);
 
-                Mypetlist.Add(pet);
+                    Mypetlist.Add(pet);
+                }
             }
         }
 

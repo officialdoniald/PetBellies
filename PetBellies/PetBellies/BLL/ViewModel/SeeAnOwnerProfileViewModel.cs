@@ -21,22 +21,9 @@ namespace PetBellies.BLL.ViewModel
             return GlobalVariables.databaseConnection.GetPetsByUserID(userid);
         }
 
-        public bool IsItABlockedUser(int userid)
+        public bool IsItABlockedUser(int userid, int blockedid)
         {
-            var blockedPeopleList = GlobalVariables.databaseConnection.GetBlockedPeopleByID();
-
-            if (blockedPeopleList != null && blockedPeopleList.Count > 0)
-            {
-                foreach (var item in blockedPeopleList)
-                {
-                    if (item.BlockedUserID == userid)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return GlobalVariables.databaseConnection.IsItABlockedUser(userid, blockedid);
         }
 
         public List<Following> GetUsersFollowing(int id)

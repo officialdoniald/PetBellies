@@ -18,7 +18,7 @@ namespace PetBellies
             GlobalVariables.NormalLabel = (Style)Resources["NormalLabel"];
             GlobalVariables.NavigationPageStyle = (Style)Resources["NavigationPageStyle"];
 
-            GlobalVariables.WebApiURL = GlobalVariables.databaseConnection.GetWebApiURL();
+            GlobalVariables.WebApiURL = PetBellies.Properties.Resources.WebApiURL;
 
             if (!CrossConnectivity.Current.IsConnected)
             {

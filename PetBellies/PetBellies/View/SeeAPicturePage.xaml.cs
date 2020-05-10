@@ -11,9 +11,9 @@ using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SeeAPicturePage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class SeeAPicturePage : ContentPage
+    {
         private int howmanylike = 0;
 
         private bool haveiliked = false;
@@ -45,9 +45,9 @@ namespace PetBellies.View
             Initialize();
         }
 
-        private async Task Initialize()
+        private void Initialize()
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
 
                 thisPet = GlobalVariables.seePictureFragmentViewModel.GetPetById(petpictures.PetID);
@@ -57,7 +57,7 @@ namespace PetBellies.View
                     nameLabel.Text = thisPet.Name;
 
                     profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
-                    
+
                     pictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(petpictures.PictureURL));
                 });
 
@@ -92,12 +92,15 @@ namespace PetBellies.View
                 likes = GlobalVariables.seePictureFragmentViewModel.GetLikes(petpictures.id);
 
                 howmanylike = likes.Count;
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     howmanyLikesLabel.Text = howmanylike.ToString() + English.GetLike();
+                });
 
-                    haveiliked = GlobalVariables.seePictureFragmentViewModel.HaveILiked(petpictures.id);
-
+                haveiliked = GlobalVariables.seePictureFragmentViewModel.HaveILiked(petpictures.id);
+                Device.BeginInvokeOnMainThread(() =>
+                {
                     if (haveiliked) likeornotImage.Source = GlobalVariables.unlikepng;
                     else likeornotImage.Source = GlobalVariables.likepng;
                 });
@@ -166,26 +169,6 @@ namespace PetBellies.View
 
                 if (success)
                 {
-                    try
-                    {
-                        var user = GlobalVariables.seePictureFragmentViewModel.GetUser(petpictures.PetID);
-
-                        //Aki reportolt
-                        string url = string.Format("http://petbellies.com/php/petbelliesreppic.php?email={0}&nev={1}&host={2}", user.Email, user.FirstName, 0);
-                        Uri uri = new Uri(url);
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                        request.Method = "GET";
-                        WebResponse res = await request.GetResponseAsync();
-
-                        //Akinek a képe van
-                        string url1 = string.Format("http://petbellies.com/php/petbelliesreppic.php?email={0}&nev={1}&host={2}", GlobalVariables.ActualUsersEmail, GlobalVariables.ActualUser.FirstName, 1);
-                        Uri uri1 = new Uri(url);
-                        HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(url);
-                        request.Method = "GET";
-                        WebResponse res1 = await request.GetResponseAsync();
-                    }
-                    catch (Exception) { }
-
                     await DisplayAlert("Success", "Thanks..", "OK");
                 }
                 else

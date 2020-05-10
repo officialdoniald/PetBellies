@@ -19,10 +19,7 @@ namespace PetBellies.View
 
         private Pet thisPet = new Pet();
 
-        private List<Petpictures> petPictureListfromDB = new List<Petpictures>();
         private List<User> followerList = new List<User>();
-
-        private Petpictures petpictures = new Petpictures();
 
         public SeeMyPetProfile(int petid)
         {
@@ -99,7 +96,7 @@ namespace PetBellies.View
             {
                 Task.Run(() =>
                 {
-                    var petpicture = GlobalVariables.databaseConnection.GetOnePetpicturesByID(item);
+                    var petpicture = GlobalVariables.databaseConnection.GetPetPictureByID(item);
 
                     Device.BeginInvokeOnMainThread(() =>
                     {

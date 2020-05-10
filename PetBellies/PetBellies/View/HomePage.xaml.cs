@@ -20,7 +20,30 @@ namespace PetBellies.View
         {
             InitializeComponent();
 
+            GlobalEvents.OnFollowUser += GlobalEvents_OnFollowUser;
+            GlobalEvents.OnUnFollowUser += GlobalEvents_OnUnFollowUser;
+
             Initialize();
+        }
+
+        private void GlobalEvents_OnUnFollowUser(object sender, object e)
+        {
+            Task.Run(() =>
+            {
+                GlobalVariables.WallStartIndex = 0;
+
+                Initialize();
+            });
+        }
+
+        private void GlobalEvents_OnFollowUser(object sender, object e)
+        {
+            Task.Run(() =>
+            {
+                GlobalVariables.WallStartIndex = 0;
+
+                Initialize();
+            });
         }
 
         private string followButtonText(bool haveILiked)
@@ -37,6 +60,8 @@ namespace PetBellies.View
 
         private void Initialize()
         {
+            wallListView.IsRefreshing = true;
+
             Task.Run(() =>
             {
                 Device.BeginInvokeOnMainThread(() =>
@@ -48,14 +73,14 @@ namespace PetBellies.View
                 });
 
                 GlobalVariables.wallListViewAdapter = new ObservableCollection<WallListViewAdapter>();
-
+                
                 AddWallListItem();
             });
         }
 
-        async void Handle_Refreshing(object sender, System.EventArgs e)
+        private void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
                 GlobalVariables.WallStartIndex = 0;
 
@@ -178,7 +203,7 @@ namespace PetBellies.View
                 likeNumberLabel.Text = wallListViewAdapterClicked.wallItem.howmanylikes.ToString() + English.GetLike();
             }
         }
-        
+
         private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
         {
             var reported = await DisplayActionSheet("More", "Cancel", null, "Report");
@@ -199,26 +224,6 @@ namespace PetBellies.View
 
                 if (success)
                 {
-                    try
-                    {
-                        var user = GlobalVariables.seePictureFragmentViewModel.GetUser(wallListViewAdapterClicked.wallItem.petpictures.PetID);
-
-                        //Aki reportolt
-                        string url = string.Format("http://petbellies.com/php/petbelliesreppic.php?email={0}&nev={1}&host={2}", user.Email, user.FirstName, 0);
-                        Uri uri = new Uri(url);
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                        request.Method = "GET";
-                        WebResponse res = await request.GetResponseAsync();
-
-                        //Akinek a képe van
-                        string url1 = string.Format("http://petbellies.com/php/petbelliesreppic.php?email={0}&nev={1}&host={2}", GlobalVariables.ActualUsersEmail, GlobalVariables.ActualUser.FirstName, 1);
-                        Uri uri1 = new Uri(url);
-                        HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(url);
-                        request.Method = "GET";
-                        WebResponse res1 = await request.GetResponseAsync();
-                    }
-                    catch (Exception) { }
-
                     await DisplayAlert("Success", "Thanks..", "OK");
                 }
                 else
@@ -231,29 +236,30 @@ namespace PetBellies.View
         private void MoreButton_Clicked(object sender, EventArgs e)
         {
             GlobalVariables.WallStartIndex += GlobalVariables.WallCount;
+            
+            wallListView.IsRefreshing = true;
 
             AddWallListItem();
         }
 
         private void AddWallListItem()
         {
-            Task.Run(() => {
-
-                Device.BeginInvokeOnMainThread(()=> {
-                    wallListView.IsRefreshing = true;
-                });
-
+            Task.Run(() =>
+            {
                 wallList = GlobalVariables.homeFragmentViewModel.GetWallList();
 
                 if (wallList.Count == 0)
                 {
-                    Device.BeginInvokeOnMainThread(() => {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
                         MoreButton.IsVisible = false;
                     });
                 }
 
                 foreach (var item in wallList)
                 {
+                    var hastags = GlobalVariables.homeFragmentViewModel.GetHashtags(item.petpictures.id);
+
                     GlobalVariables.wallListViewAdapter.Add(new WallListViewAdapter()
                     {
                         wallItem = item,
@@ -262,7 +268,7 @@ namespace PetBellies.View
                         profilepictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL)),
                         pictureURL = ImageSource.FromStream(() => new System.IO.MemoryStream(item.petpictures.PictureURL)),
                         followButtonText = followButtonText(item.haveILiked),
-                        hashtags = GlobalVariables.homeFragmentViewModel.GetHashtags(item.petpictures.id)
+                        hashtags = hastags
                     });
                 }
 

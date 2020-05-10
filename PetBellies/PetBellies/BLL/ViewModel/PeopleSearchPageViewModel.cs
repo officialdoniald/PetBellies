@@ -22,7 +22,7 @@ namespace PetBellies.BLL.ViewModel
                 searchablelist = (
                                  from g
                                  in users
-                                 where g.Name.Contains(keyword)
+                                 where g.Name.ToLower().Contains(keyword.ToLower())
                                  select g
                                  ).ToList();
             }

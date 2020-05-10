@@ -9,22 +9,50 @@ using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MyAccountPage : ContentPage
-	{
-        private List<ListViewWithPictureAndSomeText> listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
-
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class MyAccountPage : ContentPage
+    {
         private List<Following> followings = new List<Following>();
 
         public MyAccountPage()
         {
             InitializeComponent();
 
-            Device.BeginInvokeOnMainThread(() => {
+            GlobalEvents.OnProfileUpdated += GlobalEvents_OnProfileUpdated;
+            GlobalEvents.OnProfilePictureUpdated += GlobalEvents_OnProfilePictureUpdated;
+            GlobalEvents.OnPetAdded += GlobalEvents_OnPetAdded;
+            GlobalEvents.OnPetDeleted += GlobalEvents_OnPetDeleted;
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePicture));
+
                 Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
             });
+
+            GetPets();
         }
-        
+
+        private void GlobalEvents_OnPetDeleted(object sender, object e)
+        {
+            GetPets();
+        }
+
+        private void GlobalEvents_OnPetAdded(object sender, object e)
+        {
+            GetPets();
+        }
+
+        private void GlobalEvents_OnProfilePictureUpdated(object sender, object e)
+        {
+            profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePicture));
+        }
+
+        private void GlobalEvents_OnProfileUpdated(object sender, object e)
+        {
+            Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
+        }
+
         protected override void OnAppearing()
         {
             var currentWidth = Application.Current.MainPage.Width;
@@ -34,56 +62,50 @@ namespace PetBellies.View
             profilePictureImage.HeightRequest = optimalWidth;
             profilePictureImage.WidthRequest = optimalWidth;
 
-            if (GlobalVariables.ActualUser.ProfilePicture != null)
-                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePicture));
-            else profilePictureImage.Source = "account.png";
-
-            Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
-
             GetFollowings();
-
-            GetPets();
         }
 
         private void GetPets()
         {
-            Task.Run(()=> {
-                Device.BeginInvokeOnMainThread(()=> {
-                    listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
-
+            Task.Run(() =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
                     petListStackLayout.Children.Clear();
 
-                    foreach (var item in GlobalVariables.Mypetlist)
+                });
+                foreach (var item in GlobalVariables.Mypetlist)
+                {
+                    Frame frame = new Frame()
                     {
-                        Frame frame = new Frame()
-                        {
-                            //BorderColor = Color.LightGray,
-                            //Padding = 10,
-                            //BackgroundColor = Color.FromHex("#F5F6F8")
-                            BackgroundColor = Color.White
-                        };
+                        //BorderColor = Color.LightGray,
+                        //Padding = 10,
+                        //BackgroundColor = Color.FromHex("#F5F6F8")
+                        BackgroundColor = Color.White
+                    };
 
-                        StackLayout stackLayout = new StackLayout()
-                        {
-                            Orientation = StackOrientation.Vertical
-                        };
+                    StackLayout stackLayout = new StackLayout()
+                    {
+                        Orientation = StackOrientation.Vertical
+                    };
 
-                        CircleImage petProfilePictureImage = new CircleImage
-                        {
-                            HeightRequest = 55,
-                            WidthRequest = 55,
-                            Aspect = Aspect.AspectFill,
-                            HorizontalOptions = LayoutOptions.Center,
-                            Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL))
-                        };
+                    CircleImage petProfilePictureImage = new CircleImage
+                    {
+                        HeightRequest = 55,
+                        WidthRequest = 55,
+                        Aspect = Aspect.AspectFill,
+                        HorizontalOptions = LayoutOptions.Center,
+                        Source = ImageSource.FromStream(() => new System.IO.MemoryStream(item.ProfilePictureURL))
+                    };
 
-                        Label nameLabel = new Label()
-                        {
-                            Text = item.Name,
-                            HorizontalOptions = LayoutOptions.Center,
-                            TextColor = Color.Black
-                        };
-
+                    Label nameLabel = new Label()
+                    {
+                        Text = item.Name,
+                        HorizontalOptions = LayoutOptions.Center,
+                        TextColor = Color.Black
+                    };
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
                         stackLayout.GestureRecognizers.Add(new TapGestureRecognizer()
                         {
                             NumberOfTapsRequired = 1,
@@ -94,17 +116,19 @@ namespace PetBellies.View
                         stackLayout.Children.Add(nameLabel);
                         frame.Content = stackLayout;
                         petListStackLayout.Children.Add(frame);
-                    }
-                });
+                    });
+                }
             });
         }
 
         private void GetFollowings()
         {
-            Task.Run(()=> {
+            Task.Run(() =>
+            {
                 followings = GlobalVariables.myAccountPageViewModel.GetMyFollowing();
 
-                Device.BeginInvokeOnMainThread(()=> {
+                Device.BeginInvokeOnMainThread(() =>
+                {
                     followingLabel.Text = followings.Count.ToString();
                     followingLabel.GestureRecognizers.Add(new TapGestureRecognizer()
                     {
@@ -122,11 +146,15 @@ namespace PetBellies.View
 
         private void TapPet(int id)
         {
-            var searchResultPage = new SeeMyPetProfile(id);
+            Task.Run(()=> {
+                var searchResultPage = new SeeMyPetProfile(id);
 
-            Navigation.PushAsync(searchResultPage);
+                Device.BeginInvokeOnMainThread(()=> {
+                    Navigation.PushAsync(searchResultPage);
+                });
+            });
         }
-        
+
         //Following gomb
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
@@ -141,7 +169,7 @@ namespace PetBellies.View
             {
                 await Navigation.PushAsync(new AddPetPage());
             }
-            else if(reported == "Settings")
+            else if (reported == "Settings")
             {
                 await Navigation.PushAsync(new OtherPage());
             }

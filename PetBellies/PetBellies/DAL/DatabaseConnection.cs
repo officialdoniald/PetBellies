@@ -44,9 +44,11 @@ namespace PetBellies.DAL
         {
             try
             {
-                return JsonConvert.DeserializeObject<List<int>>(Segédfüggvények.RequestJson("PetPictures/GetPetPicturesByRange?from=" + GlobalVariables.PetPicturesStartIndex + "&count=" + GlobalVariables.PetPicturesCount));
+                var list = JsonConvert.DeserializeObject<List<int>>(Segédfüggvények.RequestJson("PetPictures/GetPetPicturesByRange?from=" + GlobalVariables.PetPicturesStartIndex + "&count=" + GlobalVariables.PetPicturesCount));
+
+                return list;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -63,16 +65,15 @@ namespace PetBellies.DAL
                 return null;
             }
         }
-
+        
         public string GetWebApiURL()
         {
             try
             {
-                return Segédfüggvények.RequestJson("CasualRequests/GetWebApiURL");
+                return JsonConvert.DeserializeObject<string>(Segédfüggvények.RequestJson("CasualRequests/GetWebApiURL"));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var asd = ex.Message;
                 return null;
             }
         }
@@ -137,7 +138,7 @@ namespace PetBellies.DAL
             }
         }
 
-        public byte[] GetGlobalCasualImage()
+        public byte[] GetCasualImage()
         {
             try
             {
@@ -218,7 +219,7 @@ namespace PetBellies.DAL
             }
         }
 
-        public List<Likes> GetLikeByPetpicturesID(int ID)
+        public List<Likes> GetLikesOnAPicture(int ID)
         {
             try
             {
@@ -230,7 +231,7 @@ namespace PetBellies.DAL
             }
         }
 
-        public bool GetLikeByUserID(int userid, int petpicturesid)
+        public bool GetLikesByPetpicturesIDAndUserID(int userid, int petpicturesid)
         {
             try
             {
@@ -242,7 +243,7 @@ namespace PetBellies.DAL
             }
         }
 
-        public bool GetFollowingByID(int userID, int petid)
+        public bool HaveIFollowedThisPet(int userID, int petid)
         {
             try
             {
@@ -254,7 +255,7 @@ namespace PetBellies.DAL
             }
         }
 
-        public List<BlockedPeople> GetBlockedPeopleByID()
+        public List<BlockedPeople> BlockedPeopleList()
         {
             try
             {
@@ -266,7 +267,7 @@ namespace PetBellies.DAL
             }
         }
 
-        public Petpictures GetOnePetpicturesByID(int ID)
+        public Petpictures GetPetPictureByID(int ID)
         {
             try
             {
@@ -330,7 +331,7 @@ namespace PetBellies.DAL
 
         #region InsertFunctions
 
-        public bool InsertUserAsync(User user)
+        public bool AddUser(User user)
         {
             var message = Segédfüggvények.PostPut(HttpMethod.Post, user, "Users/AddUser");
 
@@ -344,14 +345,14 @@ namespace PetBellies.DAL
             }
         }
 
-        public int InsertPet(Pet pet)
+        public int AddPet(Pet pet)
         {
             var message = Segédfüggvények.PostPut(HttpMethod.Post, pet, "Pets/AddPet");
 
             return JsonConvert.DeserializeObject<int>(message.Content.ReadAsStringAsync().Result);
         }
 
-        public int InsertPetpictures(Petpictures petpictures)
+        public int UploadPhoto(Petpictures petpictures)
         {
             var message = Segédfüggvények.PostPut(HttpMethod.Post, petpictures, "Petpictures/UploadPhoto");
 
@@ -421,6 +422,20 @@ namespace PetBellies.DAL
         public bool UpdateUser(int ID, User user)
         {
             var message = Segédfüggvények.PostPut(HttpMethod.Put, user, "Users/UpdateUser");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ForgotPasswordAsync(int ID, User user)
+        {
+            var message = Segédfüggvények.PostPut(HttpMethod.Put, user, "Users/ForgotPasswordAsync");
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -562,6 +577,15 @@ namespace PetBellies.DAL
             {
                 return false;
             }
+        }
+
+        #endregion
+
+        #region Casual
+
+        public bool IsItABlockedUser(int ID, int blockedid)
+        {
+            return JsonConvert.DeserializeObject<bool>(Segédfüggvények.RequestJson("CasualRequests/IsItABlockedUser?userid" + ID + "&blockedid=" + blockedid));
         }
 
         #endregion

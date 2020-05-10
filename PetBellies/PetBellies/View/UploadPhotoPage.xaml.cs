@@ -8,9 +8,9 @@ using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class UploadPhotoPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class UploadPhotoPage : ContentPage
+    {
         private int selectedPetId = -1;
         private double currentWidth;
         private bool addedPhoto = false;
@@ -22,7 +22,7 @@ namespace PetBellies.View
 
             currentWidth = Application.Current.MainPage.Width;
         }
-        
+
         protected override void OnAppearing()
         {
             if (GlobalVariables.AddedPet || GlobalVariables.AddedPhoto)
@@ -31,29 +31,44 @@ namespace PetBellies.View
 
         private void Initialize()
         {
-            InitializeComponent();
-
-            if (GlobalVariables.Mypetlist.Count != 0)
+            Task.Run(() =>
             {
-                selectedPetId = GlobalVariables.Mypetlist[0].petid;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    InitializeComponent();
+                });
 
-                GlobalVariables.AddedPet = false;
-                GlobalVariables.AddedPhoto = false;
+                if (GlobalVariables.Mypetlist.Count != 0)
+                {
+                    selectedPetId = GlobalVariables.Mypetlist[0].petid;
 
-                petPicker.Title = "Select a pet";
+                    GlobalVariables.AddedPet = false;
+                    GlobalVariables.AddedPhoto = false;
 
-                petPicker.IsEnabled = true;
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        petPicker.Title = "Select a pet";
 
-                petPicker.ItemsSource = GlobalVariables.MyPetsString;
-            }
-            else
-            {
-                petPicker.IsEnabled = false;
+                        petPicker.IsEnabled = true;
 
-                petPicker.Title = "Add a pet before upload a photo";
-            }
+                        petPicker.ItemsSource = GlobalVariables.MyPetsString;
+                    });
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        petPicker.IsEnabled = false;
 
-            pictureImage.IsVisible = false;
+                        petPicker.Title = "Add a pet before upload a photo";
+                    });
+                }
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    pictureImage.IsVisible = false;
+                });
+            });
         }
 
         private async void galleryButton_ClickedAsync(object sender, EventArgs e)
@@ -67,7 +82,7 @@ namespace PetBellies.View
             pictureImage.IsVisible = true;
 
             var file = await CrossMedia.Current.PickPhotoAsync();
-            
+
             if (file == null) return;
 
             addedPhoto = true;
@@ -82,15 +97,15 @@ namespace PetBellies.View
 
         private void addPhotoButton_ClickedAsync(object sender, EventArgs e)
         {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                uploadActivity.IsRunning = true;
+                addPhotoButton.IsEnabled = false;
+                galleryButton.IsEnabled = false;
+            });
+
             Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    uploadActivity.IsRunning = true;
-                    addPhotoButton.IsEnabled = false;
-                    galleryButton.IsEnabled = false;
-                });
-
                 string success = GlobalVariables.uploadPhotoFragmentViewModel.UploadPictureAsync(addedPhoto, f, selectedPetId, hashtagsEntry.Text);
 
                 if (!string.IsNullOrEmpty(success))

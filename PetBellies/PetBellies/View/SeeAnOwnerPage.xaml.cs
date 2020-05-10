@@ -68,7 +68,7 @@ namespace PetBellies.View
                     Title = user.FirstName + " " + user.LastName;
                 });
 
-                if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(userID))//ha nem blokkolt
+                if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(GlobalVariables.ActualUser.id, userID))//ha nem blokkolt
                 {
                     Task.Run(()=> {
                         petList = GlobalVariables.seeAnOwnerProfileViewModel.GetPet(user.id);
@@ -198,24 +198,6 @@ namespace PetBellies.View
 
                 if (success)
                 {
-                    try
-                    {
-                        //Aki reportolt
-                        string url = string.Format("http://petbellies.com/php/petbelliesreppic.php?email={0}&nev={1}&host={2}", user.Email, user.FirstName, 0);
-                        Uri uri = new Uri(url);
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-                        request.Method = "GET";
-                        WebResponse res = await request.GetResponseAsync();
-
-                        //Akinek a képe van
-                        string url1 = string.Format("http://petbellies.com/php/petbelliesreppic.php?email={0}&nev={1}&host={2}", GlobalVariables.ActualUsersEmail, GlobalVariables.ActualUser.FirstName, 1);
-                        Uri uri1 = new Uri(url);
-                        HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(uri1);
-                        request.Method = "GET";
-                        WebResponse res1 = await request.GetResponseAsync();
-                    }
-                    catch (Exception) { }
-
                     await DisplayAlert("Success", "Thanks..", "OK");
                 }
                 else

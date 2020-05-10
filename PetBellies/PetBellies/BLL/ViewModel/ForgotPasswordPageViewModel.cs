@@ -33,22 +33,12 @@ namespace PetBellies.BLL.ViewModel
 
             user.Password = segédfüggvények.EncryptPassword(passwordWithoutEncrypt);
 
-            bool success = GlobalVariables.databaseConnection.UpdateUser(user.id, user);
+            bool success = GlobalVariables.databaseConnection.ForgotPasswordAsync(user.id, user);
 
             if (!success)
             {
                 return English.SomethingWentWrong();
             }
-
-            try
-            {
-                string url = String.Format("http://petbellies.com/php/petbelliesforgotp.php?email={0}&nev={1}&pw={2}", EMAIL, user.FirstName, passwordWithoutEncrypt);
-                Uri uri = new Uri(url);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Method = "GET";
-                WebResponse res = await request.GetResponseAsync();
-            }
-            catch (Exception) { }
 
             return string.Empty;
         }

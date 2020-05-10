@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class UpdatePetProfilePage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class UpdatePetProfilePage : ContentPage
+    {
         private int petid = -1;
         private bool addedPhoto = false;
         private Pet thisPet = new Pet();
@@ -24,35 +24,51 @@ namespace PetBellies.View
 
             this.petid = petid;
 
-            ageDatePicker.MaximumDate = DateTime.Now;
+            Init();
+        }
 
-            thisPet = GlobalVariables.ConvertMyPetListToPet(GlobalVariables.Mypetlist.Where(i => i.petid == petid).FirstOrDefault());
+        private void Init()
+        {
+            Task.Run(() =>
+            {
+                ageDatePicker.MaximumDate = DateTime.Now;
 
-            Device.BeginInvokeOnMainThread(() => {
-                nameEntry.Placeholder = thisPet.Name;
-                ageDatePicker.Date = thisPet.Age;
-                typeEntry.Placeholder = thisPet.PetType;
+                thisPet = GlobalVariables.ConvertMyPetListToPet(GlobalVariables.Mypetlist.Where(i => i.petid == petid).FirstOrDefault());
 
-                if (thisPet.Profilepicture != null)
-                    profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    nameEntry.Placeholder = thisPet.Name;
+                    ageDatePicker.Date = thisPet.Age;
+                    typeEntry.Placeholder = thisPet.PetType;
 
-                if (thisPet.HaveAnOwner == 0) shelterpetSwitch.IsToggled = true;
-                else shelterpetSwitch.IsToggled = false;
+                    if (thisPet.Profilepicture != null)
+                        profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
+
+                    if (thisPet.HaveAnOwner == 0) shelterpetSwitch.IsToggled = true;
+                    else shelterpetSwitch.IsToggled = false;
+                });
             });
         }
 
         private void deletePetButton_ClickedAsync(object sender, EventArgs e)
         {
-            Task.Run(()=> {
+            Task.Run(() =>
+            {
                 DisableOrEnableButtons(false);
 
                 string success = GlobalVariables.updatePetFragmentViewModel.DeletePet(petid);
 
                 if (!string.IsNullOrEmpty(success))
-                    Device.BeginInvokeOnMainThread(()=> {
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
                         DisplayAlert(English.Failed(), success, English.OK());
                     });
-                else Device.BeginInvokeOnMainThread(() => {
+                }
+                else Device.BeginInvokeOnMainThread(() =>
+                {
+                    GlobalEvents.OnProfilePictureUpdated_Event(this, null);
+
                     Navigation.PopToRootAsync();
                 });
 
@@ -71,7 +87,7 @@ namespace PetBellies.View
                 int isCheckedToInt = 1;
 
                 if (isChecked) isCheckedToInt = 0;
-                
+
                 Pet pet = new Pet();
 
                 pet = thisPet;
@@ -81,9 +97,9 @@ namespace PetBellies.View
                 {
                     pet.Name = nameEntry.Text;
                 }
-                
+
                 pet.Age = ageDatePicker.Date;
-                
+
                 if (!string.IsNullOrEmpty(typeEntry.Text))
                 {
                     pet.PetType = typeEntry.Text;
@@ -158,7 +174,7 @@ namespace PetBellies.View
                 await DisplayAlert(English.Failed(), English.NoPicking(), English.OK());
                 return;
             }
-            
+
             var file = await CrossMedia.Current.PickPhotoAsync();
 
             if (file == null) return;

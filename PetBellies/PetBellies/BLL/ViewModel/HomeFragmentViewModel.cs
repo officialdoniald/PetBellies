@@ -40,14 +40,14 @@ namespace PetBellies.BLL.ViewModel
                     Pet pet = new Pet();
 
                     pet = GlobalVariables.databaseConnection.GetPetByID(item.PetID);
-                    wall.petpictures = GlobalVariables.databaseConnection.GetOnePetpicturesByID(item.PetPicturesID);
+                    wall.petpictures = GlobalVariables.databaseConnection.GetPetPictureByID(item.PetPicturesID);
                     wall.name = pet.Name;
-                    wall.howmanylikes = GlobalVariables.databaseConnection.GetLikeByPetpicturesID(item.PetPicturesID).Count;
+                    wall.howmanylikes = GlobalVariables.databaseConnection.GetLikesOnAPicture(item.PetPicturesID).Count;
                     wall.ProfilePictureURL = pet.Profilepicture;
 
-                    wall.haveILiked = GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, item.PetPicturesID);
+                    wall.haveILiked = GlobalVariables.databaseConnection.GetLikesByPetpicturesIDAndUserID(GlobalVariables.ActualUser.id, item.PetPicturesID);
 
-                    if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(pet.Uploader))
+                    if (!GlobalVariables.seeAnOwnerProfileViewModel.IsItABlockedUser(GlobalVariables.ActualUser.id, pet.Uploader))
                     {
                         wallList.Add(wall);
                     }

@@ -20,7 +20,7 @@ namespace PetBellies.BLL.ViewModel
 
             pet.Uploader = GlobalVariables.ActualUser.id;
 
-            int success = GlobalVariables.databaseConnection.InsertPet(pet);
+            int success = GlobalVariables.databaseConnection.AddPet(pet);
 
             if (success == -1)
             {

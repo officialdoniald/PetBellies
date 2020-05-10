@@ -15,8 +15,6 @@ namespace PetBellies.View
 	{
         private int howmanylike = 0;
 
-        private bool haveiliked = false;
-
         private List<Likes> likes = new List<Likes>();
 
         Pet thisPet = new Pet();
@@ -39,9 +37,9 @@ namespace PetBellies.View
             Initialize();
         }
 
-        private async Task Initialize()
+        private void Initialize()
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
                 thisPet = GlobalVariables.ConvertMyPetListToPet(GlobalVariables.Mypetlist.Where(u => u.petid == petpictures.PetID).FirstOrDefault());
                 Device.BeginInvokeOnMainThread(() =>
@@ -80,15 +78,14 @@ namespace PetBellies.View
                         mainStackLayout.Children.Add(hashtagLabel);
                     });
                 }
+
+                likes = GlobalVariables.seePictureFragmentViewModel.GetLikes(petpictures.id);
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    likes = GlobalVariables.seePictureFragmentViewModel.GetLikes(petpictures.id);
-
                     howmanylike = likes.Count;
 
                     howmanyLikesLabel.Text = howmanylike.ToString() + English.GetLike();
-
-                    haveiliked = GlobalVariables.seePictureFragmentViewModel.HaveILiked(petpictures.id);
                 });
             });
         }
@@ -109,18 +106,20 @@ namespace PetBellies.View
 
             if (reported == "Delete")
             {
-                if (!GlobalVariables.seePictureFragmentViewModel.DeletePicture(this.petpictures))
-                {
-                    await DisplayAlert(English.Failed(), English.SomethingWentWrong(), English.OK());
-                }
-                else
-                {
-                    GlobalVariables.IsPictureDeleted = true;
+                Task.Run(async ()=> {
+                    if (!GlobalVariables.seePictureFragmentViewModel.DeletePicture(this.petpictures))
+                    {
+                        await DisplayAlert(English.Failed(), English.SomethingWentWrong(), English.OK());
+                    }
+                    else
+                    {
+                        GlobalVariables.IsPictureDeleted = true;
 
-                    await Navigation.PopToRootAsync();
+                        await Navigation.PopToRootAsync();
 
-                    await DisplayAlert(English.Successful(), English.SuccessfulDeletedThePicture(), English.OK());
-                }
+                        await DisplayAlert(English.Successful(), English.SuccessfulDeletedThePicture(), English.OK());
+                    }
+                });
             }
         }
     }

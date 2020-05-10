@@ -42,12 +42,6 @@ namespace PetBellies.BLL.ViewModel
                 {
                     GlobalVariables.ActualUsersEmail = GlobalVariables.ActualUser.Email;
 
-                    string url = String.Format("http://petbellies.com/php/petbellieschangeemail.php?email={0}&nev={1}", GlobalVariables.ActualUser.Email, GlobalVariables.ActualUser.FirstName);
-                    Uri uri = new Uri(url);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                    request.Method = "GET";
-                    WebResponse res = await request.GetResponseAsync();
-
                     DependencyService.Get<IFileStoreAndLoad>().SaveText(GlobalVariables.logintxt, GlobalVariables.ActualUsersEmail);
 
                     return UpdateUser(GlobalVariables.ActualUser);

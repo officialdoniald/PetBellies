@@ -45,6 +45,8 @@ namespace PetBellies.View
                 {
                     GlobalVariables.IsUpdatedMyProfile = true;
 
+                    GlobalEvents.OnProfileUpdated_Event(this, null);
+
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         DisplayAlert(English.Successful(), English.Successful(), English.OK());
@@ -127,6 +129,8 @@ namespace PetBellies.View
                 else
                 {
                     addedPhoto = false;
+
+                    GlobalEvents.OnProfilePictureUpdated_Event(this, null);
 
                     Device.BeginInvokeOnMainThread(() =>
                     {

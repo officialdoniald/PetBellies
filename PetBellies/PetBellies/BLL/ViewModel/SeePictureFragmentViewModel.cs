@@ -80,12 +80,12 @@ namespace PetBellies.BLL.ViewModel
 
         public List<Likes> GetLikes(int petpicturesid)
         {
-            return GlobalVariables.databaseConnection.GetLikeByPetpicturesID(petpicturesid);
+            return GlobalVariables.databaseConnection.GetLikesOnAPicture(petpicturesid);
         }
 
         public bool HaveILiked(int petpicturesid)
         {
-            return GlobalVariables.databaseConnection.GetLikeByUserID(GlobalVariables.ActualUser.id, petpicturesid);
+            return GlobalVariables.databaseConnection.GetLikesByPetpicturesIDAndUserID(GlobalVariables.ActualUser.id, petpicturesid);
         }
 
         public bool ReportPicture(Petpictures petpicturesid)
@@ -127,7 +127,7 @@ namespace PetBellies.BLL.ViewModel
 
         public Petpictures GetPetpicturesByID(int id)
         {
-            return GlobalVariables.databaseConnection.GetOnePetpicturesByID(id);
+            return GlobalVariables.databaseConnection.GetPetPictureByID(id);
         }
 
         public bool DeletePicture(Petpictures petpictures)

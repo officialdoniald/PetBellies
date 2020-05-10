@@ -73,7 +73,7 @@ namespace PetBellies.View
                 {
                     Task.Run(() =>
                     {
-                        var item = GlobalVariables.databaseConnection.GetOnePetpicturesByID(petpictureid);
+                        var item = GlobalVariables.databaseConnection.GetPetPictureByID(petpictureid);
 
                         Image image = new Image();
 

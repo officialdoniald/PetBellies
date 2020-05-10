@@ -10,7 +10,7 @@ namespace PetBellies.BLL.ViewModel
         {
             List<User> userList = new List<User>();
 
-            List<Likes> likeList = GlobalVariables.databaseConnection.GetLikeByPetpicturesID(petpicturesid);
+            List<Likes> likeList = GlobalVariables.databaseConnection.GetLikesOnAPicture(petpicturesid);
 
             foreach (var item in likeList)
             {
@@ -40,7 +40,7 @@ namespace PetBellies.BLL.ViewModel
 
         public Pet GetPetByPetId(int petpicturesid)
         {
-            return GlobalVariables.databaseConnection.GetPetByID(GlobalVariables.databaseConnection.GetOnePetpicturesByID(petpicturesid).PetID);
+            return GlobalVariables.databaseConnection.GetPetByID(GlobalVariables.databaseConnection.GetPetPictureByID(petpicturesid).PetID);
         }
     }
 }
