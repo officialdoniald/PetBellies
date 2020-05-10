@@ -29,12 +29,12 @@ namespace PetBellies.iOS
             //// Sets the NavigationBar title items. Also sets the format for TabbedPage tab items for some reason.
             //UINavigationBar.Appearance.SetTitleTextAttributes(titleAttribute);
 
-            var statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
-            if (statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
-            {
-                statusBar.BackgroundColor = new UIColor(red: 1.0f, green: 0.80f, blue: 0.71f, alpha: 1.0f);
-                statusBar.TintColor = UIColor.White;
-            }
+            //var statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
+            //if (statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
+            //{
+            //    statusBar.BackgroundColor = new UIColor(red: 1.0f, green: 0.80f, blue: 0.71f, alpha: 1.0f);
+            //    statusBar.TintColor = UIColor.White;
+            //}
 
             global::Xamarin.Forms.Forms.Init();
 

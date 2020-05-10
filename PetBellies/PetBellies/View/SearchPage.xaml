@@ -36,7 +36,7 @@
                     </Grid>
                 </ListView.Header>
                 <ListView.Footer>
-                    <Button Margin="15,15,15,0" Text="More..." x:Name="MoreButton" Style="{StaticResource NormalButton}" Clicked="MoreButton_Clicked"/>
+                    <Button Margin="15,25,15,0" Text="More..." x:Name="MoreButton" Style="{StaticResource NormalButton}" Clicked="MoreButton_Clicked"/>
                 </ListView.Footer>
             </ListView>
         </StackLayout>
