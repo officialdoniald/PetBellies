@@ -15,6 +15,7 @@
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,7 +72,7 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>petbellies publish</CodesignProvision>
+    <CodesignProvision>PetBellies Dist</CodesignProvision>
     <MtouchI18n>cjk,mideast,other,rare,west</MtouchI18n>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignExtraArgs />
@@ -81,6 +82,8 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchProfiling>false</MtouchProfiling>
     <BuildIpa>true</BuildIpa>
+    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
+    <MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
