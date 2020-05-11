@@ -35,23 +35,20 @@ namespace PetBellies.View
         {
             base.OnAppearing();
 
-            Task.Run(() =>
+            Device.BeginInvokeOnMainThread(() =>
             {
-                Device.BeginInvokeOnMainThread(() =>
+                searchListView.IsVisible = false;
+                pictureListGrid.IsVisible = true;
+
+                if (Device.RuntimePlatform == Device.iOS)
                 {
-                    searchListView.IsVisible = false;
-                    pictureListGrid.IsVisible = true;
+                    SpecialStackLayout.Margin = new Thickness(0, 50, 0, 0);
+                }
 
-                    if (Device.OS == TargetPlatform.iOS)
-                    {
-                        SpecialStackLayout.Margin = new Thickness(0, 50, 0, 0);
-                    }
-
-                    searchListView.IsRefreshing = true;
-                });
-
-                ListView_Refreshing(this, null);
+                searchListView.IsRefreshing = true;
             });
+
+            ListView_Refreshing(this, null);
         }
 
         private void searchEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -96,17 +93,17 @@ namespace PetBellies.View
             });
         }
 
-        private void Handle_Refreshing(object sender, System.EventArgs e)
+        private async void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 SetTheListView();
             });
         }
 
-        private void InitializeThePetPictures()
+        private async Task InitializeThePetPictures()
         {
-            Task.Run(() =>
+            await Task.Run(async () =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -129,13 +126,13 @@ namespace PetBellies.View
 
                 keyValuePairs = new Dictionary<int, int[]>();
 
-                FillGrid();
+                await FillGrid();
             });
         }
 
-        public void OnPictureClicked(Petpictures petpictures)
+        public async Task OnPictureClicked(Petpictures petpictures)
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 if (!GlobalVariables.databaseConnection.GetPetpicturesExistByPetPicturesID(petpictures.id))
                 {
@@ -181,9 +178,9 @@ namespace PetBellies.View
             }
         }
 
-        private void ListView_Refreshing(object sender, EventArgs e)
+        private async void ListView_Refreshing(object sender, EventArgs e)
         {
-            Task.Run(() =>
+            await Task.Run(async () =>
             {
                 if (GlobalVariables.IsPictureDeleted)
                 {
@@ -197,28 +194,24 @@ namespace PetBellies.View
                     GlobalVariables.IsPictureDeleted = false;
                 }
 
-                InitializeThePetPictures();
+                await InitializeThePetPictures();
 
-                try
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        pictureListView.IsRefreshing = false;
-                    });
-                }
-                catch (Exception) { }
+                    pictureListView.IsRefreshing = false;
+                });
             });
         }
 
-        private void MoreButton_Clicked(object sender, EventArgs e)
+        private async void MoreButton_Clicked(object sender, EventArgs e)
         {
             ((ListView)((Button)sender).Parent).IsRefreshing = true;
 
-            Task.Run(() =>
+            await Task.Run(async () =>
             {
                 GlobalVariables.PetPicturesStartIndex += GlobalVariables.PetPicturesCount;
 
-                FillGrid();
+                await FillGrid();
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -227,9 +220,9 @@ namespace PetBellies.View
             });
         }
 
-        public void FillGrid()
+        public async Task FillGrid()
         {
-            Task.Run(() =>
+            await Task.Run(async () =>
             {
                 petpicturesList = GlobalVariables.searchFragmentViewModel.GetPetpictures();
 
@@ -259,7 +252,7 @@ namespace PetBellies.View
 
                     foreach (var petpictureid in petpicturesList)
                     {
-                        Task.Run(() =>
+                        await Task.Run(() =>
                         {
                             var item = GlobalVariables.databaseConnection.GetPetPictureByID(petpictureid);
 
@@ -273,9 +266,9 @@ namespace PetBellies.View
                                 image.GestureRecognizers.Add(new TapGestureRecognizer()
                                 {
                                     NumberOfTapsRequired = 1,
-                                    TappedCallback = delegate
+                                    TappedCallback = async delegate
                                     {
-                                        OnPictureClicked(item);
+                                        await OnPictureClicked(item);
                                     }
                                 });
 

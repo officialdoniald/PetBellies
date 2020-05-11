@@ -79,9 +79,9 @@ namespace PetBellies.View
             }
         }
 
-        void Handle_Refreshing(object sender, System.EventArgs e)
+        async void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            Initialize();
+            await Initialize();
         }
     }
 }

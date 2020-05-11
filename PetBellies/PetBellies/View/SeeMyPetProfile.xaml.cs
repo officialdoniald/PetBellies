@@ -35,11 +35,11 @@ namespace PetBellies.View
             InitializeThePetPictures();
         }
 
-        private void InitializeThePetPictures()
+        private async void InitializeThePetPictures()
         {
             thisPet = GlobalVariables.ConvertMyPetListToPet(GlobalVariables.Mypetlist.Where(u => u.petid == petid).FirstOrDefault());
 
-            GetFollowers();
+            await GetFollowers();
 
             currentWidth = Application.Current.MainPage.Width;
 
@@ -58,13 +58,10 @@ namespace PetBellies.View
                 profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(thisPet.Profilepicture));
             else profilePictureImage.Source = "account.png";
 
-            Task.Run(() =>
-            {
-                GetPetsPictures();
-            });
+            await GetPetsPictures();
         }
 
-        private void GetPetsPictures()
+        private async Task GetPetsPictures()
         {
             int left = 0;
             int top = 0;
@@ -94,7 +91,7 @@ namespace PetBellies.View
 
             foreach (var item in list)
             {
-                Task.Run(() =>
+                await Task.Run(() =>
                 {
                     var petpicture = GlobalVariables.databaseConnection.GetPetPictureByID(item);
 
@@ -123,9 +120,9 @@ namespace PetBellies.View
             }
         }
 
-        private void GetFollowers()
+        private async Task GetFollowers()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 followerList = GlobalVariables.followersViewModel.GetUserList(this.petid);
 

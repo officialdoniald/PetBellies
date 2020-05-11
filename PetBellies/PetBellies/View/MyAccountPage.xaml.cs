@@ -33,14 +33,14 @@ namespace PetBellies.View
             GetPets();
         }
 
-        private void GlobalEvents_OnPetDeleted(object sender, object e)
+        private async void GlobalEvents_OnPetDeleted(object sender, object e)
         {
-            GetPets();
+            await GetPets();
         }
 
-        private void GlobalEvents_OnPetAdded(object sender, object e)
+        private async void GlobalEvents_OnPetAdded(object sender, object e)
         {
-            GetPets();
+            await GetPets();
         }
 
         private void GlobalEvents_OnProfilePictureUpdated(object sender, object e)
@@ -53,7 +53,7 @@ namespace PetBellies.View
             Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             var currentWidth = Application.Current.MainPage.Width;
 
@@ -62,12 +62,12 @@ namespace PetBellies.View
             profilePictureImage.HeightRequest = optimalWidth;
             profilePictureImage.WidthRequest = optimalWidth;
 
-            GetFollowings();
+            await GetFollowings();
         }
 
-        private void GetPets()
+        private async Task GetPets()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -121,9 +121,9 @@ namespace PetBellies.View
             });
         }
 
-        private void GetFollowings()
+        private async Task GetFollowings()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 followings = GlobalVariables.myAccountPageViewModel.GetMyFollowing();
 
@@ -144,9 +144,9 @@ namespace PetBellies.View
             });
         }
 
-        private void TapPet(int id)
+        private async void TapPet(int id)
         {
-            Task.Run(()=> {
+            await Task.Run(()=> {
                 var searchResultPage = new SeeMyPetProfile(id);
 
                 Device.BeginInvokeOnMainThread(()=> {
@@ -156,9 +156,9 @@ namespace PetBellies.View
         }
 
         //Following gomb
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new FollowersPage(followings));
+            await Navigation.PushAsync(new FollowersPage(followings));
         }
 
         private async void MoreToolbarItem_Activated(object sender, EventArgs e)

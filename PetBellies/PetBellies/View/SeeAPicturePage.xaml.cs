@@ -45,9 +45,9 @@ namespace PetBellies.View
             Initialize();
         }
 
-        private void Initialize()
+        private async void Initialize()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
 
                 thisPet = GlobalVariables.seePictureFragmentViewModel.GetPetById(petpictures.PetID);
@@ -99,6 +99,7 @@ namespace PetBellies.View
                 });
 
                 haveiliked = GlobalVariables.seePictureFragmentViewModel.HaveILiked(petpictures.id);
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     if (haveiliked) likeornotImage.Source = GlobalVariables.unlikepng;
@@ -121,11 +122,17 @@ namespace PetBellies.View
                 {
                     howmanylike = howmanylike - 1;
 
-                    howmanyLikesLabel.Text = howmanylike.ToString() + English.GetLike();
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        howmanyLikesLabel.Text = howmanylike.ToString() + English.GetLike();
+                    });
 
                     haveiliked = !haveiliked;
 
-                    likeornotImage.Source = GlobalVariables.likepng;
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        likeornotImage.Source = GlobalVariables.likepng;
+                    });
                 }
             }
             else
@@ -140,11 +147,17 @@ namespace PetBellies.View
                 {
                     howmanylike = howmanylike + 1;
 
-                    howmanyLikesLabel.Text = howmanylike.ToString() + English.GetLike();
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        howmanyLikesLabel.Text = howmanylike.ToString() + English.GetLike();
+                    });
 
                     haveiliked = !haveiliked;
 
-                    likeornotImage.Source = GlobalVariables.unlikepng;
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        likeornotImage.Source = GlobalVariables.unlikepng;
+                    });
                 }
             }
         }

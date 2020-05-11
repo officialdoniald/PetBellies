@@ -38,9 +38,9 @@ namespace PetBellies.View
             Initialize();
         }
 
-        private void Initialize()
+        private async void Initialize()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 user = GlobalVariables.databaseConnection.GetUserByID(userID);
 
@@ -235,11 +235,6 @@ namespace PetBellies.View
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             Navigation.PushAsync(new FollowersPage(followings));
-        }
-
-        private void blockUserButton_Clicked(object sender, EventArgs e)
-        {
-            
         }
     }
 }

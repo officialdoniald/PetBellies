@@ -48,9 +48,9 @@ namespace PetBellies.View
             InitializePetFollowingList();
         }
 
-        private void InitializePetFollowingList()
+        private async void InitializePetFollowingList()
         {
-            Task.Run(() => {
+            await Task.Run(() => {
                 List<ListViewWithPictureAndSomeText> listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();
 
                 foreach (var item in users)
@@ -76,9 +76,9 @@ namespace PetBellies.View
             });
         }
 
-        private void InitializeUserFollowingList()
+        private async void InitializeUserFollowingList()
         {
-            Task.Run(() => {
+            await Task.Run(() => {
                 pets = GlobalVariables.followersViewModel.GetPetList(followings);
 
                 List<ListViewWithPictureAndSomeText> listViewWithPictureAndSomeText = new List<ListViewWithPictureAndSomeText>();

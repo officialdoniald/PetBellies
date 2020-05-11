@@ -32,9 +32,9 @@ namespace PetBellies.View
             Initialize();
         }
 
-        private void Initialize()
+        private async Task Initialize()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 var list = GlobalVariables.peopleSearchPageViewModel.GetUserWithKeyword("");
 
@@ -65,9 +65,9 @@ namespace PetBellies.View
             });
         }
 
-        void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        async void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            SetList();
+            await SetList();
         }
 
         void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
@@ -90,16 +90,19 @@ namespace PetBellies.View
             }
         }
 
-        void Handle_Completed(object sender, System.EventArgs e)
+        async void Handle_Completed(object sender, System.EventArgs e)
         {
-            SetList();
+            await SetList();
         }
 
-        private void SetList()
+        private async Task SetList()
         {
-            userListView.IsRefreshing = true;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                userListView.IsRefreshing = true;
+            });
 
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 if (!String.IsNullOrEmpty(searchEntry.Text) && searchEntry.Text.Length >= 3 && isItFinished)
                 {

@@ -31,11 +31,11 @@ namespace PetBellies.View
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            Task.Run(()=>
+            await Task.Run(()=>
             {
                 GlobalVariables.InitializeGlobalCasualImage();
 

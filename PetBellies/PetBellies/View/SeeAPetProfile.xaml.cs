@@ -33,9 +33,9 @@ namespace PetBellies.View
             InitializeThePetPictures();
         }
 
-        private void InitializeThePetPictures()
+        private async void InitializeThePetPictures()
         {
-            Task.Run(() =>
+            await Task.Run(async () =>
             {
                 thisPet = GlobalVariables.petProfileFragmentViewModel.GetPetFromDBByID(petid);
 
@@ -76,9 +76,9 @@ namespace PetBellies.View
                     if (HaveIAlreadyFollow) followOrNot = GlobalVariables.petProfileFragmentViewModel.unfollowText;
                     else followOrNot = GlobalVariables.petProfileFragmentViewModel.followText;
 
-                    GetFollowers();
+                    await GetFollowers();
 
-                    GetPetsPictures();
+                    await GetPetsPictures();
                 }
                 else
                 {
@@ -93,9 +93,9 @@ namespace PetBellies.View
             });
         }
 
-        private void GetPetsPictures()
+        private async Task GetPetsPictures()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 int left = 0;
                 int top = 0;
@@ -152,9 +152,9 @@ namespace PetBellies.View
             });
         }
 
-        private void GetFollowers()
+        private async Task GetFollowers()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 followerList = GlobalVariables.followersViewModel.GetUserList(this.petid);
 

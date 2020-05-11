@@ -8,12 +8,12 @@ using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class BlockedPeople : ContentPage
-	{
-		public BlockedPeople ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class BlockedPeople : ContentPage
+    {
+        public BlockedPeople()
+        {
+            InitializeComponent();
 
             InitializeBlockedUserList();
         }
@@ -24,20 +24,22 @@ namespace PetBellies.View
 
             var selectedLVWPAST = (ListViewWithPictureAndSomeText)listView.SelectedItem;
 
-                var searchResultPage = new SeeAnOwnerPage(selectedLVWPAST.user.id);
+            var searchResultPage = new SeeAnOwnerPage(selectedLVWPAST.user.id);
 
-                Navigation.PushAsync(searchResultPage);
+            Navigation.PushAsync(searchResultPage);
         }
 
-        private void userListView_Refreshing(object sender, EventArgs e)
+        private async void userListView_Refreshing(object sender, EventArgs e)
         {
-            InitializeBlockedUserList();
+            await InitializeBlockedUserList();
         }
 
-        private void InitializeBlockedUserList()
+        private async Task InitializeBlockedUserList()
         {
-            Task.Run(()=> {
-                Device.BeginInvokeOnMainThread(() => {
+            await Task.Run(() =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
                     userListView.ItemsSource = null;
                 });
 
@@ -64,7 +66,8 @@ namespace PetBellies.View
                     }
                 }
 
-                Device.BeginInvokeOnMainThread(() => {
+                Device.BeginInvokeOnMainThread(() =>
+                {
                     userListView.ItemsSource = listViewWithPictureAndSomeText;
 
                     userListView.IsRefreshing = false;
@@ -72,7 +75,7 @@ namespace PetBellies.View
             });
         }
 
-        public void OnDelete(object sender, EventArgs e)
+        public async void OnDelete(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
 
@@ -82,7 +85,7 @@ namespace PetBellies.View
 
             if (!string.IsNullOrEmpty(success))
                 DisplayAlert(English.Failed(), success, English.OK());
-            else InitializeBlockedUserList();
+            else await InitializeBlockedUserList();
         }
     }
 }

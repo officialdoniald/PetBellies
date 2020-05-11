@@ -41,7 +41,7 @@ namespace PetBellies.View
 
             var optimalWidth = currentWidth / 3;
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 int left = 0;
                 int top = 0;
@@ -71,7 +71,7 @@ namespace PetBellies.View
 
                 foreach (var petpictureid in petpicturesList)
                 {
-                    Task.Run(() =>
+                    await Task.Run(() =>
                     {
                         var item = GlobalVariables.databaseConnection.GetPetPictureByID(petpictureid);
 
@@ -98,14 +98,6 @@ namespace PetBellies.View
                     });
                 }
             });
-        }
-
-        protected override void OnAppearing()
-        {
-            if (GlobalVariables.IsPictureDeleted)
-            {
-                Initialize();
-            }
         }
 
         public void OnPictureClicked(Petpictures petpictures)

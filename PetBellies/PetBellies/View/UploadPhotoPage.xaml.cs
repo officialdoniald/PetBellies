@@ -23,15 +23,15 @@ namespace PetBellies.View
             currentWidth = Application.Current.MainPage.Width;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             if (GlobalVariables.AddedPet || GlobalVariables.AddedPhoto)
-                Initialize();
+                await Initialize();
         }
 
-        private void Initialize()
+        private async Task Initialize()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -95,7 +95,7 @@ namespace PetBellies.View
             pictureImage.Source = ImageSource.FromStream(() => f);
         }
 
-        private void addPhotoButton_ClickedAsync(object sender, EventArgs e)
+        private async void addPhotoButton_ClickedAsync(object sender, EventArgs e)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -104,7 +104,7 @@ namespace PetBellies.View
                 galleryButton.IsEnabled = false;
             });
 
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 string success = GlobalVariables.uploadPhotoFragmentViewModel.UploadPictureAsync(addedPhoto, f, selectedPetId, hashtagsEntry.Text);
 

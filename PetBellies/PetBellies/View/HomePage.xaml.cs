@@ -28,21 +28,21 @@ namespace PetBellies.View
 
         private void GlobalEvents_OnUnFollowUser(object sender, object e)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 GlobalVariables.WallStartIndex = 0;
 
-                Initialize();
+                await Initialize();
             });
         }
 
         private void GlobalEvents_OnFollowUser(object sender, object e)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 GlobalVariables.WallStartIndex = 0;
 
-                Initialize();
+                await Initialize();
             });
         }
 
@@ -58,11 +58,11 @@ namespace PetBellies.View
             }
         }
 
-        private void Initialize()
+        private async Task Initialize()
         {
             wallListView.IsRefreshing = true;
 
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -80,11 +80,11 @@ namespace PetBellies.View
 
         private void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 GlobalVariables.WallStartIndex = 0;
 
-                Initialize();
+                await Initialize();
             });
         }
 
@@ -242,9 +242,9 @@ namespace PetBellies.View
             AddWallListItem();
         }
 
-        private void AddWallListItem()
+        private async void AddWallListItem()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 wallList = GlobalVariables.homeFragmentViewModel.GetWallList();
 

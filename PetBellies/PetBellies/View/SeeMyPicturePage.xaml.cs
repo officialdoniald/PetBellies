@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PetBellies.BLL.Helper;
-using PetBellies.BLL.ViewModel;
 using PetBellies.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -37,11 +36,12 @@ namespace PetBellies.View
             Initialize();
         }
 
-        private void Initialize()
+        private async void Initialize()
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 thisPet = GlobalVariables.ConvertMyPetListToPet(GlobalVariables.Mypetlist.Where(u => u.petid == petpictures.PetID).FirstOrDefault());
+                
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     nameLabel.Text = thisPet.Name;
@@ -51,9 +51,9 @@ namespace PetBellies.View
                     pictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(petpictures.PictureURL));
                 });
 
-                var asd = GlobalVariables.seePictureFragmentViewModel.GetHashtags(petpictures.id).Split(' ');
+                var hashtags = GlobalVariables.seePictureFragmentViewModel.GetHashtags(petpictures.id).Split(' ');
 
-                foreach (var item2 in asd)
+                foreach (var item2 in hashtags)
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -106,7 +106,7 @@ namespace PetBellies.View
 
             if (reported == "Delete")
             {
-                Task.Run(async ()=> {
+                await Task.Run(async ()=> {
                     if (!GlobalVariables.seePictureFragmentViewModel.DeletePicture(this.petpictures))
                     {
                         await DisplayAlert(English.Failed(), English.SomethingWentWrong(), English.OK());
