@@ -49,7 +49,7 @@ namespace PetBellies.BLL.Helper
                 var client = new HttpClient();
                 return client.SendAsync(request).Result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new HttpResponseMessage() { StatusCode = System.Net.HttpStatusCode.NoContent };
             }

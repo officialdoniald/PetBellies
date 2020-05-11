@@ -29,6 +29,11 @@ namespace PetBellies.View
         public SearchPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
             Task.Run(() =>
             {

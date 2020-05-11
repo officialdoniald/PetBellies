@@ -53,6 +53,8 @@ namespace PetBellies.View
                 {
                     addedPhoto = false;
 
+                    GlobalEvents.OnPetAdded_Event(this, null);
+
                     Device.BeginInvokeOnMainThread(() => {
                         Navigation.PopAsync();
                     });
