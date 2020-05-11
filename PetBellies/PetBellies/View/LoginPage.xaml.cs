@@ -1,16 +1,16 @@
-﻿using PetBellies.BLL.FileStoreAndLoad;
-using PetBellies.BLL.Helper;
+﻿using PetBellies.BLL.Helper;
 using Plugin.Connectivity;
 using System;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PetBellies.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoginPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LoginPage : ContentPage
+    {
         private bool wasNotConn = false;
 
         public LoginPage()
@@ -54,18 +54,19 @@ namespace PetBellies.View
                 }
                 else
                 {
-                    FileStoreAndLoading.InsertToFile(GlobalVariables.logintxt, emailEntry.Text);
-
                     Device.BeginInvokeOnMainThread(() =>
-                        Navigation.PushModalAsync(new JustActivityIndicator("login"))
-                    );
+                    {
+                        SecureStorage.SetAsync(GlobalVariables.EMAIL_TOKEN, emailEntry.Text.ToLower());
+
+                        App.SetRootPage(new JustActivityIndicator("login"));
+                    });
                 }
 
                 Device.BeginInvokeOnMainThread(() =>
-                {
-                    loginButton.IsEnabled = true;
-                    loginActivator.IsRunning = false;
-                });
+                        {
+                            loginButton.IsEnabled = true;
+                            loginActivator.IsRunning = false;
+                        });
             });
         }
 
@@ -73,7 +74,7 @@ namespace PetBellies.View
         {
             Navigation.PushAsync(new SignUpPage());
         }
-        
+
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             Navigation.PushAsync(new ForgotPasswordPage());

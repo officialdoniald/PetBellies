@@ -1,10 +1,10 @@
-﻿using PetBellies.BLL.FileStoreAndLoad;
-using PetBellies.BLL.Helper;
+﻿using PetBellies.BLL.Helper;
 using PetBellies.Model;
 using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PetBellies.BLL.ViewModel
@@ -42,7 +42,7 @@ namespace PetBellies.BLL.ViewModel
                 {
                     GlobalVariables.ActualUsersEmail = GlobalVariables.ActualUser.Email;
 
-                    DependencyService.Get<IFileStoreAndLoad>().SaveText(GlobalVariables.logintxt, GlobalVariables.ActualUsersEmail);
+                    await SecureStorage.SetAsync(GlobalVariables.EMAIL_TOKEN, GlobalVariables.ActualUsersEmail);
 
                     return UpdateUser(GlobalVariables.ActualUser);
                 }

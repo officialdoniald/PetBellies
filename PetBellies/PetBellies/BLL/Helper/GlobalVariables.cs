@@ -1,11 +1,11 @@
-﻿using PetBellies.BLL.FileStoreAndLoad;
-using PetBellies.BLL.ViewModel;
+﻿using PetBellies.BLL.ViewModel;
 using PetBellies.DAL;
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PetBellies.BLL.Helper
@@ -69,8 +69,6 @@ namespace PetBellies.BLL.Helper
         public static FollowersViewModel followersViewModel =
             new FollowersViewModel();
 
-        public static string logintxt = "login.txt";
-
         public static string peoplepng = "people.png";
 
         public static string likepng = "unlike.png";
@@ -119,6 +117,11 @@ namespace PetBellies.BLL.Helper
         /// Can I go back with the Back Button?
         /// </summary>
         public static bool CanIGoBackWithTheBackButton { get; set; } = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string EMAIL_TOKEN { get; set; } = "loginmail";
 
         /// <summary>
         /// Application password.
@@ -224,7 +227,7 @@ namespace PetBellies.BLL.Helper
         {
             try
             {
-                ActualUsersEmail = DependencyService.Get<IFileStoreAndLoad>().LoadText(logintxt);
+                ActualUsersEmail = SecureStorage.GetAsync(GlobalVariables.EMAIL_TOKEN).Result;
 
                 if (!string.IsNullOrEmpty(ActualUsersEmail))
                 {
@@ -256,7 +259,7 @@ namespace PetBellies.BLL.Helper
         /// </summary>
         public static void InitializeUsersEmailVariable()
         {
-            ActualUsersEmail = DependencyService.Get<IFileStoreAndLoad>().LoadText(logintxt);
+            ActualUsersEmail = SecureStorage.GetAsync(GlobalVariables.EMAIL_TOKEN).Result;
         }
 
         /// <summary>

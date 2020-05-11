@@ -1,6 +1,6 @@
-﻿using PetBellies.BLL.FileStoreAndLoad;
-using PetBellies.BLL.Helper;
+﻿using PetBellies.BLL.Helper;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -31,33 +31,24 @@ namespace PetBellies.View
                 }
                 else
                 {
-                    FileStoreAndLoading.InsertToFile(GlobalVariables.logintxt, String.Empty);
+                    await SecureStorage.SetAsync(GlobalVariables.EMAIL_TOKEN, string.Empty);
 
-                    var page = new LoginPage();
-
-                    await Navigation.PushModalAsync(new NavigationPage(page)
-                    {
-                        Style = GlobalVariables.NavigationPageStyle
-                    });
+                    App.SetRootPage(new LoginPage());
                 }
+
                 loguotButton.IsEnabled = true;
                 deleteAcoountPageButton.IsEnabled = true;
                 deleteActivity.IsRunning = false;
             }
         }
 
-        private async void loguotButton_Clicked(object sender, EventArgs e)
+        private void loguotButton_Clicked(object sender, EventArgs e)
         {
             loguotButton.IsEnabled = false;
 
-            FileStoreAndLoading.InsertToFile(GlobalVariables.logintxt, String.Empty);
+            SecureStorage.SetAsync(GlobalVariables.EMAIL_TOKEN, string.Empty);
 
-            var page = new LoginPage();
-
-            await Navigation.PushModalAsync(new NavigationPage(page)
-            {
-                Style = GlobalVariables.NavigationPageStyle
-            });
+            App.SetRootPage(new LoginPage());
 
             loguotButton.IsEnabled = true;
         }
