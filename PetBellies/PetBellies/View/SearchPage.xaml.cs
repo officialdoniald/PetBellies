@@ -233,6 +233,12 @@ namespace PetBellies.View
                         MoreButton.IsVisible = true;
                     });
 
+                    top = 0;
+                    left = 0;
+                    i = 1;
+
+                    keyValuePairs.Clear();
+
                     foreach (var item in petpicturesList)
                     {
                         keyValuePairs.Add(item, new int[2] { top, left });

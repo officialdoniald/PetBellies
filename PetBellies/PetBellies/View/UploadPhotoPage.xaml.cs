@@ -12,15 +12,17 @@ namespace PetBellies.View
     public partial class UploadPhotoPage : ContentPage
     {
         private int selectedPetId = -1;
-        private double currentWidth;
         private bool addedPhoto = false;
         private Stream f;
 
         public UploadPhotoPage()
         {
-            Initialize();
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                InitializeComponent();
+            });
 
-            currentWidth = Application.Current.MainPage.Width;
+            Initialize();
         }
 
         protected override async void OnAppearing()
@@ -33,11 +35,6 @@ namespace PetBellies.View
         {
             await Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    InitializeComponent();
-                });
-
                 if (GlobalVariables.Mypetlist.Count != 0)
                 {
                     selectedPetId = GlobalVariables.Mypetlist[0].petid;
@@ -47,6 +44,8 @@ namespace PetBellies.View
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
+                        hashtagsEntry.Text = string.Empty;
+
                         petPicker.Title = "Select a pet";
 
                         petPicker.IsEnabled = true;
