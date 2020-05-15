@@ -2,6 +2,7 @@
 using PetBellies.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -69,6 +70,15 @@ namespace PetBellies.View
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     userListView.ItemsSource = listViewWithPictureAndSomeText;
+
+                    if (listViewWithPictureAndSomeText.Any())
+                    {
+                        IsEmptyLystLabel.IsVisible = false;
+                    }
+                    else
+                    {
+                        IsEmptyLystLabel.IsVisible = true;
+                    }
 
                     userListView.IsRefreshing = false;
                 });

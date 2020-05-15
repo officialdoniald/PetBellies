@@ -45,12 +45,16 @@ namespace PetBellies.View
 
         private void GlobalEvents_OnProfilePictureUpdated(object sender, object e)
         {
-            profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePicture));
+            Device.BeginInvokeOnMainThread(()=> {
+                profilePictureImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.ActualUser.ProfilePicture));
+            });
         }
 
         private void GlobalEvents_OnProfileUpdated(object sender, object e)
         {
-            Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
+            Device.BeginInvokeOnMainThread(() => {
+                Title = GlobalVariables.ActualUser.FirstName + " " + GlobalVariables.ActualUser.LastName;
+            });
         }
 
         protected override async void OnAppearing()

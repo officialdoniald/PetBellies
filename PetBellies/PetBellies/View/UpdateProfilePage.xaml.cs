@@ -130,6 +130,8 @@ namespace PetBellies.View
                 {
                     addedPhoto = false;
 
+                    GlobalVariables.ActualUser.ProfilePicture = new Segédfüggvények().ReadFully(f);
+
                     GlobalEvents.OnProfilePictureUpdated_Event(this, null);
 
                     Device.BeginInvokeOnMainThread(() =>

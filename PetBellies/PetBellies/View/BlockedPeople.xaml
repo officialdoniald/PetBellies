@@ -8,6 +8,9 @@
     <ContentPage.Content>
         <StackLayout>
             <ListView ItemsSource="{Binding listViewWithPictureAndSomeText}" SeparatorVisibility="None" x:Name="userListView" ItemTapped="userListView_ItemTapped" IsPullToRefreshEnabled="true" Refreshing="userListView_Refreshing">
+                <ListView.Header>
+                    <Label x:Name="IsEmptyLystLabel" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center" Text="No user found..." Style="{StaticResource NormalLabel}"/>
+                </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
