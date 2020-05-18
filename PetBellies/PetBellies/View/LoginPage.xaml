@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetBellies.View.LoginPage"
              Title="PetBellies" 
-             xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" BackgroundImageSource="loginbackground.jpg">
+             xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies">
     <ScrollView>
         <Grid>
             <Image Source="loginbackground.jpg" Aspect="AspectFill"/>
