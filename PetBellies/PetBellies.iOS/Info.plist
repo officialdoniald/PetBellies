@@ -37,7 +37,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This app needs access to the photo gallery to upload photos of you and your pet.</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.50</string>
+	<string>50</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.50</string>
 	<key>NSCalendarsUsageDescription</key>
