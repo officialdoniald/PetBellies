@@ -27,9 +27,9 @@
                 <DatePicker x:Name="ageDatePicker" Style="{StaticResource NormalDatePicker}"/>
                 <Label Text="Species:" Style="{StaticResource EntryAboveLabel}" Margin="0,10,0,0"/>
                 <Entry x:Name="typeEntry" Style="{StaticResource NormalEnrty}" />
-                <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                <StackLayout Orientation="Horizontal" Margin="0,10,0,0" HorizontalOptions="FillAndExpand">
                     <Label Text="Shelter pet?" Style="{StaticResource NormalLabel}" VerticalOptions="Center" />
-                    <Switch x:Name="shelterpetSwitch" />
+                    <Switch x:Name="shelterpetSwitch" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
                 <Button Margin="0,10,0,0" Text="Change" x:Name="changePetButton" Style="{StaticResource NormalButton}" Clicked="changePetButton_ClickedAsync" />
                 <Button Text="Delete profile" BorderColor="Red" TextColor="Red" Style="{StaticResource NormalButton}" Margin="0,10,0,0" x:Name="deletePetButton" Clicked="deletePetButton_ClickedAsync" />

@@ -14,9 +14,9 @@
                 <Entry x:Name="emailEntry" Keyboard="Email" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnEmailEntry" />
                 <Label Text="Password:" Style="{StaticResource EntryAboveLabel}" />
                 <Entry x:Name="pwEntry" IsPassword="true" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnPasswordEntry" />
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Label Text="I am over 13 years old." Style="{StaticResource NormalLabel}" VerticalOptions="Center" />
-                    <Switch x:Name="imover13Switch" Toggled="Handle_Toggled"/>
+                    <Switch x:Name="imover13Switch" Toggled="Handle_Toggled" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
                 <Button Text="Sign up" x:Name="signupButton" Style="{StaticResource NormalButton}" Clicked="signupButton_ClickedAsync" IsEnabled="false"/>
                 <Label Style="{StaticResource NormalLabel}" Text="By clicking Sign up, you agree to our" />

@@ -4,27 +4,28 @@
              x:Class="PetBellies.View.LoginPage"
              Title="PetBellies" 
              xmlns:customControls="clr-namespace:PetBellies.CustomControls;assembly=PetBellies" BackgroundImageSource="loginbackground.jpg">
-    <Grid>
-        <Image Source="loginbackground.jpg"
-           Aspect="AspectFill"/>
-        <StackLayout Orientation="Vertical"
+    <ScrollView>
+        <Grid>
+            <Image Source="loginbackground.jpg" Aspect="AspectFill"/>
+            <StackLayout Orientation="Vertical"
                  VerticalOptions="EndAndExpand" 
                  Margin="15,0,15,25"
                  RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
                  RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
-            <Label Text="E-Mail:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
-            <customControls:CustomEntry TextColor="White" x:Name="emailEntry" Keyboard="Email" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnEmail" />
-            <Label Text="Password:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
-            <customControls:CustomEntry TextColor="White" x:Name="pwEntry" IsPassword="True" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnPassword" />
-            <Label Text="Forgot password" Style="{StaticResource NormalLabel}" TextColor="White">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
-                </Label.GestureRecognizers>
-            </Label>
-            <Button BorderColor="White" TextColor="White" x:Name="loginButton" Style="{StaticResource NormalButton}" Text="Login" Clicked="loginButton_Clicked" />
-            <ActivityIndicator Color="White" x:Name="loginActivator" IsRunning="false" Style="{StaticResource NormalActivityIndicator}"></ActivityIndicator>
-            <Label Text="Are you not a member yet?" Style="{StaticResource NormalLabel}" TextColor="White"/>
-            <Button BorderColor="White" TextColor="White" x:Name="signUpButton" Style="{StaticResource NormalButton}" Text="Sign up" Clicked="signUpButton_Clicked" />
-        </StackLayout>
-    </Grid>
+                <Label Text="E-Mail:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
+                <customControls:CustomEntry TextColor="White" x:Name="emailEntry" Keyboard="Email" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnEmail" />
+                <Label Text="Password:" Style="{StaticResource EntryAboveLabel}" TextColor="White"/>
+                <customControls:CustomEntry TextColor="White" x:Name="pwEntry" IsPassword="True" Style="{StaticResource NormalEnrty}" Completed="Handle_CompletedOnPassword" />
+                <Label Text="Forgot password" Style="{StaticResource NormalLabel}" TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Button BorderColor="White" TextColor="White" x:Name="loginButton" Style="{StaticResource NormalButton}" Text="Login" Clicked="loginButton_Clicked" />
+                <ActivityIndicator Color="White" x:Name="loginActivator" IsRunning="false" Style="{StaticResource NormalActivityIndicator}"></ActivityIndicator>
+                <Label Text="Are you not a member yet?" Style="{StaticResource NormalLabel}" TextColor="White"/>
+                <Button BorderColor="White" TextColor="White" x:Name="signUpButton" Style="{StaticResource NormalButton}" Text="Sign up" Clicked="signUpButton_Clicked" />
+            </StackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>
